@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from principal.forms import UserForm, UserProfileInfoForm
+from django.shortcuts import render, redirect
+from principal.forms import CrearInventarioForm, UserForm, UserProfileInfoForm
+from principal.models import Inventario
 # Create your views here.
 
 from django.contrib.auth import authenticate, login, logout
@@ -9,6 +10,27 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
     return render(request, 'principal/index.html')
+
+@login_required
+def agregar_producto_inventario(request):
+	form_agpr = CrearInventarioForm(data=request.POST)
+	if form_agpr.is_valid():
+        form_agpr.save()           
+    context = {
+      "form_agpr": form_agpr,
+	    "title": "Añadir producto",
+    }
+    return render(request, "principal/añadir_producto_inventario.html", context)
+
+@login_required
+def lista_inventario(request):
+	title = 'Lista inventario'
+	queryset = Inventario.objects.all()
+	context = {
+		"title": title,
+		"queryset": queryset,
+	}
+	return render(request, "principal/lista_producto.html", context)
 
 @login_required
 def special(request):
@@ -52,7 +74,6 @@ def register(request):
                             'profile_form':profile_form,
                             'registrado':registrado})
 
-
 def user_login(request):
 
     if request.method == 'POST':
@@ -73,3 +94,4 @@ def user_login(request):
             return HttpResponse('datos de login invalidos')
     else:
         return render(request,'principal/login.html',{})
+

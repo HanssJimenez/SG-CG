@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from principal.models import UserProfileInfo
+from principal.models import UserProfileInfo, Inventario
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget= forms.PasswordInput())
@@ -14,3 +14,8 @@ class UserProfileInfoForm(forms.ModelForm):
     class Meta():
         model = UserProfileInfo
         fields = ('portfolio_site','profile_pic')
+
+class CrearInventarioForm(forms.ModelForm):
+   class Meta():
+     model = Inventario
+     fields = ('categoria', 'nombre_p', 'cantidad')

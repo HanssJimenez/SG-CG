@@ -1,0 +1,7 @@
+{% extends 'principal/base.html' %}
+{%block body_block%}
+    {{title}}<br>
+    {% for lista in queryset %}
+    {{lista.nombre_p}} {{lista.cantidad}}<br>
+    {% endfor %}
+{%endblock%}

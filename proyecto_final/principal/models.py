@@ -61,3 +61,21 @@ class Solicitud(models.Model):
 
     def __str__(self):
         return(self).cliente.nombre
+
+class Inventario(models.Model):
+    categoria = models.CharField(max_length=50, blank=True, null=True)
+    nombre_p = models.CharField(max_length=50, blank=True, null=True)
+    cantidad = models.PositiveIntegerField(default = 0, blank= True, null=True)
+    agg_cantidad = models.PositiveIntegerField(default = 0, blank= True, null=True)
+    agg_por= models.CharField(max_length=50, blank = True, null =True)
+    cantidad_pedido= models.PositiveIntegerField(default= 0, blank = True, null=True)
+    pedido_por=models.CharField(max_length=50, blank = True, null =True)
+    pedido_a = models.CharField(max_length=50, blank=True, null=True)
+    telefono = models.CharField(max_length=50, blank=True, null=True)
+    creado_por = models.CharField(max_length=50, blank=True, null=True)
+    reganizar_nvl = models.IntegerField(default='0', blank=True, null=True)
+    actualizacion_reciente = models.DateTimeField(auto_now_add=False, auto_now=True)
+    exportar_a_CSV = models.BooleanField(default=False)
+
+    def __str__(self):
+    	return self.nombre_p
