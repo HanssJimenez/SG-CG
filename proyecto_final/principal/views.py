@@ -13,11 +13,13 @@ def index(request):
 
 @login_required
 def agregar_producto_inventario(request):
-	form_agpr = CrearInventarioForm(data=request.POST)
-	if form_agpr.is_valid():
-        form_agpr.save()           
+    form_agpr = CrearInventarioForm(data=request.POST)
+    if form_agpr.is_valid():
+        form_agpr.save()
+        return redirect('/lista_producto')
+        
     context = {
-      "form_agpr": form_agpr,
+        "form_agpr": form_agpr,
 	    "title": "Añadir producto",
     }
     return render(request, "principal/añadir_producto_inventario.html", context)
