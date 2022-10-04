@@ -27,3 +27,5 @@ urlpatterns = [
     url(r'^cuadros/', views.cuadros, name='cuadros'),
     
 ]
+
+handler404 = 'principal.views.error_404_view'

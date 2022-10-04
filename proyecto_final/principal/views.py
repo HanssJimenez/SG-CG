@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from principal.forms import CrearInventarioForm, UserForm, UserProfileInfoForm
 from principal.models import Inventario
+from django.template import RequestContext
 # Create your views here.
 
 from django.contrib.auth import authenticate, login, logout
@@ -71,7 +72,7 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileInfoForm()
 
-    return render(request, 'principal/registration.html',
+    return render(request, 'principal/register.html',
                             {'user_form':user_form,
                             'profile_form':profile_form,
                             'registrado':registrado})
@@ -99,3 +100,6 @@ def user_login(request):
 
 def cuadros (request):
     return render(request, 'principal/charts.html')
+
+def error_404_view(request, exception):
+    return render(request, 'principal/404.html')

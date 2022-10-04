@@ -26,7 +26,7 @@ SECRET_KEY = 'rwdmv==w6=+#ig5fm-kde+s-ky!jsaek5b94-&b0ij)zl1pk&m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -137,9 +137,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [STATIC_DIR,]
-
-MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 
+if DEBUG:
+    STATICFILES_DIRS = [STATIC_DIR,]
+else:    
+    STATIC_ROOT = STATIC_DIR
+
+MEDIA_ROOT = MEDIA_DIR
 LOGIN_URL = '/principal/user_login'
