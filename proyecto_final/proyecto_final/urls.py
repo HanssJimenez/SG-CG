@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^special/', views.special,name='special'),
     url(r'^lista_producto/', views.lista_inventario,name='lista_producto'),
     url(r'^agregar_producto/', views.agregar_producto_inventario,name='agregar_producto'),
+    url(r'^cuadros/', views.cuadros, name='cuadros'),
     
 ]

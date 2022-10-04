@@ -97,3 +97,5 @@ def user_login(request):
     else:
         return render(request,'principal/login.html',{})
 
+def cuadros (request):
+    return render(request, 'principal/charts.html')
