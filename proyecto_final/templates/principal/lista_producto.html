@@ -1,7 +1,24 @@
 {% extends 'principal/base.html' %}
 {%block body_block%}
-    {{title}}<br>
-    {% for lista in queryset %}
-    {{lista.nombre_p}} {{lista.cantidad}}<br>
-    {% endfor %}
+{{title}}<br>    
+<table class="table"
+    <thead>
+        <tr>
+            <td>#</td>
+            <td>Nombre</td>
+            <td>Cantidad</td>
+            <td>Categoria</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for lista in queryset %}
+        <tr>
+            <td> {{lista.id}} <br></td>
+            <td>{{lista.nombre_p}}</td>
+            <td>{{lista.cantidad}}</td>
+            <td>{{lista.categoria}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>        
+</table>
 {%endblock%}

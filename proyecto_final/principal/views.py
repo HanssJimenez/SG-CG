@@ -1,17 +1,19 @@
 from django.shortcuts import render, redirect, render_to_response
 from principal.forms import CrearInventarioForm, UserForm, UserProfileInfoForm
-from principal.models import Inventario
+from . import models
 from django.template import RequestContext
-# Create your views here.
-
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView
+# Create your views here.
 
+# Vistas inicio
 def index(request):
     return render(request, 'principal/index.html')
 
+# Views de inventario / agregar / actualizar/ eliminar
 @login_required
 def agregar_producto_inventario(request):
     form_agpr = CrearInventarioForm(data=request.POST)
@@ -24,6 +26,8 @@ def agregar_producto_inventario(request):
 	    "title": "Añadir producto",
     }
     return render(request, "principal/añadir_producto_inventario.html", context)
+
+# Vistas para tablas
 
 @login_required
 def lista_inventario(request):
@@ -103,3 +107,5 @@ def cuadros (request):
 
 def error_404_view(request, exception):
     return render(request, 'principal/404.html')
+
+
