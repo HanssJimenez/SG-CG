@@ -11,14 +11,18 @@
         </tr>
     </thead>
     <tbody>
-        {% for lista in queryset %}
+        {% if inventario %}
+        {% for inv in inventario %}
         <tr>
-            <td> {{lista.id}} <br></td>
-            <td>{{lista.nombre_p}}</td>
-            <td>{{lista.cantidad}}</td>
-            <td>{{lista.categoria}}</td>
+            <td> {{inventario.id}} <br></td>
+            <td>{{inventario.nombre_p}}</td>
+            <td>{{inventario.cantidad}}</td>
+            <td>{{inventario.categoria}}</td>
         </tr>
         {% endfor %}
+        {% else%}
+        <h1>No se encontraron registros</h1>
+        {% endif %}
     </tbody>        
 </table>
 {%endblock%}

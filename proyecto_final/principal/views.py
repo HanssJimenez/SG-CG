@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView
+from django.views.generic import (View, TemplateView, ListView, DetailView,CreateView,UpdateView,DeleteView)
 # Create your views here.
 
 # Vistas inicio
@@ -30,14 +30,10 @@ def agregar_producto_inventario(request):
 # Vistas para tablas
 
 @login_required
-def lista_inventario(request):
-	title = 'Lista inventario'
-	queryset = Inventario.objects.all()
-	context = {
-		"title": title,
-		"queryset": queryset,
-	}
-	return render(request, "principal/lista_producto.html", context)
+class InventarioListView(ListView):
+    context_object_name = 'inventario'
+    model = models.Inventario
+    template_name = 'principal/lista_producto.html'
 
 @login_required
 def special(request):
@@ -109,3 +105,12 @@ def error_404_view(request, exception):
     return render(request, 'principal/404.html')
 
 
+# @login_required
+# def lista_inventario(request):
+# 	title = 'Lista inventario'
+# 	queryset = Inventario.objects.all()
+# 	context = {
+# 		"title": title,
+# 		"queryset": queryset,
+# 	}
+# 	return render(request, "principal/lista_producto.html", context)
