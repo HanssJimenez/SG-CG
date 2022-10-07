@@ -1,11 +1,5 @@
 {% extends 'principal/base.html' %}
 {%block body_block%}
-    {{title}}<br>
-    <form enctype="multipart/form-data" method='POST'>
-        {% csrf_token %}
-		{{form_agpr.as_p}}
-        <input type="submit" value='Guardar'/>
-    </form>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-5">
@@ -13,18 +7,22 @@
                     <div class="card-header">
                         <h3 class="text-center font-weight-light my-4">Añadir Producto </h3></div>
                     <div class="card-body">
-                        <form action="{% url 'principal:user_login' %}" method="POST">
+                        <form action="multipart/form-data" method="POST">
                             {% csrf_token %}
                             <div class="form-floating mb-3">
-                                <input class="form-control" type="text" name = "username" placeholder="Nombre Usuario Aquí" />
-                                <label for="username">Usuario</label>
+                                <input class="form-control" type="text" name = "categoria" required placeholder="Categoria Aquí" />
+                                <label for="categoria">Categoria</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" type="password" name = "password" placeholder="Constraseña Aquí" />
-                                <label for="password">Contraseña</label>
+                                <input class="form-control" type="text" name = "nombre_p" required placeholder="nombre Aquí" />
+                                <label for="nombre_p">Nombre</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" type="number" name = "cantidad" required placeholder="Cantidad Aquí" />
+                                <label for="cantidad">Cantidad</label>
                             </div>
                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                <input class="btn btn-primary" type="submit" name="" value="Login">
+                                <input class="btn btn-primary" type="submit" name="" value="Añadir Producto">
                             </div>
                         </form>
                     </div>

@@ -1,24 +1,45 @@
 {% extends 'principal/base.html' %}
 {%block body_block%}
-{{title}}<br>    
-<table class="table"
-    <thead>
-        <tr>
-            <td>#</td>
-            <td>Nombre</td>
-            <td>Cantidad</td>
-            <td>Categoria</td>
-        </tr>
-    </thead>
-    <tbody>
-        {% for inv in queryset %}
-        <tr>
-            <td> {{inv.id}} <br></td>
-            <td>{{inv.nombre_p}}</td>
-            <td>{{inv.cantidad}}</td>
-            <td>{{inv.categoria}}</td>
-        </tr>
-        {% endfor %}
-    </tbody>        
-</table>
+
+<div class="container-fluid"> 
+    <h1>Filtrar lista</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="form-floating mb-3">
+            <input class="form-control" type="text" name = "categoria" placeholder="ingrese categoria a buscar" />
+            <label for="categoria">categoria</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input class="form-control" type="text" name = "nombre_p" placeholder="ingrese nombre a buscar" />
+            <label for="nombre_p">nombre de producto</label>
+        </div>
+        <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+            <input class="btn btn-primary" type="submit" name="" value="Buscar">
+        </div>
+    </form>
+</div>
+<br>
+<div class="container-fluid">
+    <h1>Lista de Producto</h1>
+    <table class="table"
+        <thead>
+            <tr>
+                <td>#</td>
+                <td>Nombre</td>
+                <td>Cantidad</td>
+                <td>Categoria</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inv in queryset %}
+            <tr>
+                <td> {{inv.id}} <br></td>
+                <td>{{inv.nombre_p}}</td>
+                <td>{{inv.cantidad}}</td>
+                <td>{{inv.categoria}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>        
+    </table>
+</div>
 {%endblock%}

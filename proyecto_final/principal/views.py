@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, render_to_response
-from principal.forms import CrearInventarioForm, UserForm, UserProfileInfoForm
+from principal.forms import AgreProdForm, UserForm, UserProfileInfoForm,BusquedProductoForm
 
 from . import models
 from principal.models import *
@@ -18,7 +18,7 @@ def index(request):
 # Views de inventario / agregar / actualizar/ eliminar
 @login_required
 def agregar_producto_inventario(request):
-    form_agpr = CrearInventarioForm(data=request.POST)
+    form_agpr = AgreProdForm(data=request.POST)
     if form_agpr.is_valid():
         form_agpr.save()
         return redirect('/lista_producto')
@@ -34,12 +34,22 @@ def agregar_producto_inventario(request):
 @login_required
 def lista_inventario(request):
 	title = 'Lista inventario'
+	form = BusquedProductoForm(request.POST)
 	queryset = Inventario.objects.all()
 	context = {
 		"title": title,
 		"queryset": queryset,
 	}
+	if request.method == 'POST':
+		queryset = Inventario.objects.filter(categoria__icontains=form['categoria'].value(),
+									nombre_p__icontains=form['nombre_p'].value()
+									)
+		context = {
+		"form": form,
+		"queryset": queryset,
+	}
 	return render(request, "principal/lista_producto.html", context)
+	
 
 @login_required
 def special(request):

@@ -63,9 +63,9 @@ class Solicitud(models.Model):
         return(self).cliente.nombre
 
 class Inventario(models.Model):
-    categoria = models.CharField(max_length=50, blank=True, null=True)
+    categoria = models.CharField(max_length=50, blank=False, null=True)
     nombre_p = models.CharField(max_length=50, blank=False)
-    cantidad = models.PositiveIntegerField(default = 0, blank= True, null=True)
+    cantidad = models.PositiveIntegerField(default = 0, blank= False, null=True)
     agg_cantidad = models.PositiveIntegerField(default = 0, blank= True, null=True)
     agg_por= models.CharField(max_length=50, blank = True, null =True)
     cantidad_pedido= models.PositiveIntegerField(default= 0, blank = True, null=True)
