@@ -23,7 +23,13 @@ class UserProfileInfoForm(forms.ModelForm):
         model = UserProfileInfo
         fields = ('portfolio_site','profile_pic')
 
-class CrearInventarioForm(forms.ModelForm):
+class AgreProdForm(forms.ModelForm):
    class Meta():
      model = Inventario
      fields = ('categoria', 'nombre_p', 'cantidad')
+     
+
+class BusquedProductoForm(forms.ModelForm):
+   class Meta:
+     model = Inventario
+     fields = ['categoria', 'nombre_p']
