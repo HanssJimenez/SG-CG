@@ -2,7 +2,7 @@ from django.conf.urls import url,include
 from principal import views
 
 
-nombre_app = 'principal'
+app_name = 'principal'
 
 urlpatterns =[
     url(r'^register/$', views.register, name = 'register'),

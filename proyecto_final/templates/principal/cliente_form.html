@@ -1,0 +1,31 @@
+{% extends 'principal/base.html' %}
+{%block body_block%}
+{% load crispy_forms_tags%}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5">
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                    <div class="card-header">
+                        <h3 class="text-center font-weight-light my-4">Añadir Cliente </h3></div>
+                    <div class="card-body">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            {{form.nombre|as_crispy_field}}
+                            {{form.apellido|as_crispy_field}}
+                            {{form.numtel|as_crispy_field}}
+                            <br><hr>
+                            <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                <button type="submit" class="btn btn-primary">Agregar</button>
+                                <a href="{% url 'lista_cliente' %}" class="btn btn-secondary" >Cancelar</a>
+                            </div>
+                            <hr>
+                        </form>
+                    </div>
+                    <div class="card-footer text-center py-3">
+                        <div class="small"><p>Gracias por usar SG-CG!</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%endblock%}

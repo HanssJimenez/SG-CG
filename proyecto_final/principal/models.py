@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class UserProfileInfo(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     portfolio_site = models.URLField(blank= True)
     profile_pic = models.ImageField(upload_to = 'profile_pics', blank= True)
@@ -27,14 +27,14 @@ class Cliente(models.Model):
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
     numtel = models.CharField(max_length=100)
-
+    
     def __str__(self):
         return(self).nombre
 
 class Credito(models.Model):
-    cliente = models.ForeignKey(Cliente)
+    cliente = models.ForeignKey(Cliente,on_delete=models.CASCADE)
+    
     total = models.IntegerField()
-
     def __str__(self):
         return(self).cliente.nombre
 
@@ -47,23 +47,29 @@ class Producto(models.Model):
         return(self).nombre
 
 class Existencia(models.Model):
-    nombre = models.ForeignKey(Producto)
+    nombre = models.ForeignKey(Producto,on_delete=models.CASCADE)
     cantidad = models.IntegerField()
 
     def __str__(self):
         return(self).nombre.nombre
 
 class Solicitud(models.Model):
-    cliente = models.ForeignKey(Cliente)
-    colaborador = models.ForeignKey(Colaborador)
+    cliente = models.ForeignKey(Cliente,on_delete=models.CASCADE)
+    colaborador = models.ForeignKey(Colaborador,on_delete=models.CASCADE)
     pago = models.IntegerField()
     credito = models.BooleanField()
 
     def __str__(self):
         return(self).cliente.nombre
 
+class Categorias(models.Model):
+    nombre = models.CharField(max_length=50,blank=False, null=False)
+    
+    def __str__(self):
+        return self.nombre
+
 class Inventario(models.Model):
-    categoria = models.CharField(max_length=50, blank=False, null=True)
+    categoria = models.ForeignKey(Categorias, on_delete=models.CASCADE)
     nombre_p = models.CharField(max_length=50, blank=False)
     cantidad = models.PositiveIntegerField(default = 0, blank= False, null=True)
     agg_cantidad = models.PositiveIntegerField(default = 0, blank= True, null=True)
@@ -78,4 +84,6 @@ class Inventario(models.Model):
     exportar_a_CSV = models.BooleanField(default=False)
 
     def __str__(self):
-    	return self.nombre_p
+        return self.nombre_p
+
+

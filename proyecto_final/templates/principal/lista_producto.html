@@ -21,22 +21,24 @@
 <br>
 <div class="container-fluid">
     <h1>Lista de Producto</h1>
-    <table class="table"
+    <table class="table">
         <thead>
             <tr>
                 <td>#</td>
                 <td>Nombre</td>
                 <td>Cantidad</td>
                 <td>Categoria</td>
+                <td>Borrar</td>
             </tr>
         </thead>
         <tbody>
             {% for inv in queryset %}
             <tr>
                 <td> {{inv.id}} <br></td>
-                <td>{{inv.nombre_p}}</td>
+                <td><a href="{% url 'modificar_producto' inv.id %}">{{inv.nombre_p}}</a></td>
                 <td>{{inv.cantidad}}</td>
                 <td>{{inv.categoria}}</td>
+                <td><a href="{% url 'borrar_producto' inv.id %}">Borrar</a></td>
             </tr>
             {% endfor %}
         </tbody>        

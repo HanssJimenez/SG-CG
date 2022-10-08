@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from principal.models import UserProfileInfo, Inventario
+from principal.models import *
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget= forms.PasswordInput())
@@ -40,8 +40,32 @@ class AgreProdForm(forms.ModelForm):
             raise forms.ValidationError('Completa este campo')
         return nombre_p  
 
+class ModInvForm(forms.ModelForm):
+	class Meta:
+		model = Inventario
+		fields = ['categoria', 'nombre_p', 'cantidad']
 
 class BusquedProductoForm(forms.ModelForm):
     class Meta:
         model = Inventario
         fields = ['categoria', 'nombre_p']
+#Form de cliente
+class ClienteForm(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        fields = "__all__"
+#Form de colaborador
+class ColaboradorForm(forms.ModelForm):
+    class Meta:
+        model = Colaborador
+        fields = "__all__"
+#Form de Credito
+class CreditoForm(forms.ModelForm):
+    class Meta:
+        model = Credito
+        fields = "__all__"
+#Form de Inventario
+class InventarioForm(forms.ModelForm):
+    class Meta:
+        model = Inventario
+        fields = ('categoria', 'nombre_p', 'cantidad')

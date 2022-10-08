@@ -1,19 +1,104 @@
-from django.shortcuts import render, redirect, render_to_response
-from principal.forms import AgreProdForm, UserForm, UserProfileInfoForm,BusquedProductoForm
-
-from . import models
-from principal.models import *
-from django.template import RequestContext
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
-from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect, render
+from django.template import RequestContext
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+
+from principal.forms import (AgreProdForm, BusquedProductoForm, ModInvForm,
+                            UserForm, UserProfileInfoForm)
+from principal.models import *
+
 
 # Create your views here.
 
 # Vistas inicio
 def index(request):
     return render(request, 'principal/index.html')
+
+# ClassBaseViews Colaborador Crear/Modificar/Eliminar/Leer
+#Crear
+class CrearColaborador(CreateView):
+    model = Colaborador
+    fields = '__all__'
+    success_url = reverse_lazy('lista_colaborador')
+#Modificar
+class ModificarColaborador(UpdateView):
+    model = Colaborador
+    fields = '__all__'
+    success_url = reverse_lazy('lista_colaborador')
+#Eliminar
+class EliminarColaborador(DeleteView):
+    queryset = Colaborador.objects.all()
+    success_url = reverse_lazy('lista_colaborador')
+#Leer
+class LeerColaborador(ListView):
+    model = Colaborador
+    queryset = Colaborador.objects.all()
+
+# ClassBaseViews Credito Crear/Modificar/Eliminar/Leer
+#Crear
+class CrearCredito(CreateView):
+    model = Credito
+    fields = '__all__'
+    success_url = reverse_lazy('lista_credito')
+#Modificar
+class ModificarCredito(UpdateView):
+    model = Credito
+    fields = '__all__'
+    success_url = reverse_lazy('lista_credito')
+#Eliminar
+class EliminarCredito(DeleteView):
+    queryset = Credito.objects.all()
+    success_url = reverse_lazy('lista_credito')
+#Leer
+class LeerCredito(ListView):
+    model = Credito
+    queryset = Credito.objects.all()
+
+# ClassBaseViews Clientes Crear/Modificar/Eliminar/Leer
+#Crear
+class CrearCliente(CreateView):
+    model = Cliente
+    fields = '__all__'
+    success_url = reverse_lazy('lista_cliente')
+#Modificar
+class ModificarCliente(UpdateView):
+    model = Cliente
+    fields = '__all__'
+    success_url = reverse_lazy('lista_cliente')
+
+#Eliminar
+class EliminarCliente(DeleteView):
+    queryset = Cliente.objects.all()
+    success_url = reverse_lazy('lista_cliente')
+    
+#Leer
+class LeerCliente(ListView):
+    model = Cliente
+    queryset = Cliente.objects.all()
+
+# ClassBaseViews Inventario Crear/Modificar/Eliminar/Leer
+#Crear
+class CrearInventario(CreateView):
+    model = Inventario
+    fields = ('categoria', 'nombre_p', 'cantidad')
+    success_url = reverse_lazy('lista_inventario')
+#Modificar
+class ModificarInventario(UpdateView):
+    model = Inventario
+    fields = ('categoria', 'nombre_p', 'cantidad')
+    success_url = reverse_lazy('lista_inventario')
+#Eliminar
+class EliminarInventario(DeleteView):
+    queryset = Inventario.objects.all()
+    success_url = reverse_lazy('lista_inventario')
+#Leer
+class LeerInventario(ListView):
+    model = Inventario
+    queryset = Inventario.objects.all()
 
 # Views de inventario / agregar / actualizar/ eliminar
 @login_required
@@ -25,9 +110,32 @@ def agregar_producto_inventario(request):
         
     context = {
         "form_agpr": form_agpr,
-	    "title": "Añadir producto",
+        "title": "Añadir producto",
     }
     return render(request, "principal/añadir_producto_inventario.html", context)
+
+@login_required
+def modificar_producto_inventario(request, pk):
+    queryset = Inventario.objects.get(id=pk)
+    form = ModInvForm(instance=queryset)
+    if request.method == 'POST':
+        form = ModInvForm(request.POST, instance=queryset)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('lista_producto'))
+
+    context = {
+		'form':form
+	}
+    return render(request, 'principal/añadir_producto_inventario.html', context)
+
+def borrar_producto_inventario(request, pk):
+	queryset = Inventario.objects.get(id=pk)
+	if request.method == 'POST':
+		queryset.delete()
+		return HttpResponseRedirect(reverse('lista_producto'))
+		
+	return render(request, 'principal/borrar_producto_inventario.html')
 
 # Vistas para tablas
 
