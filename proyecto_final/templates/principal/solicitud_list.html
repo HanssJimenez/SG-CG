@@ -1,0 +1,50 @@
+{% extends 'principal/base.html' %}
+{%block body_block%}
+<div class="container-fluid">
+    <h1>Lista de ventas</h1>
+    <a href="{% url 'crear_solicitud' %}" class="btn btn-outline-primary mb-3 mt-5">
+        <i class="fas fa-plus"></i>&nbsp;&nbsp; Venta
+    </a>
+    <table class="table table-bordered text-center">
+        <thead class = "table-primary">
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Colaborador</th>
+                <th>Descripcion</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>credito</th>
+                <th colspan ="2"> Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for solicitud in object_list%}
+            <tr>
+                <td> {{solicitud.id}} <br></td>
+                <td>{{solicitud.cliente}}</a></td>
+                <td>{{solicitud.colaborador}}</td>
+                <td>{{solicitud.descripcion}}</td>
+                <td>{{solicitud.fecha}}</td>
+                <td>{{solicitud.pago}}</td>
+                {% if solicitud.credito %}
+                <td><i class ="fas fa-plus " style="color: green"></i></td>
+                {%else%}
+                <td><i class ="fas fa-plus " style="color: red"></i></td>
+                {% endif%}
+                <td>
+                    <a href="{% url 'modificar_solicitud' pk=solicitud.id %}" class = "btn btn-primary btn-sm">
+                        <i class= "fas fa-pen"></i>
+                    </a>
+                </td>        
+                <td>
+                    <a href="{% url 'borrar_solicitud' pk=solicitud.id %}" class = "btn btn-danger btn-sm">
+                        <i class= "fas fa-trash-alt"></i>
+                    </a>
+                </td> 
+            </tr>
+            {% endfor %}
+        </tbody>        
+    </table>
+</div>
+{%endblock%}

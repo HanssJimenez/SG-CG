@@ -15,12 +15,12 @@ class Colaborador(models.Model):
     DPI = models.CharField(max_length=15, unique=True)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
-    numtel = models.CharField(max_length=100)
+    numero_de_telefono = models.CharField(max_length=100)
     puesto = models.CharField(max_length=100)
-    fnaci = models.DateField()
-    sueldo = models.IntegerField()
+    fecha_de_nacimiento = models.DateField()
+    sueldo = models.PositiveIntegerField()
     def __str__(self):
-        return(self).nombre
+        return self.nombre+" "+self.apellido
 
 
 class Cliente(models.Model):
@@ -29,7 +29,7 @@ class Cliente(models.Model):
     numtel = models.CharField(max_length=100)
     
     def __str__(self):
-        return(self).nombre
+        return self.nombre+" "+self.apellido
 
 class Credito(models.Model):
     cliente = models.ForeignKey(Cliente,on_delete=models.CASCADE)
@@ -56,11 +56,15 @@ class Existencia(models.Model):
 class Solicitud(models.Model):
     cliente = models.ForeignKey(Cliente,on_delete=models.CASCADE)
     colaborador = models.ForeignKey(Colaborador,on_delete=models.CASCADE)
-    pago = models.IntegerField()
+    descripcion = models.CharField(max_length=250, blank=True , null=True)
+    fecha = models.DateField(blank=True, null=True)
+    pago = models.PositiveIntegerField()
     credito = models.BooleanField()
 
     def __str__(self):
         return(self).cliente.nombre
+
+
 
 class Categorias(models.Model):
     nombre = models.CharField(max_length=50,blank=False, null=False)

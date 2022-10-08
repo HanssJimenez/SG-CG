@@ -6,17 +6,20 @@
             <div class="col-lg-5">
                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-header">
-                        <h3 class="text-center font-weight-light my-4">Añadir Producto </h3></div>
+                        <h3 class="text-center font-weight-light my-4">Añadir Venta </h3></div>
                     <div class="card-body">
                         <form action="" method="POST">
                             {% csrf_token %}
-                            {{form.categoria|as_crispy_field}}
-                            {{form.nombre_p|as_crispy_field}}
-                            {{form.cantidad|as_crispy_field}}
+                            {{form.cliente|as_crispy_field}}
+                            {{form.colaborador|as_crispy_field}}
+                            {{form.descripcion|as_crispy_field}}
+                            {{form.fecha|as_crispy_field}}
+                            {{form.pago|as_crispy_field}}
+                            {{form.credito|as_crispy_field}}
                             <br><hr>
                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                 <button type="submit" class="btn btn-primary">Agregar</button>
-                                <a href="{% url 'lista_inventario' %}" class="btn btn-secondary" >Cancelar</a>
+                                <a href="{% url 'lista_solicitud' %}" class="btn btn-secondary" >Cancelar</a>
                             </div>
                             <hr>
                         </form>

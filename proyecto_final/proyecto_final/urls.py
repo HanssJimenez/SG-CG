@@ -38,16 +38,26 @@ urlpatterns = [
     url(r'^crear_colaborador/', views.CrearColaborador.as_view(),name='crear_colaborador'),
     url(r'^modificar_colaborador/(?P<pk>\d+)/$', views.ModificarColaborador.as_view(), name = 'modificar_colaborador'),
     url(r'^borrar_colaborador/(?P<pk>\d+)/$', views.EliminarColaborador.as_view(), name = 'borrar_colaborador'),
-    #urls inventario CBV
+    #urls inventario
     url(r'^lista_inventario/', views.LeerInventario.as_view(),name='lista_inventario'),
     url(r'^crear_inventario/', views.CrearInventario.as_view(),name='crear_inventario'),
     url(r'^modificar_inventario/(?P<pk>\d+)/$', views.ModificarInventario.as_view(), name = 'modificar_inventario'),
     url(r'^borrar_inventario/(?P<pk>\d+)/$', views.EliminarInventario.as_view(), name = 'borrar_inventario'),
+    #urls categorias
+    url(r'^lista_categorias/', views.LeerCategorias.as_view(),name='lista_categorias'),
+    url(r'^crear_categorias/', views.CrearCategorias.as_view(),name='crear_categorias'),
+    url(r'^modificar_categorias/(?P<pk>\d+)/$', views.ModificarCategorias.as_view(), name = 'modificar_categorias'),
+    url(r'^borrar_categorias/(?P<pk>\d+)/$', views.EliminarCategorias.as_view(), name = 'borrar_categorias'),
+    #urls solicitud
+    url(r'^lista_solicitud/', views.LeerSolicitud.as_view(),name='lista_solicitud'),
+    url(r'^crear_solicitud/', views.CrearSolicitud.as_view(),name='crear_solicitud'),
+    url(r'^modificar_solicitud/(?P<pk>\d+)/$', views.ModificarSolicitud.as_view(), name = 'modificar_solicitud'),
+    url(r'^borrar_solicitud/(?P<pk>\d+)/$', views.EliminarSolicitud.as_view(), name = 'borrar_solicitud'),
     #urls inventario
-    url(r'^lista_producto/', views.lista_inventario,name='lista_producto'),
-    url(r'^agregar_producto/', views.agregar_producto_inventario,name='agregar_producto'),
-    url(r'^modificar_producto/(?P<pk>\d+)/$', views.modificar_producto_inventario, name = 'modificar_producto'),
-    url(r'^borrar_producto/(?P<pk>\d+)/$', views.borrar_producto_inventario, name = 'borrar_producto'),
+    # url(r'^lista_producto/', views.lista_inventario,name='lista_producto'),
+    # url(r'^agregar_producto/', views.agregar_producto_inventario,name='agregar_producto'),
+    # url(r'^modificar_producto/(?P<pk>\d+)/$', views.modificar_producto_inventario, name = 'modificar_producto'),
+    # url(r'^borrar_producto/(?P<pk>\d+)/$', views.borrar_producto_inventario, name = 'borrar_producto'),
 ]
 
 handler404 = 'principal.views.error_404_view'

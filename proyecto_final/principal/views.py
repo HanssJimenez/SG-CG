@@ -7,8 +7,7 @@ from django.template import RequestContext
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
-from principal.forms import (AgreProdForm, BusquedProductoForm, ModInvForm,
-                            UserForm, UserProfileInfoForm)
+from principal.forms import (UserForm, UserProfileInfoForm)
 from principal.models import *
 
 
@@ -100,63 +99,103 @@ class LeerInventario(ListView):
     model = Inventario
     queryset = Inventario.objects.all()
 
+# ClassBaseViews Inventario Crear/Modificar/Eliminar/Leer
+#Crear
+class CrearCategorias(CreateView):
+    model = Categorias
+    fields = '__all__'
+    success_url = reverse_lazy('lista_categorias')
+#Modificar
+class ModificarCategorias(UpdateView):
+    model = Categorias
+    fields = '__all__'
+    success_url = reverse_lazy('lista_categorias')
+#Eliminar
+class EliminarCategorias(DeleteView):
+    queryset = Categorias.objects.all()
+    success_url = reverse_lazy('lista_categorias')
+#Leer
+class LeerCategorias(ListView):
+    model = Categorias
+    queryset = Categorias.objects.all()
+
+# ClassBaseViews Solicitud Crear/Modificar/Eliminar/Leer
+#Crear
+class CrearSolicitud(CreateView):
+    model = Solicitud
+    fields = '__all__'
+    success_url = reverse_lazy('lista_solicitud')
+#Modificar
+class ModificarSolicitud(UpdateView):
+    model = Solicitud
+    fields = '__all__'
+    success_url = reverse_lazy('lista_solicitud')
+#Eliminar
+class EliminarSolicitud(DeleteView):
+    queryset = Solicitud.objects.all()
+    success_url = reverse_lazy('lista_solicitud')
+#Leer
+class LeerSolicitud(ListView):
+    model = Solicitud
+    queryset = Solicitud.objects.all()
+
 # Views de inventario / agregar / actualizar/ eliminar
-@login_required
-def agregar_producto_inventario(request):
-    form_agpr = AgreProdForm(data=request.POST)
-    if form_agpr.is_valid():
-        form_agpr.save()
-        return redirect('/lista_producto')
+# @login_required
+# def agregar_producto_inventario(request):
+#     form_agpr = AgreProdForm(data=request.POST)
+#     if form_agpr.is_valid():
+#         form_agpr.save()
+#         return redirect('/lista_producto')
         
-    context = {
-        "form_agpr": form_agpr,
-        "title": "Añadir producto",
-    }
-    return render(request, "principal/añadir_producto_inventario.html", context)
+#     context = {
+#         "form_agpr": form_agpr,
+#         "title": "Añadir producto",
+#     }
+#     return render(request, "principal/añadir_producto_inventario.html", context)
 
-@login_required
-def modificar_producto_inventario(request, pk):
-    queryset = Inventario.objects.get(id=pk)
-    form = ModInvForm(instance=queryset)
-    if request.method == 'POST':
-        form = ModInvForm(request.POST, instance=queryset)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('lista_producto'))
+# @login_required
+# def modificar_producto_inventario(request, pk):
+#     queryset = Inventario.objects.get(id=pk)
+#     form = ModInvForm(instance=queryset)
+#     if request.method == 'POST':
+#         form = ModInvForm(request.POST, instance=queryset)
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect(reverse('lista_producto'))
 
-    context = {
-		'form':form
-	}
-    return render(request, 'principal/añadir_producto_inventario.html', context)
+#     context = {
+# 		'form':form
+# 	}
+#     return render(request, 'principal/añadir_producto_inventario.html', context)
 
-def borrar_producto_inventario(request, pk):
-	queryset = Inventario.objects.get(id=pk)
-	if request.method == 'POST':
-		queryset.delete()
-		return HttpResponseRedirect(reverse('lista_producto'))
+# def borrar_producto_inventario(request, pk):
+# 	queryset = Inventario.objects.get(id=pk)
+# 	if request.method == 'POST':
+# 		queryset.delete()
+# 		return HttpResponseRedirect(reverse('lista_producto'))
 		
-	return render(request, 'principal/borrar_producto_inventario.html')
+# 	return render(request, 'principal/borrar_producto_inventario.html')
 
-# Vistas para tablas
+# # Vistas para tablas
 
-@login_required
-def lista_inventario(request):
-	title = 'Lista inventario'
-	form = BusquedProductoForm(request.POST)
-	queryset = Inventario.objects.all()
-	context = {
-		"title": title,
-		"queryset": queryset,
-	}
-	if request.method == 'POST':
-		queryset = Inventario.objects.filter(categoria__icontains=form['categoria'].value(),
-									nombre_p__icontains=form['nombre_p'].value()
-									)
-		context = {
-		"form": form,
-		"queryset": queryset,
-	}
-	return render(request, "principal/lista_producto.html", context)
+# @login_required
+# def lista_inventario(request):
+# 	title = 'Lista inventario'
+# 	form = BusquedProductoForm(request.POST)
+# 	queryset = Inventario.objects.all()
+# 	context = {
+# 		"title": title,
+# 		"queryset": queryset,
+# 	}
+# 	if request.method == 'POST':
+# 		queryset = Inventario.objects.filter(categoria__icontains=form['categoria'].value(),
+# 									nombre_p__icontains=form['nombre_p'].value()
+# 									)
+# 		context = {
+# 		"form": form,
+# 		"queryset": queryset,
+# 	}
+# 	return render(request, "principal/lista_producto.html", context)
 	
 
 @login_required

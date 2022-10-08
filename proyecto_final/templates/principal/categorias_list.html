@@ -1,32 +1,30 @@
 {% extends 'principal/base.html' %}
 {%block body_block%}
 <div class="container-fluid">
-    <h1>Lista de credito</h1>
-    <a href="{% url 'crear_credito' %}" class="btn btn-outline-primary mb-3 mt-5">
-        <i class="fas fa-plus"></i>&nbsp;&nbsp; credito
+    <h1>Lista de Categorias</h1>
+    <a href="{% url 'crear_categorias' %}" class="btn btn-outline-primary mb-3 mt-5">
+        <i class="fas fa-plus"></i>&nbsp;&nbsp; Categoria
     </a>
-    <table class="table table-bordered">
+    <table class="table table-bordered text-center">
         <thead class = "table-primary">
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>credito</th>
                 <th colspan ="2"> Opciones</th>
             </tr>
         </thead>
         <tbody>
-            {% for credito in object_list%}
+            {% for categorias in object_list%}
             <tr>
-                <td> {{credito.id}} <br></td>
-                <td>{{credito.cliente}}</a></td>
-                <td>Q {{credito.total}}</td>
+                <td> {{categorias.id}} <br></td>
+                <td>{{categorias.nombre}}</a></td>
                 <td>
-                    <a href="{% url 'modificar_credito' pk=credito.id %}" class = "btn btn-primary btn-sm">
+                    <a href="{% url 'modificar_categorias' pk=categorias.id %}" class = "btn btn-primary btn-sm">
                         <i class= "fas fa-pen"></i>
                     </a>
                 </td>        
                 <td>
-                    <a href="{% url 'borrar_credito' pk=credito.id %}" class = "btn btn-danger btn-sm">
+                    <a href="{% url 'borrar_categorias' pk=categorias.id %}" class = "btn btn-danger btn-sm">
                         <i class= "fas fa-trash-alt"></i>
                     </a>
                 </td> 
