@@ -64,7 +64,6 @@ class Solicitud(models.Model):
 
 class Credito(models.Model):
     cliente = models.ForeignKey(Cliente,on_delete=models.PROTECT)
-    soli = models.ForeignKey(Solicitud, on_delete=models.PROTECT)
     total = models.IntegerField()
     
     def credito_actual(self):
