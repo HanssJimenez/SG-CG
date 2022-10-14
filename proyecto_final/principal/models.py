@@ -59,13 +59,17 @@ class Solicitud(models.Model):
     def __str__(self):
         return(self).cliente.nombre
     
-
+    def get_pago(self):
+        return(self).pago
 
 class Credito(models.Model):
     cliente = models.ForeignKey(Cliente,on_delete=models.PROTECT)
-    
+    soli = models.ForeignKey(Solicitud, on_delete=models.PROTECT)
     total = models.IntegerField()
     
+    def credito_actual(self):
+        return self.total - self.soli.pago
+        
     def __str__(self):
         return(self).cliente.nombre
 
