@@ -31,12 +31,7 @@ class Cliente(models.Model):
     def __str__(self):
         return self.nombre+" "+self.apellido
 
-class Credito(models.Model):
-    cliente = models.ForeignKey(Cliente,on_delete=models.CASCADE)
-    
-    total = models.IntegerField()
-    def __str__(self):
-        return(self).cliente.nombre
+
 
 class Producto(models.Model):
     idproducto = models.IntegerField(unique=True)
@@ -47,15 +42,15 @@ class Producto(models.Model):
         return(self).nombre
 
 class Existencia(models.Model):
-    nombre = models.ForeignKey(Producto,on_delete=models.CASCADE)
+    nombre = models.ForeignKey(Producto,on_delete=models.PROTECT)
     cantidad = models.IntegerField()
 
     def __str__(self):
         return(self).nombre.nombre
 
 class Solicitud(models.Model):
-    cliente = models.ForeignKey(Cliente,on_delete=models.CASCADE)
-    colaborador = models.ForeignKey(Colaborador,on_delete=models.CASCADE)
+    cliente = models.ForeignKey(Cliente,on_delete=models.PROTECT, verbose_name='Clientes existentes')
+    colaborador = models.ForeignKey(Colaborador,on_delete=models.PROTECT)
     descripcion = models.CharField(max_length=250, blank=True , null=True)
     fecha = models.DateField(blank=True, null=True)
     pago = models.PositiveIntegerField()
@@ -63,8 +58,16 @@ class Solicitud(models.Model):
 
     def __str__(self):
         return(self).cliente.nombre
+    
+    def get_pago(self):
+        return(self).pago
 
-
+class Credito(models.Model):
+    cliente = models.ForeignKey(Cliente,on_delete=models.PROTECT)
+    total = models.IntegerField()
+    
+    def __str__(self):
+        return(self).cliente.nombre
 
 class Categorias(models.Model):
     nombre = models.CharField(max_length=50,blank=False, null=False)

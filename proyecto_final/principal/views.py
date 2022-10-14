@@ -1,5 +1,8 @@
+from urllib import request
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.views import redirect_to_login
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -13,129 +16,167 @@ from principal.models import *
 
 # Create your views here.
 
+class AccesoUsuarioColaborador(PermissionRequiredMixin):
+    def dispatch(self, request, *args, **kwargs):
+        if(not self.request.user.is_authenticated):
+            return redirect_to_login(self.request.get_full_path(),
+                                    self.get_login_url(),self.get_redirect_field_name())
+        if not self.has_permission():
+            return redirect('/no_posee_permisos/')
+        return super(AccesoUsuarioColaborador, self).dispatch(request, *args, **kwargs)
+
 # Vistas inicio
 def index(request):
     return render(request, 'principal/index.html')
 
+def no_permisos(request):
+    return render(request, 'principal/no_posee_permisos.html')
+
 # ClassBaseViews Colaborador Crear/Modificar/Eliminar/Leer
 #Crear
-class CrearColaborador(CreateView):
+
+class CrearColaborador(AccesoUsuarioColaborador,CreateView):
+    
+    permission_required = ('principal.add_colaborador')
     model = Colaborador
     fields = '__all__'
     success_url = reverse_lazy('lista_colaborador')
 #Modificar
-class ModificarColaborador(UpdateView):
+class ModificarColaborador(AccesoUsuarioColaborador,UpdateView):
+    permission_required = ('principal.change_colaborador')
     model = Colaborador
     fields = '__all__'
     success_url = reverse_lazy('lista_colaborador')
 #Eliminar
-class EliminarColaborador(DeleteView):
+class EliminarColaborador(AccesoUsuarioColaborador,DeleteView):
+    permission_required = ('principal.delete_colaborador')
     queryset = Colaborador.objects.all()
     success_url = reverse_lazy('lista_colaborador')
 #Leer
-class LeerColaborador(ListView):
+class LeerColaborador(AccesoUsuarioColaborador,ListView):
+    permission_required = ('principal.view_colaborador')
     model = Colaborador
     queryset = Colaborador.objects.all()
 
 # ClassBaseViews Credito Crear/Modificar/Eliminar/Leer
 #Crear
-class CrearCredito(CreateView):
+class CrearCredito(AccesoUsuarioColaborador,CreateView):
+    permission_required = ('principal.add_credito')
     model = Credito
     fields = '__all__'
     success_url = reverse_lazy('lista_credito')
 #Modificar
-class ModificarCredito(UpdateView):
+class ModificarCredito(AccesoUsuarioColaborador,UpdateView):
+    permission_required = ('principal.change_credito')
     model = Credito
     fields = '__all__'
     success_url = reverse_lazy('lista_credito')
 #Eliminar
-class EliminarCredito(DeleteView):
+class EliminarCredito(AccesoUsuarioColaborador,DeleteView):
+    permission_required = ('principal.delete_credito')
     queryset = Credito.objects.all()
     success_url = reverse_lazy('lista_credito')
 #Leer
-class LeerCredito(ListView):
+class LeerCredito(AccesoUsuarioColaborador,ListView):
+    permission_required = ('principal.view_credito')
     model = Credito
     queryset = Credito.objects.all()
 
 # ClassBaseViews Clientes Crear/Modificar/Eliminar/Leer
 #Crear
-class CrearCliente(CreateView):
+class CrearCliente(AccesoUsuarioColaborador,CreateView):
+    permission_required = ('principal.add_cliente')
     model = Cliente
     fields = '__all__'
     success_url = reverse_lazy('lista_cliente')
 #Modificar
-class ModificarCliente(UpdateView):
+class ModificarCliente(AccesoUsuarioColaborador,UpdateView):
+    permission_required = ('principal.change_cliente')
     model = Cliente
     fields = '__all__'
     success_url = reverse_lazy('lista_cliente')
 
 #Eliminar
-class EliminarCliente(DeleteView):
+class EliminarCliente(AccesoUsuarioColaborador,DeleteView):
+    permission_required = ('principal.delete_cliente')
     queryset = Cliente.objects.all()
     success_url = reverse_lazy('lista_cliente')
     
 #Leer
-class LeerCliente(ListView):
+class LeerCliente(AccesoUsuarioColaborador,ListView):
+    permission_required = ('principal.view_cliente')
     model = Cliente
     queryset = Cliente.objects.all()
 
 # ClassBaseViews Inventario Crear/Modificar/Eliminar/Leer
 #Crear
-class CrearInventario(CreateView):
+class CrearInventario(AccesoUsuarioColaborador,CreateView):
+    permission_required = ('principal.add_inventario')
     model = Inventario
     fields = ('categoria', 'nombre_p', 'cantidad')
     success_url = reverse_lazy('lista_inventario')
 #Modificar
-class ModificarInventario(UpdateView):
+class ModificarInventario(AccesoUsuarioColaborador,UpdateView):
+    permission_required = ('principal.change_inventario')
     model = Inventario
     fields = ('categoria', 'nombre_p', 'cantidad')
     success_url = reverse_lazy('lista_inventario')
 #Eliminar
-class EliminarInventario(DeleteView):
+class EliminarInventario(AccesoUsuarioColaborador,DeleteView):
+    permission_required = ('principal.delete_inventario')
     queryset = Inventario.objects.all()
     success_url = reverse_lazy('lista_inventario')
 #Leer
-class LeerInventario(ListView):
+class LeerInventario(AccesoUsuarioColaborador,ListView):
+    permission_required = ('principal.view_inventario')
     model = Inventario
     queryset = Inventario.objects.all()
 
 # ClassBaseViews Inventario Crear/Modificar/Eliminar/Leer
 #Crear
-class CrearCategorias(CreateView):
+class CrearCategorias(AccesoUsuarioColaborador,CreateView):
+    permission_required = ('principal.add_categorias')
     model = Categorias
     fields = '__all__'
     success_url = reverse_lazy('lista_categorias')
 #Modificar
-class ModificarCategorias(UpdateView):
+class ModificarCategorias(AccesoUsuarioColaborador,UpdateView):
+    permission_required = ('principal.change_categorias')
     model = Categorias
     fields = '__all__'
     success_url = reverse_lazy('lista_categorias')
 #Eliminar
-class EliminarCategorias(DeleteView):
+class EliminarCategorias(AccesoUsuarioColaborador,DeleteView):
+    permission_required = ('principal.delete_categorias')
     queryset = Categorias.objects.all()
     success_url = reverse_lazy('lista_categorias')
 #Leer
-class LeerCategorias(ListView):
+class LeerCategorias(AccesoUsuarioColaborador,ListView):
+    permission_required = ('principal.view_categorias')
     model = Categorias
     queryset = Categorias.objects.all()
 
 # ClassBaseViews Solicitud Crear/Modificar/Eliminar/Leer
 #Crear
-class CrearSolicitud(CreateView):
+class CrearSolicitud(AccesoUsuarioColaborador,CreateView):
+    permission_required = ('principal.add_solicitud')
     model = Solicitud
     fields = '__all__'
     success_url = reverse_lazy('lista_solicitud')
 #Modificar
-class ModificarSolicitud(UpdateView):
+class ModificarSolicitud(AccesoUsuarioColaborador,UpdateView):
+    permission_required = ('principal.change_solicitud')
     model = Solicitud
     fields = '__all__'
     success_url = reverse_lazy('lista_solicitud')
 #Eliminar
-class EliminarSolicitud(DeleteView):
+class EliminarSolicitud(AccesoUsuarioColaborador,DeleteView):
+    permission_required = ('principal.delete_solicitud')
     queryset = Solicitud.objects.all()
     success_url = reverse_lazy('lista_solicitud')
 #Leer
-class LeerSolicitud(ListView):
+class LeerSolicitud(AccesoUsuarioColaborador,ListView):
+    permission_required = ('principal.view_solicitud')
     model = Solicitud
     queryset = Solicitud.objects.all()
 

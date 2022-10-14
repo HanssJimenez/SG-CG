@@ -19,10 +19,12 @@ from principal import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^no_posee_permisos', views.no_permisos, name='no_posee_permisos'),
     url(r'^admin/', admin.site.urls),
     url(r'^principal/', include('principal.urls', namespace='principal')),
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^special/', views.special,name='special'),
+    
     #urls cliente
     url(r'^lista_cliente/', views.LeerCliente.as_view(),name='lista_cliente'),
     url(r'^crear_cliente/', views.CrearCliente.as_view(),name='crear_cliente'),

@@ -61,10 +61,7 @@ class ColaboradorForm(forms.ModelForm):
         model = Colaborador
         fields = "__all__"
         
-    def __init__(self,*args,**kwargs):
-        super().__init__(*args,**kwargs)
-        self.fields['numtel'].label = "Número de telefono"
-        self.fields['fnaci'].label = "Fecha de nacimiento" 
+
 #Form de Credito
 class CreditoForm(forms.ModelForm):
     class Meta:
