@@ -57,6 +57,7 @@ class LeerColaborador(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_colaborador')
     model = Colaborador
     queryset = Colaborador.objects.all()
+    paginate_by = 5
     def get_queryset(self):
         q = self.request.GET.get('q')
         if q:
@@ -68,6 +69,8 @@ class LeerColaborador(AccesoUsuarioColaborador,ListView):
         else:
             object_list = self.model.objects.all()
         return object_list
+    
+    
 # ClassBaseViews Credito Crear/Modificar/Eliminar/Leer
 #Crear
 class CrearCredito(AccesoUsuarioColaborador,CreateView):
@@ -91,7 +94,16 @@ class LeerCredito(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_credito')
     model = Credito
     queryset = Credito.objects.all()
-
+    paginate_by = 10
+    def get_queryset(self):
+        q = self.request.GET.get('q')
+        if q:
+            object_list = self.model.objects.filter(
+                Q(cliente__nombre__icontains=q) | Q(total__icontains=q) 
+            )
+        else:
+            object_list = self.model.objects.all()
+        return object_list
 # ClassBaseViews Clientes Crear/Modificar/Eliminar/Leer
 #Crear
 class CrearCliente(AccesoUsuarioColaborador,CreateView):
@@ -117,6 +129,7 @@ class LeerCliente(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_cliente')
     model = Cliente
     queryset = Cliente.objects.all()
+    paginate_by = 10
     def get_queryset(self):
         q = self.request.GET.get('q')
         if q:
@@ -150,6 +163,7 @@ class LeerInventario(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_inventario')
     model = Inventario
     queryset = Inventario.objects.all()
+    paginate_by = 10
     def get_queryset(self):
         q = self.request.GET.get('q')
         if q:
@@ -183,6 +197,7 @@ class LeerCategorias(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_categorias')
     model = Categorias
     queryset = Categorias.objects.all()
+    paginate_by = 10
     def get_queryset(self):
         q = self.request.GET.get('q')
         if q:
@@ -216,6 +231,7 @@ class LeerSolicitud(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_solicitud')
     model = Solicitud
     queryset = Solicitud.objects.all()
+    paginate_by = 10
     def get_queryset(self):
         q = self.request.GET.get('q')
         if q:
