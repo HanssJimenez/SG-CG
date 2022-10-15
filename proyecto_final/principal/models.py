@@ -17,7 +17,7 @@ class Colaborador(models.Model):
     apellido = models.CharField(max_length=100)
     numero_de_telefono = models.CharField(max_length=100)
     puesto = models.CharField(max_length=100)
-    fecha_de_nacimiento = models.DateField()
+    fecha_de_nacimiento = models.DateField(auto_now=False, auto_now_add=False)
     sueldo = models.PositiveIntegerField()
     def __str__(self):
         return self.nombre+" "+self.apellido

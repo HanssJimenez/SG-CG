@@ -1,3 +1,4 @@
+from cProfile import label
 from django import forms
 from django.contrib.auth.models import User
 from principal.models import *
@@ -57,10 +58,23 @@ class ClienteForm(forms.ModelForm):
 
 #Form de colaborador
 class ColaboradorForm(forms.ModelForm):
+    
     class Meta:
         model = Colaborador
         fields = "__all__"
-        
+        labels = {
+            'DPI':'',
+            'nombre':'',
+            'apellido':'',
+            'numero_de_telefono':'',
+            'puesto':'',
+            'fecha_de_nacimiento':'',
+            'sueldo':''
+        }
+        widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder':'Nombre'}),
+            'fecha_de_nacimiento': forms.DateInput()
+        }
 
 #Form de Credito
 class CreditoForm(forms.ModelForm):
@@ -77,14 +91,7 @@ class CategoriasForm(forms.ModelForm):
     class Meta:
         model = Categorias
         fields = "__all__"
-    
-        labels = {
-            'nombre':''
-        }
-        widgets ={
-            'name': forms.TextInput(attrs={'placeholder':'Ingrese nombre'})
-        }
-        
+
 
 #Form de Venta
 class SolicitudForm(forms.ModelForm):
