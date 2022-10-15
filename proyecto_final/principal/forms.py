@@ -77,6 +77,14 @@ class CategoriasForm(forms.ModelForm):
     class Meta:
         model = Categorias
         fields = "__all__"
+    
+        labels = {
+            'nombre':''
+        }
+        widgets ={
+            'name': forms.TextInput(attrs={'placeholder':'Ingrese nombre'})
+        }
+        
 
 #Form de Venta
 class SolicitudForm(forms.ModelForm):

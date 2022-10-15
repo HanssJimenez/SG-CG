@@ -1,4 +1,5 @@
 from urllib import request
+from django.db.models import Q # Required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -36,7 +37,6 @@ def no_permisos(request):
 #Crear
 
 class CrearColaborador(AccesoUsuarioColaborador,CreateView):
-    
     permission_required = ('principal.add_colaborador')
     model = Colaborador
     fields = '__all__'
@@ -57,7 +57,17 @@ class LeerColaborador(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_colaborador')
     model = Colaborador
     queryset = Colaborador.objects.all()
-
+    def get_queryset(self):
+        q = self.request.GET.get('q')
+        if q:
+            object_list = self.model.objects.filter(
+                Q(DPI__icontains=q) | Q(nombre__icontains=q) | Q(apellido__icontains=q)
+                | Q(numero_de_telefono__icontains=q) | Q(puesto__icontains=q) | Q(fecha_de_nacimiento__icontains=q)
+                | Q(sueldo__icontains=q)
+            )
+        else:
+            object_list = self.model.objects.all()
+        return object_list
 # ClassBaseViews Credito Crear/Modificar/Eliminar/Leer
 #Crear
 class CrearCredito(AccesoUsuarioColaborador,CreateView):
@@ -107,6 +117,15 @@ class LeerCliente(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_cliente')
     model = Cliente
     queryset = Cliente.objects.all()
+    def get_queryset(self):
+        q = self.request.GET.get('q')
+        if q:
+            object_list = self.model.objects.filter(
+                Q(nombre__icontains=q) | Q(apellido__icontains=q) | Q(numtel__icontains=q) 
+            )
+        else:
+            object_list = self.model.objects.all()
+        return object_list
 
 # ClassBaseViews Inventario Crear/Modificar/Eliminar/Leer
 #Crear
@@ -131,6 +150,15 @@ class LeerInventario(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_inventario')
     model = Inventario
     queryset = Inventario.objects.all()
+    def get_queryset(self):
+        q = self.request.GET.get('q')
+        if q:
+            object_list = self.model.objects.filter(
+                Q(nombre_p__icontains=q) | Q(categoria__nombre__icontains=q) | Q(cantidad__icontains=q) 
+            )
+        else:
+            object_list = self.model.objects.all()
+        return object_list
 
 # ClassBaseViews Inventario Crear/Modificar/Eliminar/Leer
 #Crear
@@ -155,6 +183,15 @@ class LeerCategorias(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_categorias')
     model = Categorias
     queryset = Categorias.objects.all()
+    def get_queryset(self):
+        q = self.request.GET.get('q')
+        if q:
+            object_list = self.model.objects.filter(
+                Q(nombre__icontains=q) 
+            )
+        else:
+            object_list = self.model.objects.all()
+        return object_list
 
 # ClassBaseViews Solicitud Crear/Modificar/Eliminar/Leer
 #Crear
@@ -179,6 +216,16 @@ class LeerSolicitud(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_solicitud')
     model = Solicitud
     queryset = Solicitud.objects.all()
+    def get_queryset(self):
+        q = self.request.GET.get('q')
+        if q:
+            object_list = self.model.objects.filter(
+                Q(cliente__nombre__icontains=q) | Q(colaborador__nombre__icontains=q) | Q(descripcion__icontains=q) 
+                | Q(fecha__icontains=q) | Q(pago__icontains=q)
+            )
+        else:
+            object_list = self.model.objects.all()
+        return object_list
 
 # Views de inventario / agregar / actualizar/ eliminar
 # @login_required

@@ -31,8 +31,6 @@ class Cliente(models.Model):
     def __str__(self):
         return self.nombre+" "+self.apellido
 
-
-
 class Producto(models.Model):
     idproducto = models.IntegerField(unique=True)
     nombre = models.CharField(max_length=100, unique=True)
@@ -65,10 +63,6 @@ class Solicitud(models.Model):
 class Credito(models.Model):
     cliente = models.ForeignKey(Cliente,on_delete=models.PROTECT)
     total = models.IntegerField()
-    
-    def credito_actual(self):
-        return self.total - self.soli.pago
-        
     def __str__(self):
         return(self).cliente.nombre
 

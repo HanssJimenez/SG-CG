@@ -19,6 +19,13 @@
     <a href="{% url 'crear_cliente' %}" class="btn btn-outline-primary mb-3 mt-5">
         <i class="fas fa-plus"></i>&nbsp;&nbsp; cliente
     </a>
+    <form>
+        <div class="input-group mb-3">
+            <input name="q" type="text" class="form-control input-sm" placeholder="Barra de busqueda" value="{{ request.GET.q }}">
+            <button class="btn btn-secondary" title="Search"><i class="fas fa-search"></i></button>
+            <a href="{% url 'lista_cliente' %}" class="btn btn-dark" style="margin-left: 2px;" title="Refrsh"><i class="fas fa-sync-alt"></i></a>
+        </div>
+    </form>
     <table class="table table-bordered text-center">
         <thead class = "table-primary">
             <tr>
