@@ -55,7 +55,7 @@ class Solicitud(models.Model):
     colaborador = models.ForeignKey(Colaborador,on_delete=models.PROTECT)
     descripcion = models.CharField(max_length=250, blank=True , null=True)
     fecha = models.DateField(blank=True, null=True)
-    pago = models.PositiveIntegerField()
+    monto = models.PositiveIntegerField(blank = True, null = True)
     credito = models.BooleanField()
 
     def __str__(self):
@@ -63,7 +63,7 @@ class Solicitud(models.Model):
     
 
 class Credito(models.Model):
-    cliente = models.ForeignKey(Cliente,on_delete=models.PROTECT)
+    cliente = models.ForeignKey(Cliente,on_delete=models.PROTECT) 
     total = models.IntegerField()
     def __str__(self):
         return(self).cliente.nombre
@@ -91,6 +91,8 @@ class Inventario(models.Model):
 
     def __str__(self):
         return self.nombre_p
+
+
 ESTADOS = (
     ('Pendiente', 'Pendiente'),
     ('Procesando', 'Procesando'),
