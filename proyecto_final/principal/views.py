@@ -11,7 +11,7 @@ from django.template import RequestContext
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
-from principal.forms import (UserForm, UserProfileInfoForm)
+from principal.forms import (ClienteForm, ColaboradorForm, SolicitudForm, UserForm, UserProfileInfoForm)
 from principal.models import *
 
 
@@ -39,13 +39,15 @@ def no_permisos(request):
 class CrearColaborador(AccesoUsuarioColaborador,CreateView):
     permission_required = ('principal.add_colaborador')
     model = Colaborador
-    fields = '__all__'
+    form_class = ColaboradorForm
+    # fields = '__all__'
     success_url = reverse_lazy('lista_colaborador')
 #Modificar
 class ModificarColaborador(AccesoUsuarioColaborador,UpdateView):
     permission_required = ('principal.change_colaborador')
     model = Colaborador
-    fields = '__all__'
+    form_class = ColaboradorForm
+    # fields = '__all__'
     success_url = reverse_lazy('lista_colaborador')
 #Eliminar
 class EliminarColaborador(AccesoUsuarioColaborador,DeleteView):
@@ -109,13 +111,17 @@ class LeerCredito(AccesoUsuarioColaborador,ListView):
 class CrearCliente(AccesoUsuarioColaborador,CreateView):
     permission_required = ('principal.add_cliente')
     model = Cliente
-    fields = '__all__'
+    # fields = '__all__'
+    form_class = ClienteForm
     success_url = reverse_lazy('lista_cliente')
+    
+
 #Modificar
 class ModificarCliente(AccesoUsuarioColaborador,UpdateView):
     permission_required = ('principal.change_cliente')
     model = Cliente
-    fields = '__all__'
+    # fields = '__all__'
+    form_class = ClienteForm
     success_url = reverse_lazy('lista_cliente')
 
 #Eliminar
@@ -213,7 +219,8 @@ class LeerCategorias(AccesoUsuarioColaborador,ListView):
 class CrearSolicitud(AccesoUsuarioColaborador,CreateView):
     permission_required = ('principal.add_solicitud')
     model = Solicitud
-    fields = '__all__'
+    form_class = SolicitudForm
+    # fields = '__all__'
     success_url = reverse_lazy('lista_solicitud')
 #Modificar
 class ModificarSolicitud(AccesoUsuarioColaborador,UpdateView):

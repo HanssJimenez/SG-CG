@@ -15,10 +15,14 @@ class Colaborador(models.Model):
     DPI = models.CharField(max_length=15, unique=True)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
-    numero_de_telefono = models.CharField(max_length=100)
+    numero_de_telefono = models.CharField(max_length=100, verbose_name="Número de teléfono")
     puesto = models.CharField(max_length=100)
     fecha_de_nacimiento = models.DateField(auto_now=False, auto_now_add=False)
     sueldo = models.PositiveIntegerField()
+    def clean(self):
+        self.nombre = self.nombre.capitalize()
+        self.apellido = self.apellido.capitalize()
+        self.puesto = self.puesto.capitalize()
     def __str__(self):
         return self.nombre+" "+self.apellido
 
@@ -26,7 +30,7 @@ class Colaborador(models.Model):
 class Cliente(models.Model):
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
-    numtel = models.CharField(max_length=100)
+    numtel = models.CharField(max_length=9, verbose_name="Número de teléfono")
     
     def __str__(self):
         return self.nombre+" "+self.apellido
@@ -57,8 +61,6 @@ class Solicitud(models.Model):
     def __str__(self):
         return(self).cliente.nombre
     
-    def get_pago(self):
-        return(self).pago
 
 class Credito(models.Model):
     cliente = models.ForeignKey(Cliente,on_delete=models.PROTECT)
@@ -89,5 +91,9 @@ class Inventario(models.Model):
 
     def __str__(self):
         return self.nombre_p
-
+ESTADOS = (
+    ('Pendiente', 'Pendiente'),
+    ('Procesando', 'Procesando'),
+    ('Entregado', 'Entregado')
+)
 
