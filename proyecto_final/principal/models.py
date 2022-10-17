@@ -64,7 +64,6 @@ class Solicitud(models.Model):
 
 class Credito(models.Model):
     solicitud = models.ForeignKey(Cliente,on_delete=models.PROTECT)
-    monto = 
     total = models.IntegerField()
     def __str__(self):
         return(self).solicitud.nombre

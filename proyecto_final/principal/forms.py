@@ -26,6 +26,7 @@ class UserForm(forms.ModelForm):
     )
     class Meta():
         model = User
+        ordering = ['-pk']
         fields = ('username', 'email', 'password')
     def clean(self):
         cleaned_data = super().clean()
@@ -38,6 +39,7 @@ class UserProfileInfoForm(forms.ModelForm):
 
     class Meta():
         model = UserProfileInfo
+        ordering = ['-pk']
         fields = ('portfolio_site','profile_pic')
 
 class ClienteForm(forms.ModelForm):
@@ -56,6 +58,7 @@ class ClienteForm(forms.ModelForm):
     
     class Meta:
         model = Cliente
+        ordering = ['-pk']
         fields = "__all__"
         
         widgets={
@@ -150,16 +153,19 @@ class ColaboradorForm(forms.ModelForm):
 class CreditoForm(forms.ModelForm):
     class Meta:
         model = Credito
+        ordering = ['-pk']
         fields = "__all__"
 #Form de Inventario
 class InventarioForm(forms.ModelForm):
     class Meta:
         model = Inventario
+        ordering = ['-pk']
         fields = ('categoria', 'nombre_p', 'cantidad')
 #Form de Categoria
 class CategoriasForm(forms.ModelForm):
     class Meta:
         model = Categorias
+        ordering = ['-pk']
         fields = "__all__"
 
 
@@ -168,6 +174,7 @@ class SolicitudForm(forms.ModelForm):
     
     class Meta:
         model = Solicitud
+        ordering = ['-pk']
         fields = "__all__"
         widgets = {
             'fecha':forms.DateInput(
