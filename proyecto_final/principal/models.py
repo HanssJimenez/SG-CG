@@ -63,10 +63,14 @@ class Solicitud(models.Model):
     
 
 class Credito(models.Model):
-    cliente = models.ForeignKey(Cliente,on_delete=models.PROTECT) 
+    solicitud = models.ForeignKey(Cliente,on_delete=models.PROTECT)
+    monto = 
     total = models.IntegerField()
     def __str__(self):
-        return(self).cliente.nombre
+        return(self).solicitud.nombre
+    
+    def monto(self):
+        return self.solicitud.nombre
 
 class Categorias(models.Model):
     nombre = models.CharField(max_length=50,blank=False, null=False)
