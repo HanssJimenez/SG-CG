@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.urls import path
 from django.contrib import admin
 from principal import views
 
@@ -25,6 +26,7 @@ urlpatterns = [
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^special/', views.special,name='special'),
     
+    # url(r'^$', views.VistaInicio.as_view(),name='inicio'),
     #urls cliente
     url(r'^lista_cliente/', views.LeerCliente.as_view(),name='lista_cliente'),
     url(r'^crear_cliente/', views.CrearCliente.as_view(),name='crear_cliente'),
@@ -55,11 +57,31 @@ urlpatterns = [
     url(r'^crear_solicitud/', views.CrearSolicitud.as_view(),name='crear_solicitud'),
     url(r'^modificar_solicitud/(?P<pk>\d+)/$', views.ModificarSolicitud.as_view(), name = 'modificar_solicitud'),
     url(r'^borrar_solicitud/(?P<pk>\d+)/$', views.EliminarSolicitud.as_view(), name = 'borrar_solicitud'),
+    #urls proveedor
+    url(r'^lista_proveedor/', views.LeerProveedor.as_view(),name='lista_proveedor'),
+    url(r'^crear_proveedor/', views.CrearProveedor.as_view(),name='crear_proveedor'),
+    url(r'^modificar_proveedor/(?P<pk>\d+)/$', views.ModificarProveedor.as_view(), name = 'modificar_proveedor'),
+    url(r'^borrar_proveedor/(?P<pk>\d+)/$', views.EliminarProveedor.as_view(), name = 'borrar_proveedor'),
+    path('proveedor/<nombre>', views.ProveedorVista.as_view(), name = 'proveedor'),
+    #urls compras
+    url(r'^lista_compras/', views.LeerCompra.as_view(),name='lista_compras'),
+    url(r'^crear_compras/new', views.SeleccionarProveedorView.as_view(),name='crear_compras_proveedor'),
+    url(r'^nueva_compra/new/(?P<pk>\d+)/$', views.CrearCompraView.as_view(), name = 'nueva_compra'),
+    url(r'^eliminar_compra/(?P<pk>\d+)/eliminar', views.EliminarCompra.as_view(), name = 'eliminar_compra'),
+    #urls servicios
+    url(r'^lista_servicio/', views.LeerServicio.as_view(),name='lista_servicio'),
+    url(r'^crear_servicio/new', views.CrearServicioVista.as_view(),name='nuevo_servicio'),
+    url(r'^eliminar_servicio/new/(?P<pk>\d+)/$', views.EliminarServicioView.as_view(), name = 'eliminar_servicio'),
+    #path comprobantes
+    path("compra_comprobante/<nocomp>", views.ComprobanteCompraView.as_view(), name="compra_comprobante"),
+    path("comprobante_servicio/<nocomp>", views.ComprobanteServicioView.as_view(), name="comprobante_servicio"),
+    #url resumen
+    url(r'^resumen/', views.VistaInicio.as_view(), name = 'resumen'),
     #urls inventario
     # url(r'^lista_producto/', views.lista_inventario,name='lista_producto'),
     # url(r'^agregar_producto/', views.agregar_producto_inventario,name='agregar_producto'),
     # url(r'^modificar_producto/(?P<pk>\d+)/$', views.modificar_producto_inventario, name = 'modificar_producto'),
-    # url(r'^borrar_producto/(?P<pk>\d+)/$', views.borrar_producto_inventario, name = 'borrar_producto'),
+    # url(r'^borrar_producto/(?P<pk>\d+)/$', views.borrar_producto_inventario, name = 'borrar_producto')   VistaInicio,
 ]
 
 handler404 = 'principal.views.error_404_view'

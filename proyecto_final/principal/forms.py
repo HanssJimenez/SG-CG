@@ -1,5 +1,6 @@
 from cProfile import label
 from django import forms
+from django.forms import formset_factory
 from django.contrib.auth.models import User
 from principal.models import *
 from django.core.validators import RegexValidator
@@ -157,10 +158,11 @@ class CreditoForm(forms.ModelForm):
         fields = "__all__"
 #Form de Inventario
 class InventarioForm(forms.ModelForm):
+    
     class Meta:
         model = Inventario
         ordering = ['-pk']
-        fields = ('categoria', 'nombre_p', 'cantidad')
+        fields = ('categoria', 'nombre', 'cantidad' , 'medida')
 #Form de Categoria
 class CategoriasForm(forms.ModelForm):
     class Meta:
@@ -171,7 +173,10 @@ class CategoriasForm(forms.ModelForm):
 
 #Form de Venta
 class SolicitudForm(forms.ModelForm):
-    
+    def __init__(self, *args, **kwargs):                                                        # used to set css classes to the various fields
+        super().__init__(*args, **kwargs)
+        self.fields['nombre'].widget.attrs.update({'class': 'textinput form-control'})
+        self.fields['cantidad'].widget.attrs.update({'class': 'textinput form-control', 'min': '0'})
     class Meta:
         model = Solicitud
         ordering = ['-pk']
@@ -192,3 +197,103 @@ class SolicitudForm(forms.ModelForm):
         if fecha > datetime.date.today() or fecha < datetime.date.today():
             raise forms.ValidationError('La fecha debe ser de hoy')
         return fecha
+    
+
+# form used to select a supplier
+class SeleccionarProveedor(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['proveedor'].queryset = Proveedor.objects.filter(borrado=False)
+        self.fields['proveedor'].widget.attrs.update({'class': 'textinput form-control'})
+    class Meta:
+        model = ComprobanteCompra
+        fields = ['proveedor']
+
+# form used to render a single stock item form
+class UnidadCompraForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['inventario'].queryset = Inventario.objects.filter(borrado=False)
+        self.fields['inventario'].widget.attrs.update({'class': 'textinput form-control setprice stock', 'required': 'true'})
+        self.fields['cantidad'].widget.attrs.update({'class': 'textinput form-control setprice quantity', 'min': '0', 'required': 'true'})
+        self.fields['preciouni'].widget.attrs.update({'class': 'textinput form-control setprice price', 'min': '0', 'required': 'true'})
+    class Meta:
+        model = UnidadCompra
+        fields = ['inventario', 'cantidad', 'preciouni']
+
+# formset used to render multiple 'PurchaseItemForm'
+UnidadCompraFormset = formset_factory(UnidadCompraForm, extra=1)
+
+# form used to accept the other details for purchase bill
+class DetalleCompraForm(forms.ModelForm):
+    class Meta:
+        model = DetalleComprobanteCompra
+        fields = ['destino','total']
+
+
+# form used for supplier
+class ProveedorForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombre'].widget.attrs.update({'class': 'textinput form-control', 'pattern' : '[a-zA-Z\s]{1,50}', 'title' : 'Alphabets and Spaces only'})
+        self.fields['telefono'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '10', 'pattern' : '[0-9]{10}', 'title' : 'Numbers only'})
+        self.fields['correo'].widget.attrs.update({'class': 'textinput form-control'})
+        self.fields['gestion'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '15', 'pattern' : '[A-Z0-9]{15}', 'title' : 'GSTIN Format Required'})
+    class Meta:
+        model = Proveedor
+        fields = ['nombre', 'telefono', 'direccion', 'correo', 'gestion']
+        widgets = {
+            'direccion' : forms.Textarea(
+                attrs = {
+                    'class' : 'textinput form-control',
+                    'rows'  : '2'
+                }
+            )
+        }
+
+# form used to accept the other details for purchase bill
+class DetalleCompraForm(forms.ModelForm):
+    class Meta:
+        model = DetalleComprobanteCompra
+        fields = ['destino', 'total']        
+
+# form used to get customer details
+class ServicioForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombre'].widget.attrs.update({'class': 'textinput form-control', 'pattern' : '[a-zA-Z\s]{1,50}', 'title' : 'Alphabets and Spaces only', 'required': 'true'})
+        self.fields['telefono'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '8', 'pattern' : '[0-9]{8}', 'title' : 'Numbers only', 'required': 'true'})
+        self.fields['correo'].widget.attrs.update({'class': 'textinput form-control'})
+        self.fields['gestion'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '10', 'pattern' : '[A-Z0-9]{10}', 'title' : 'GSTIN Format Required'})
+    class Meta:
+        model = ComprobanteServicio
+        fields = ['nombre', 'telefono', 'direccion', 'correo', 'gestion']
+        widgets = {
+            'direccion' : forms.Textarea(
+                attrs = {
+                    'class' : 'textinput form-control',
+                    'rows'  : '4'
+                }
+            )
+        }
+
+# form used to render a single stock item form
+class VentaUnidadForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['inventario'].queryset = Inventario.objects.filter(borrado=False)
+        self.fields['inventario'].widget.attrs.update({'class': 'textinput form-control setprice stock', 'required': 'true'})
+        self.fields['cantidad'].widget.attrs.update({'class': 'textinput form-control setprice quantity', 'min': '0', 'required': 'true'})
+        self.fields['preciouni'].widget.attrs.update({'class': 'textinput form-control setprice price', 'min': '0', 'required': 'true'})
+    class Meta:
+        model = UnidadVendida
+        fields = ['inventario', 'cantidad', 'preciouni']
+
+# formset used to render multiple 'VentaUnidadForm'
+VentaUnidadFormset = formset_factory(VentaUnidadForm, extra=1)
+
+# form used to accept the other details for sales bill
+class SaleDetailsForm(forms.ModelForm):
+    class Meta:
+        model = DetalleComprobanteServicio
+        fields = ['tiposervicio','descripcion', 'total']

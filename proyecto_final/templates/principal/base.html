@@ -34,7 +34,7 @@
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="{% url 'admin:index' %}">Administrador</a></li>
                         {% if perms.principal.add_user %}
@@ -61,35 +61,44 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Usuarios
                             </a> {% endcomment %}
-                            <div class="sb-sidenav-menu-heading">Colaboradores</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseColaboradores" aria-expanded="false" aria-controls="collapseColaboradores">
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseResumen" aria-expanded="false" aria-controls="collapseResumen">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Lista
+                                Resumen
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse" id="collapseColaboradores" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <div class="collapse" id="collapseResumen" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{% url 'lista_colaborador' %}">Colaboradores</a>
+                                    <a class="nav-link" href="{% url 'resumen' %}">Ver</a>
                                     {% comment %} <a class="nav-link" href="{% url 'agregar_cliente' %}">Añadir</a>
                                     <a class="nav-link" href="layout-sidenav-light.html">Eliminar</a> {% endcomment %}
                                 </nav>
                             </div>
-                            <div class="sb-sidenav-menu-heading">Clientes</div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseColaboradores" aria-expanded="false" aria-controls="collapseColaboradores">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                Colaboradores
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseColaboradores" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{% url 'lista_colaborador' %}">Lista</a>
+                                    {% comment %} <a class="nav-link" href="{% url 'agregar_cliente' %}">Añadir</a>
+                                    <a class="nav-link" href="layout-sidenav-light.html">Eliminar</a> {% endcomment %}
+                                </nav>
+                            </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseClientes" aria-expanded="false" aria-controls="collapseClientes">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Lista
+                                Cliente
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseClientes" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{% url 'lista_cliente' %}">Clientes</a>
-                                    <a class="nav-link" href="{% url 'lista_credito' %}">Credito</a>
+                                    <a class="nav-link" href="{% url 'lista_cliente' %}">Lista</a>
+                                    {% comment %} <a class="nav-link" href="{% url 'lista_credito' %}">Credito</a> {% endcomment %}
                                 </nav>
                             </div>
-                            <div class="sb-sidenav-menu-heading">Inventario</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseInventario" aria-expanded="false" aria-controls="collapseInventario">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Lista
+                                Inventario
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseInventario" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
@@ -98,21 +107,50 @@
                                     <a class="nav-link" href="{% url 'lista_categorias' %}">categoria</a>
                                 </nav>
                             </div>
-                            <div class="sb-sidenav-menu-heading">Ventas</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVentas" aria-expanded="false" aria-controls="collapseVentas">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Lista
+                                Servicios
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseVentas" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{% url 'lista_solicitud' %}">Ventas</a>
+                                    <a class="nav-link" href="{% url 'lista_solicitud' %}">Lista</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProveedores" aria-expanded="false" aria-controls="collapseVentas">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                Proveedores
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseProveedores" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{% url 'lista_proveedor' %}">Lista</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCompras" aria-expanded="false" aria-controls="collapseVentas">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                Compras
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseCompras" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{% url 'lista_compras' %}">Lista</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseServicios" aria-expanded="false" aria-controls="collapseVentas">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                Servicios
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseServicios" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{% url 'lista_servicio' %}">Lista</a>
                                 </nav>
                             </div>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
+                        <div class="small">Inicio de sesion como:</div>
                         {{user.username}}
                     </div>
                 </nav>
@@ -135,6 +173,9 @@
         <script src={% static 'js/bootstrap.bundle.min.js' %} crossorigin="anonymous"></script>
         <script src={% static 'js/scripts.js' %}></script>
         <script src={% static 'js/jquery-3.6.1.min.js' %}></script>
+        <script src={% static 'bootstrap/jquery-3.3.1.slim.min.js' %}></script>
+        <script src={% static 'bootstrap/popper.min.js' %}></script>
+        <script src={% static 'bootstrap/bootstrap.min.js' %}></script>
         <script src={% static 'js/jquery.mask.min.js' %}></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src={% static 'assets/demo/chart-area-demo.js' %}></script>

@@ -1,44 +1,43 @@
 {% extends 'principal/base.html' %}
 {%block body_block%}
 <div class="container-fluid">
-    <h1>Lista de Inventario</h1>
-    <a href="{% url 'crear_inventario' %}" class="btn btn-outline-primary mb-3 mt-5">
-        <i class="fas fa-plus"></i>&nbsp;&nbsp; Producto
+    <h1>Lista de Proveedores</h1>
+    <a href="{% url 'crear_proveedor' %}" class="btn btn-outline-primary mb-3 mt-5">
+        <i class="fas fa-plus"></i>&nbsp;&nbsp; proveedor
     </a>
     <form>
         <div class="input-group mb-3">
-            <input name="q" type="text" class="form-control input-sm" placeholder="Barra de busqueda"  value="{{ request.GET.q }}">
+            <input name="q" type="text" class="form-control input-sm" placeholder="Barra de busqueda" value="{{ request.GET.q }}">
             <button class="btn btn-secondary" title="Search"><i class="fas fa-search"></i></button>
-            <a href="{% url 'lista_inventario' %}" class="btn btn-dark" style="margin-left: 2px;" title="Refrsh"><i class="fas fa-sync-alt"></i></a>
+            <a href="{% url 'lista_proveedor' %}" class="btn btn-dark" style="margin-left: 2px;" title="Refrsh"><i class="fas fa-sync-alt"></i></a>
         </div>
     </form>
     <table class="table table-bordered text-center">
         <thead class = "table-primary">
             <tr>
                 <th>ID</th>
-                <th>categoria</th>
-                <th>nombre</th>
-                <th>cantidad actual</th>
-                <th>medida</th>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>No. Gestión</th>
+
                 <th colspan ="2"> Opciones</th>
             </tr>
         </thead>
-{%if object_list%}
+{% if object_list %}
         <tbody>
-            {% for inventario in object_list%}
+            {% for proveedor in object_list%}
             <tr>
-                <td> {{inventario.id}} <br></td>
-                <td>{{inventario.categoria}}</a></td>
-                <td>{{inventario.nombre}}</td>
-                <td>{{inventario.cantidad}}</td>
-                <td>{{inventario.medida}}</td>
+                <td> {{proveedor.id}} <br></td>
+                <td><a href="{% url 'proveedor' proveedor.nombre%}">{{proveedor.nombre}}</a></td>
+                <td>{{proveedor.telefono}}</td>
+                <td>{{proveedor.gestion}}</td>
                 <td>
-                    <a href="{% url 'modificar_inventario' pk=inventario.id %}" class = "btn btn-primary btn-sm">
+                    <a href="{% url 'modificar_proveedor' pk=proveedor.id %}" class = "btn btn-primary btn-sm">
                         <i class= "fas fa-pen"></i>
                     </a>
                 </td>        
                 <td>
-                    <a href="{% url 'borrar_inventario' pk=inventario.id %}" class = "btn btn-danger btn-sm">
+                    <a href="{% url 'borrar_proveedor' pk=proveedor.id %}" class = "btn btn-danger btn-sm">
                         <i class= "fas fa-trash-alt"></i>
                     </a>
                 </td> 
@@ -79,5 +78,5 @@
 <br>
     <div style="color: #575757; font-style: bold; font-size: 1.5rem; text-align: center;">No se encontraron registros.</div>
 
-{%endif%}
+{%endif%} 
 {%endblock%}

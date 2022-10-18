@@ -1,0 +1,11 @@
+{% extends 'principal/base.html' %}
+{%block body_block%}
+    <div class="container">
+        <form method="post" action="">
+            {% csrf_token %}
+                <h1>Esta seguro que desea elimiar este proveedor?</h1><br>
+                <input class="btn btn-danger" type="submit" value="Si" />
+                <a href="{% url 'lista_proveedor' %}"><div class="btn btn-primary">Cancelar</div></a>
+        </form>
+    </div>
+{%endblock%}

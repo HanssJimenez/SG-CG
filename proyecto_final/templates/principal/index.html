@@ -1,6 +1,14 @@
-{% extends 'principal/base.html' %}
-{%block body_block%}
-  <div class="jumbotron">
-    <h1>Bienvenido al Sistema Gestor de CyberGames</h1>
-  </div>
-{%endblock%}
+{% extends "principal/base.html" %}
+<!-- Log on to codeastro.com for more projects -->
+{%load static%}
+
+
+
+
+{% block body_block %}
+<div class="container">
+    <div style="color:#464646; font-style: bold; font-size: 3rem; border-bottom: 1px solid #464646;">Bienvenido, {{ request.user.username }}</div>
+
+    <br>
+</div>
+{% endblock %}
