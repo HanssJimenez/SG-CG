@@ -107,7 +107,7 @@
                                     <a class="nav-link" href="{% url 'lista_categorias' %}">categoria</a>
                                 </nav>
                             </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVentas" aria-expanded="false" aria-controls="collapseVentas">
+                            {% comment %} <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVentas" aria-expanded="false" aria-controls="collapseVentas">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Servicios
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -116,7 +116,7 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="{% url 'lista_solicitud' %}">Lista</a>
                                 </nav>
-                            </div>
+                            </div> {% endcomment %}
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProveedores" aria-expanded="false" aria-controls="collapseVentas">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Proveedores

@@ -33,7 +33,7 @@
         <div class="row"><!-- Log on to codeastro.com for more projects -->
 
             <div class="col-md-6">
-                <div style="color: #4e6570; font-style: bold; font-size: 1.3em; border-bottom: 2px solid #4e6570">Servicios Recientes</div><br>
+                <div style="color: #4e6570; font-style: bold; font-size: 1.3em; border-bottom: 2px solid #4e6570">Compras Recientes</div><br>
                 {% for item in sales %}
                     {% if not forloop.first %}
                         <br><div style="border-bottom: 0.5px solid #4e6570"></div><br>
@@ -50,7 +50,7 @@
             </div>
 
             <div class="col-md-6">
-                <div style="color: #4e6570; font-style: bold; font-size: 1.3em; border-bottom: 2px solid #4e6570">Compras Recientes</div><br>
+                <div style="color: #4e6570; font-style: bold; font-size: 1.3em; border-bottom: 2px solid #4e6570">Servicios Recientes</div><br>
                 {% for item in purchases %}
                     {% if not forloop.first %}
                         <br><div style="border-bottom: 0.5px solid #4e6570"></div><br>
@@ -80,7 +80,7 @@
             data: {
                 datasets: [{
                     backgroundColor: '#1a79a5',
-                    label: 'Stock in Inventory',
+                    label: 'Insumos de la empresa',
                     data: {{ data|safe }},
                 }],
                 labels: {{ labels|safe }}

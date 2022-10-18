@@ -38,7 +38,8 @@ def index(request):
 def no_permisos(request):
     return render(request, 'principal/no_posee_permisos.html')
 
-class VistaInicio(View):
+class VistaInicio(AccesoUsuarioColaborador,View):
+    permission_required = ('principal.add_colaborador')
     template_name = "principal/resumen.html"
     def get(self, request):        
         labels = []
@@ -174,7 +175,8 @@ class LeerCliente(AccesoUsuarioColaborador,ListView):
 
 ################################################################################################
 # shows a lists of all suppliers
-class LeerProveedor(ListView):
+class LeerProveedor(AccesoUsuarioColaborador,ListView):
+    permission_required = ('principal.add_colaborador')
     model = Proveedor
     queryset = Proveedor.objects.filter(borrado=False)
     paginate_by = 10
@@ -190,14 +192,16 @@ class LeerProveedor(ListView):
 
 
 # used to add a new supplier
-class CrearProveedor(CreateView):
+class CrearProveedor(AccesoUsuarioColaborador,CreateView):
+    permission_required = ('principal.add_colaborador')
     model = Proveedor
     form_class = ProveedorForm
     success_url = reverse_lazy('lista_proveedor')
     
 
 # used to update a supplier's info
-class ModificarProveedor(SuccessMessageMixin, UpdateView):
+class ModificarProveedor(AccesoUsuarioColaborador,SuccessMessageMixin, UpdateView):
+    permission_required = ('principal.add_colaborador')
     model = Proveedor
     form_class = ProveedorForm
     success_url = 'lista_proveedor'
@@ -206,7 +210,8 @@ class ModificarProveedor(SuccessMessageMixin, UpdateView):
 
 
 # # used to delete a supplier
-class EliminarProveedor(View):
+class EliminarProveedor(AccesoUsuarioColaborador,View):
+    permission_required = ('principal.add_colaborador')
     template_name = 'principal/proveedor_confirm_delete.html'
     success_message = "Supplier has been deleted successfully"
 
@@ -222,7 +227,8 @@ class EliminarProveedor(View):
 
 
 # # used to view a supplier's profile
-class ProveedorVista(View):
+class ProveedorVista(AccesoUsuarioColaborador,View):
+    permission_required = ('principal.add_colaborador')
     def get(self, request, nombre):
         supplierobj = get_object_or_404(Proveedor, nombre=nombre)
         bill_list = ComprobanteCompra.objects.filter(proveedor=supplierobj)
@@ -242,7 +248,8 @@ class ProveedorVista(View):
 ################################################################################################
 
 # shows the list of bills of all purchases 
-class LeerCompra(ListView):
+class LeerCompra(AccesoUsuarioColaborador,ListView):
+    permission_required = ('principal.add_colaborador')
     model = ComprobanteCompra
     template_name = "principal/comprobantecompra_list.html"
     context_object_name = 'bills'
@@ -251,7 +258,8 @@ class LeerCompra(ListView):
 
 
 # used to select the supplier
-class SeleccionarProveedorView(View):
+class SeleccionarProveedorView(AccesoUsuarioColaborador,View):
+    permission_required = ('principal.add_colaborador')
     form_class = SeleccionarProveedor
     template_name = 'principal/select_proveedor.html'
 
@@ -269,7 +277,8 @@ class SeleccionarProveedorView(View):
 
 
 # used to generate a bill object and save items
-class CrearCompraView(View):                                                 
+class CrearCompraView(AccesoUsuarioColaborador,View):                                                 
+    permission_required = ('principal.add_colaborador')
     template_name = 'principal/nueva_compra.html'
 
     def get(self, request, pk):
@@ -315,7 +324,8 @@ class CrearCompraView(View):
 
 
 # used to delete a bill object
-class EliminarCompra(SuccessMessageMixin, DeleteView):
+class EliminarCompra(AccesoUsuarioColaborador,SuccessMessageMixin, DeleteView):
+    permission_required = ('principal.add_colaborador')
     model = ComprobanteCompra
     success_url = '/lista_compras/'
     def delete(self, *args, **kwargs):
@@ -329,6 +339,7 @@ class EliminarCompra(SuccessMessageMixin, DeleteView):
         return super(EliminarCompra, self).delete(*args, **kwargs)
 
 class ComprobanteCompraView(View):
+    permission_required = ('principal.add_colaborador')
     model = ComprobanteCompra
     template_name = "principal/comprobante_compra.html"
     bill_base = "principal/base.html"
@@ -361,7 +372,8 @@ class ComprobanteCompraView(View):
         return render(request, self.template_name, context)
 ################################################################################################
 # shows the list of bills of all sales 
-class LeerServicio(ListView):
+class LeerServicio(AccesoUsuarioColaborador,ListView):
+    permission_required = ('principal.add_colaborador')
     model = ComprobanteServicio
     template_name = "principal/comprobanteservicio_list.html"
     context_object_name = 'bills'
@@ -370,7 +382,8 @@ class LeerServicio(ListView):
 
 
 # used to generate a bill object and save items
-class CrearServicioVista(View):                                                      
+class CrearServicioVista(AccesoUsuarioColaborador,View):    
+    permission_required = ('principal.add_colaborador')                                                  
     template_name = 'principal/nuevo_servicio.html'
 
     def get(self, request):
@@ -419,7 +432,8 @@ class CrearServicioVista(View):
 
 
 # used to delete a bill object
-class EliminarServicioView(SuccessMessageMixin, DeleteView):
+class EliminarServicioView(AccesoUsuarioColaborador,SuccessMessageMixin, DeleteView):
+    permission_required = ('principal.add_colaborador')
     model = ComprobanteServicio
     success_url = '/lista_servicio/'
     
@@ -435,7 +449,8 @@ class EliminarServicioView(SuccessMessageMixin, DeleteView):
         return super(EliminarServicioView, self).delete(*args, **kwargs)
 
 
-class ComprobanteServicioView(View):
+class ComprobanteServicioView(AccesoUsuarioColaborador,View):
+    permission_required = ('principal.add_colaborador')
     model = ComprobanteServicio
     template_name = "principal/comprobante_servicio.html"
     bill_base = "principal/base.html"

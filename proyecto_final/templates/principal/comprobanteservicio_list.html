@@ -2,7 +2,7 @@
 
 
 {% block body_block %}
-    
+<div class="container">
     <div class="row" style="color: #575757; font-style: bold; font-size: 3rem;">
         <div class="col-md-8">Lista Servicios</div>
         <div class="col-md-4">               
@@ -35,7 +35,7 @@
                 <td class=""> {{ servicio.nombre }} <br> <small style="color: #909494">No tel: {{ servicio.telefono }}</small> </td>
                 <td class="align-middle">{% for item in servicio.get_lista_unidades %} {{ item.inventario.nombre }} <br> {% endfor %}</td>
                 <td class="align-middle">{% for item in servicio.get_lista_unidades %} {{ item.cantidad }} <br> {% endfor %}</td>     
-                <td class="align-middle">${{ servicio.get_precio_total }}</td>
+                <td class="align-middle">Q {{ servicio.get_precio_total }}</td>
                 <td class="align-middle">{{ servicio.fechav.date }}</td>
                 <td class="align-middle"> <a href="{% url 'comprobante_servicio' servicio.nocomp %}" class="btn btn-secondary btn-sm">Ver Comprobante</a> <a href="{% url 'eliminar_servicio' servicio.pk %}" class="btn btn-danger btn-sm">Eliminar Comprobante</a> </td>
             </tr>
@@ -75,7 +75,7 @@
 
     <br><br><br><br><br><br><br><br>
     <div style="color: #575757; font-style: bold; font-size: 1.5rem; text-align: center;">No se encontraron Servicios.</div>
-
+</DIV>
 {% endif %}
 
 {% endblock%}

@@ -18,7 +18,7 @@
                     <tbody>
                         
                         <tr style="height: 1px;">
-                            <td> <p style="text-align: center;">COMPROBANTE - COMPRA</p> </td>
+                            <td> <p style="text-align: center;">COMPROBANTE - SERVICIO</p> </td>
                         </tr>
                         
                         <tr style="text-align: center;">
@@ -38,20 +38,20 @@
                                         <td class="border" style="text-align: center; font-weight: bold;" colspan="3">GSTIN NO - {{ bill.proveedor.gestion }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="border" style="width: 50%; font-weight: bold;">&nbsp;NOMBRE DE Cliente/ DIRECCION</td>
+                                        <td class="border" style="width: 50%; font-weight: bold;">&nbsp;NOMBRE DE CLIENTE/ DESCRIPCION DE SERVICIO</td>
                                         <td class="border" style="width: 25%; font-weight: bold;">&nbsp;COMPROBANTE NO</td>
                                         <td class="border" style="width: 25%;">&nbsp;{{ bill.nocomp }}</td>
                                     </tr>
                                     <tr>
                                         <td class="border" style="width: 50%;">&nbsp;{{ bill.nombre }}</td>
-                                        <td class="border" style="width: 25%; font-weight: bold;">&nbsp;FECHA</td>
+                                        <td class="border" style="width: 25%; font-weight: bold;">&nbsp;Fecha solicitud</td>
                                         <td class="border" style="width: 25%;">&nbsp;{{ bill.fechav.date }}</td>
                                     </tr>
                                     <tr><!-- Log on to codeastro.com for more projects -->
                                         <td class="border" style="width: 50%;" rowspan="3">{{ bill.descripcion|linebreaks }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="border" style="width: 25%; font-weight: bold;">&nbsp;DESTINO</td>
+                                        <td class="border" style="width: 25%; font-weight: bold;">&nbsp;Fecha de entrega</td>
                                         <td class="border align-middle" style="width: 25%;"> <input type="text" name="destino" class="text-center" style="border: 0; overflow: hidden;" value="{% if billdetails.destino %}{{ billdetails.destino }}{% endif %}"> </td>
                                     </tr>
                                     <tr>
