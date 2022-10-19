@@ -20,10 +20,10 @@
 
     <div class="row">
         <div class="col-md-6">
-            <a href="{% url 'crear_compras_proveedor' %}" class="btn btn-success btn-lg btn-block btn-huge">Compra de Insumo</a>
+            <a href="{% url 'nuevo_servicio' %}" class="btn btn-success btn-lg btn-block btn-huge">Nuevo Servicio</a>
         </div>
         <div class="col-md-6">
-            <a href="{% url 'nuevo_servicio' %}" class="btn btn-success btn-lg btn-block btn-huge">Nuevo Servicio</a>
+            <a href="{% url 'crear_compras_proveedor' %}" class="btn btn-success btn-lg btn-block btn-huge">Compra de Insumo</a>
         </div>
     </div>
 
@@ -33,7 +33,7 @@
         <div class="row"><!-- Log on to codeastro.com for more projects -->
 
             <div class="col-md-6">
-                <div style="color: #4e6570; font-style: bold; font-size: 1.3em; border-bottom: 2px solid #4e6570">Compras Recientes</div><br>
+                <div style="color: #4e6570; font-style: bold; font-size: 1.3em; border-bottom: 2px solid #4e6570">Servicios Recientes</div><br>
                 {% for item in sales %}
                     {% if not forloop.first %}
                         <br><div style="border-bottom: 0.5px solid #4e6570"></div><br>
@@ -44,13 +44,13 @@
                             Comprado por <b>{{ item.nombre }}</b> <br>
                             <small><i>{{ item.fechav.date }}</i></small>
                         </div>
-                        {% comment %} <div class="col-md-2"> <br> ${{ item.get_precio_total }} <br> <a href="{% url 'sale-bill' item.nocomp %}">View Bill</a> </div> {% endcomment %}
+                        <div class="col-md-2"> <br> Q {{ item.get_precio_total }} <br> <a href="{% url 'compra_comprobante' item.nocomp %}">Ver Comprobante</a> </div>
                     </div>
                 {% endfor %}
             </div>
 
             <div class="col-md-6">
-                <div style="color: #4e6570; font-style: bold; font-size: 1.3em; border-bottom: 2px solid #4e6570">Servicios Recientes</div><br>
+                <div style="color: #4e6570; font-style: bold; font-size: 1.3em; border-bottom: 2px solid #4e6570">Compras Recientes</div><br>
                 {% for item in purchases %}
                     {% if not forloop.first %}
                         <br><div style="border-bottom: 0.5px solid #4e6570"></div><br>
@@ -61,7 +61,7 @@
                             Comprado a <b>{{ item.proveedor.nombre }}</b> <br>
                             <small><i>{{ item.fecha.date }}</i></small>
                         </div>
-                        {% comment %} <div class="col-md-2"> <br>${{ item.get_precio_total }} <br> <a href="{% url 'purchase-bill' item.billno %}">View Bill</a> </div> {% endcomment %}
+                        <div class="col-md-2"> <br>Q {{ item.get_total_precio }} <br> <a href="{% url 'comprobante_servicio' item.nocomp %}">Ver Comprobante</a> </div>
                     </div>
                 {% endfor %}
             </div>

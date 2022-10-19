@@ -524,7 +524,7 @@ class LeerInventario(AccesoUsuarioColaborador,ListView):
         q = self.request.GET.get('q')
         if q:
             object_list = self.model.objects.filter(
-                Q(nombre_p__icontains=q) | Q(categoria__nombre__icontains=q) | Q(cantidad__icontains=q) 
+                Q(nombre__icontains=q) | Q(categoria__nombre__icontains=q) | Q(cantidad__icontains=q) 
             )
         else:
             object_list = self.model.objects.filter(borrado=False)
