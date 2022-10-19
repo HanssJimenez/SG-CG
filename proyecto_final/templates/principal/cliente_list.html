@@ -1,5 +1,6 @@
 {% extends 'principal/base.html' %}
 {%block body_block%}
+{% load static%}
 {% comment %} <div class="container-fluid"> 
     <h1>Filtrar lista</h1>
     <form method="POST">
@@ -26,7 +27,7 @@
             <a href="{% url 'lista_cliente' %}" class="btn btn-dark" style="margin-left: 2px;" title="Refrsh"><i class="fas fa-sync-alt"></i></a>
         </div>
     </form>
-    <table class="table table-bordered text-center">
+    <table id="example" class="table table-bordered text-center" >
         <thead class = "table-primary">
             <tr>
                 <th>ID</th>
@@ -84,4 +85,20 @@
         {% endif %}
     </nav>
 </div>
+<script src={% static 'js/dataTables.min.js' %}></script>
+<script src={% static 'js/dataTables.bootstrap5min.js' %}></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+    {% comment %} $('#tablaprueba').DataTable({
+        paging: true,
+        pageLength:10,
+        lengthChange:true,
+        autoWidth: true,
+        searching: true,
+        bInfo: true,
+        bSort: true,
+    }) {% endcomment %}
+</script>
 {%endblock%}
