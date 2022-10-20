@@ -1,20 +1,5 @@
 {% extends 'principal/base.html' %}
 {%block body_block%}
-{% load static%}
-{% comment %} <div class="container-fluid"> 
-    <h1>Filtrar lista</h1>
-    <form method="POST">
-        {% csrf_token %}
-        <div class="form-floating mb-3">
-            <input class="form-control" type="text" name = "nombre"/>
-            <label for="nombre">nombre de Cliente</label>
-        </div>
-        <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-            <input class="btn btn-primary" type="submit" name="" value="Buscar">
-        </div>
-    </form>
-</div>
-<br> {% endcomment %}
 <div class="container-fluid">
     <h1>Lista de Clientes</h1>
     <a href="{% url 'crear_cliente' %}" class="btn btn-outline-primary mb-3 mt-5">
@@ -27,7 +12,7 @@
             <a href="{% url 'lista_cliente' %}" class="btn btn-dark" style="margin-left: 2px;" title="Refrsh"><i class="fas fa-sync-alt"></i></a>
         </div>
     </form>
-    <table id="example" class="table table-bordered text-center" >
+    <table class="table table-bordered text-center" >
         <thead class = "table-primary">
             <tr>
                 <th>ID</th>
@@ -85,20 +70,4 @@
         {% endif %}
     </nav>
 </div>
-<script src={% static 'js/dataTables.min.js' %}></script>
-<script src={% static 'js/dataTables.bootstrap5min.js' %}></script>
-<script>
-    $(document).ready(function () {
-        $('#example').DataTable();
-    });
-    {% comment %} $('#tablaprueba').DataTable({
-        paging: true,
-        pageLength:10,
-        lengthChange:true,
-        autoWidth: true,
-        searching: true,
-        bInfo: true,
-        bSort: true,
-    }) {% endcomment %}
-</script>
 {%endblock%}

@@ -5,26 +5,28 @@
     <a href="{% url 'crear_categorias' %}" class="btn btn-outline-primary mb-3 mt-5">
         <i class="fas fa-plus"></i>&nbsp;&nbsp; Categoria
     </a>
-    <form>
+    {% comment %} <form>
         <div class="input-group mb-3">
             <input name="q" type="text" class="form-control input-sm" placeholder="Barra de busqueda" value="{{ request.GET.q }}">
             <button class="btn btn-secondary" title="Search"><i class="fas fa-search"></i></button>
             <a href="{% url 'lista_categorias' %}" class="btn btn-dark" style="margin-left: 2px;" title="Refrsh"><i class="fas fa-sync-alt"></i></a>
         </div>
-    </form>
-    <table class="table table-bordered text-center">
-        <thead class = "table-primary">
+    </form> {% endcomment %}
+<div class="container-fluid">
+    <table id="tablapreuba" class="table table-bordered">
+        <thead class = "table-dark">
             <tr>
                 <th>ID</th>
-                <th>Nombre</th>
-                <th colspan ="2"> Opciones</th>
+                <th>Nobre</th>
+                <th>Modificar</th>
+                <th>Elmiminar</th>
             </tr>
         </thead>
         <tbody>
             {% for categorias in object_list%}
             <tr>
-                <td> {{categorias.id}} <br></td>
-                <td>{{categorias.nombre}}</a></td>
+                <td> {{categorias.id}}</td>
+                <td>{{categorias.nombre}}</td>
                 <td>
                     <a href="{% url 'modificar_categorias' pk=categorias.id %}" class = "btn btn-primary btn-sm">
                         <i class= "fas fa-pen"></i>
@@ -39,7 +41,8 @@
             {% endfor %}
         </tbody>        
     </table>
-    <nav>
+</div>
+    {% comment %} <nav>
         {% if page_obj.has_other_pages %}
         <ul class = "pagination">
             {% if page_obj.has_previous %}
@@ -64,6 +67,7 @@
             {% endif %}
         </ul>
         {% endif %}
-    </nav>
+    </nav> {% endcomment %}
 </div>
+
 {%endblock%}

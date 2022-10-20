@@ -26,4 +26,7 @@ admin.site.register(Proveedor)
 admin.site.register(ComprobanteCompra)
 admin.site.register(UnidadCompra)
 admin.site.register(DetalleComprobanteCompra)
+admin.site.register(ComprobanteServicio)
+admin.site.register(UnidadVendida)
+admin.site.register(DetalleComprobanteServicio)
 

@@ -85,18 +85,6 @@ class LeerColaborador(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_colaborador')
     model = Colaborador
     queryset = Colaborador.objects.all()
-    paginate_by = 5
-    def get_queryset(self):
-        q = self.request.GET.get('q')
-        if q:
-            object_list = self.model.objects.filter(
-                Q(DPI__icontains=q) | Q(nombre__icontains=q) | Q(apellido__icontains=q)
-                | Q(numero_de_telefono__icontains=q) | Q(puesto__icontains=q) | Q(fecha_de_nacimiento__icontains=q)
-                | Q(sueldo__icontains=q)
-            )
-        else:
-            object_list = self.model.objects.all()
-        return object_list
     
     
 # ClassBaseViews Credito Crear/Modificar/Eliminar/Leer
@@ -122,16 +110,16 @@ class LeerCredito(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_credito')
     model = Credito
     queryset = Credito.objects.all()
-    paginate_by = 10
-    def get_queryset(self):
-        q = self.request.GET.get('q')
-        if q:
-            object_list = self.model.objects.filter(
-                Q(cliente__nombre__icontains=q) | Q(total__icontains=q) 
-            )
-        else:
-            object_list = self.model.objects.all()
-        return object_list
+    
+    # def get_queryset(self):
+    #     q = self.request.GET.get('q')
+    #     if q:
+    #         object_list = self.model.objects.filter(
+    #             Q(cliente__nombre__icontains=q) | Q(total__icontains=q) 
+    #         )
+    #     else:
+    #         object_list = self.model.objects.all()
+    #     return object_list
 # ClassBaseViews Clientes Crear/Modificar/Eliminar/Leer
 #Crear
 class CrearCliente(AccesoUsuarioColaborador,CreateView):
@@ -519,16 +507,6 @@ class LeerInventario(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_inventario')
     model = Inventario
     queryset = Inventario.objects.filter(borrado=False)
-    paginate_by = 10
-    def get_queryset(self):
-        q = self.request.GET.get('q')
-        if q:
-            object_list = self.model.objects.filter(
-                Q(nombre__icontains=q) | Q(categoria__nombre__icontains=q) | Q(cantidad__icontains=q) 
-            )
-        else:
-            object_list = self.model.objects.filter(borrado=False)
-        return object_list
 
 # ClassBaseViews Inventario Crear/Modificar/Eliminar/Leer
 #Crear
