@@ -110,16 +110,6 @@ class LeerCredito(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_credito')
     model = Credito
     queryset = Credito.objects.all()
-    
-    # def get_queryset(self):
-    #     q = self.request.GET.get('q')
-    #     if q:
-    #         object_list = self.model.objects.filter(
-    #             Q(cliente__nombre__icontains=q) | Q(total__icontains=q) 
-    #         )
-    #     else:
-    #         object_list = self.model.objects.all()
-    #     return object_list
 # ClassBaseViews Clientes Crear/Modificar/Eliminar/Leer
 #Crear
 class CrearCliente(AccesoUsuarioColaborador,CreateView):
@@ -149,16 +139,6 @@ class LeerCliente(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_cliente')
     model = Cliente
     queryset = Cliente.objects.all()
-    paginate_by = 10
-    def get_queryset(self):
-        q = self.request.GET.get('q')
-        if q:
-            object_list = self.model.objects.filter(
-                Q(nombre__icontains=q) | Q(apellido__icontains=q) | Q(numtel__icontains=q) 
-            )
-        else:
-            object_list = self.model.objects.all()
-        return object_list
 
 
 ################################################################################################
@@ -167,16 +147,6 @@ class LeerProveedor(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.add_colaborador')
     model = Proveedor
     queryset = Proveedor.objects.filter(borrado=False)
-    paginate_by = 10
-    def get_queryset(self):
-        q = self.request.GET.get('q')
-        if q:
-            object_list = self.model.objects.filter(borrado=False|
-                Q(nombre__icontains=q) | Q(apellido__icontains=q) | Q(numtel__icontains=q) 
-            )
-        else:
-            object_list = self.model.objects.filter(borrado=False)
-        return object_list
 
 
 # used to add a new supplier
@@ -243,7 +213,6 @@ class LeerCompra(AccesoUsuarioColaborador,ListView):
     context_object_name = 'bills'
     ordering = ['-fecha']
     paginate_by = 10
-
 
 # used to select the supplier
 class SeleccionarProveedorView(AccesoUsuarioColaborador,View):
@@ -366,8 +335,6 @@ class LeerServicio(AccesoUsuarioColaborador,ListView):
     template_name = "principal/comprobanteservicio_list.html"
     context_object_name = 'bills'
     ordering = ['-fechav']
-    paginate_by = 10
-
 
 # used to generate a bill object and save items
 class CrearServicioVista(AccesoUsuarioColaborador,View):    
@@ -577,65 +544,6 @@ class LeerSolicitud(AccesoUsuarioColaborador,ListView):
         else:
             object_list = self.model.objects.all()
         return object_list
-
-# Views de inventario / agregar / actualizar/ eliminar
-# @login_required
-# def agregar_producto_inventario(request):
-#     form_agpr = AgreProdForm(data=request.POST)
-#     if form_agpr.is_valid():
-#         form_agpr.save()
-#         return redirect('/lista_producto')
-        
-#     context = {
-#         "form_agpr": form_agpr,
-#         "title": "Añadir producto",
-#     }
-#     return render(request, "principal/añadir_producto_inventario.html", context)
-
-# @login_required
-# def modificar_producto_inventario(request, pk):
-#     queryset = Inventario.objects.get(id=pk)
-#     form = ModInvForm(instance=queryset)
-#     if request.method == 'POST':
-#         form = ModInvForm(request.POST, instance=queryset)
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect(reverse('lista_producto'))
-
-#     context = {
-# 		'form':form
-# 	}
-#     return render(request, 'principal/añadir_producto_inventario.html', context)
-
-# def borrar_producto_inventario(request, pk):
-# 	queryset = Inventario.objects.get(id=pk)
-# 	if request.method == 'POST':
-# 		queryset.delete()
-# 		return HttpResponseRedirect(reverse('lista_producto'))
-		
-# 	return render(request, 'principal/borrar_producto_inventario.html')
-
-# # Vistas para tablas
-
-# @login_required
-# def lista_inventario(request):
-# 	title = 'Lista inventario'
-# 	form = BusquedProductoForm(request.POST)
-# 	queryset = Inventario.objects.all()
-# 	context = {
-# 		"title": title,
-# 		"queryset": queryset,
-# 	}
-# 	if request.method == 'POST':
-# 		queryset = Inventario.objects.filter(categoria__icontains=form['categoria'].value(),
-# 									nombre_p__icontains=form['nombre_p'].value()
-# 									)
-# 		context = {
-# 		"form": form,
-# 		"queryset": queryset,
-# 	}
-# 	return render(request, "principal/lista_producto.html", context)
-	
 
 @login_required
 def special(request):

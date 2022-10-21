@@ -77,6 +77,7 @@ urlpatterns = [
     path("comprobante_servicio/<nocomp>", views.ComprobanteServicioView.as_view(), name="comprobante_servicio"),
     #url resumen
     url(r'^resumen/', views.VistaInicio.as_view(), name = 'resumen'),
+    url(r'^cuadros/', views.cuadros, name = 'cuadros'),
     #urls inventario
     # url(r'^lista_producto/', views.lista_inventario,name='lista_producto'),
     # url(r'^agregar_producto/', views.agregar_producto_inventario,name='agregar_producto'),

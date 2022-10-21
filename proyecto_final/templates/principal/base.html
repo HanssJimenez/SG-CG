@@ -3,32 +3,31 @@
 {% load crispy_forms_tags%}
 <html lang="en">
     <head>
-        <title>Inicio SG-CG</title>
+        <title>{% block title %} Inicio SG-CG {% endblock %}</title>
         
         
         <link href= "{% static 'css/styles.css' %}" rel="stylesheet" />
         <link href= "{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
         <script src="{% static 'js/all.js' %}" crossorigin="anonymous"></script>
-        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
         <link href= "{% static 'css/jquery.dataTables.css' %}" rel="stylesheet">
         <link href= "{% static 'css/jquery.dataTables.min.css' %}" rel="stylesheet">
         <link href= "{% static 'css/dataTables.bootstrap5.min.css' %}" rel="stylesheet" >
         <link href= "{% static 'css/datatables.min.css' %}" rel="stylesheet" >
         <link href= "{% static 'css/dataTables.dateTime.min.css' %}" rel="stylesheet" >
         <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-        
+        <script src="{% static 'js/jquery-3.6.1.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
         
     
     </head>
     <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark ">
             <!-- Navbar Brand-->
-            <img class="navbar-brand" src= {% static '/img/LogoCG.png' %}/>
+            <img class="navbar-brand jus" src= {% static '/img/LogoCG.png' %}/>
             <!-- Sidebar Toggle-->
-
             {% if user.is_authenticated%}
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="bi bi-list-stars"></i></button>
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li><a class="nav-link active" href="{% url 'index' %}">Bienvenido</a></li>
                 <li class="nav-item">
@@ -50,15 +49,24 @@
                 </li>
                 
             </ul>
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#!">Settings</a></li>
+                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
             {% else%}
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li><a class="nav-link active" href="{% url 'principal:user_login' %}">Iniciar Sesión</a></li>
             </ul>
             {% endif%}
             {% if user.is_authenticated %}
-            
             <!-- Navbar-->
-            
         </nav>
         {% endif %}
         {% if user.is_authenticated %}
@@ -73,7 +81,7 @@
                                 Usuarios
                             </a> {% endcomment %}
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseResumen" aria-expanded="false" aria-controls="collapseResumen">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <div class="sb-nav-link-icon"><i class="bi bi-clipboard-data-fill"></i></div>
                                 Resumen
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -85,7 +93,7 @@
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseColaboradores" aria-expanded="false" aria-controls="collapseColaboradores">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <div class="sb-nav-link-icon"><i class="bi bi-person-heart"></i></div>
                                 Colaboradores
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -97,8 +105,8 @@
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseClientes" aria-expanded="false" aria-controls="collapseClientes">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Cliente
+                                <div class="sb-nav-link-icon"><i class="bi bi-person-hearts"></i></div>
+                                Clientes
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseClientes" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
@@ -108,7 +116,7 @@
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseInventario" aria-expanded="false" aria-controls="collapseInventario">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <div class="sb-nav-link-icon"><i class="bi bi-box2-heart-fill"></i></div>
                                 Inventario
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -129,7 +137,7 @@
                                 </nav>
                             </div> {% endcomment %}
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProveedores" aria-expanded="false" aria-controls="collapseVentas">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <div class="sb-nav-link-icon"><i class="bi bi-person-lines-fill"></i></div>
                                 Proveedores
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -139,7 +147,7 @@
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCompras" aria-expanded="false" aria-controls="collapseVentas">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <div class="sb-nav-link-icon"><i class="bi bi-bag-heart-fill"></i></div>
                                 Compras
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -149,7 +157,7 @@
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseServicios" aria-expanded="false" aria-controls="collapseVentas">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <div class="sb-nav-link-icon"><i class="bi bi-tools"></i></div>
                                 Servicios
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -182,7 +190,7 @@
         </div>
         {% endif %}
         <script src="{% static 'js/scripts.js' %}"></script>
-        <script src="{% static 'js/jquery-3.6.1.min.js' %}"></script>
+        
         <script src="{% static 'bootstrap/popper.min.js' %}"></script>
         
         <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
@@ -194,6 +202,7 @@
         <script src="{% static 'js/dataTables.dateTime.min.js' %}"></script>
         
         <script src="{% static 'js/jquery.mask.min.js' %}"></script>
+        <script src="{% static 'js/sum().js' %}"></script>
         <script src="{% static 'js/tablas.js' %}"></script>
         
     </body>

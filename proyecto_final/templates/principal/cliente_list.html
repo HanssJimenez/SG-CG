@@ -1,25 +1,18 @@
 {% extends 'principal/base.html' %}
+{% block title %} Clientes {% endblock %}
 {%block body_block%}
 <div class="container-fluid">
-    <h1>Lista de Clientes</h1>
-    <a href="{% url 'crear_cliente' %}" class="btn btn-outline-primary mb-3 mt-5">
-        <i class="fas fa-plus"></i>&nbsp;&nbsp; cliente
+    <a href="{% url 'crear_cliente' %}" class="btn btn-success mb-3 mt-5">
+        <i class="bi bi-person-hearts"> </i><i class="fas fa-plus"></i>&nbsp;&nbsp; cliente
     </a>
-    <form>
-        <div class="input-group mb-3">
-            <input name="q" type="text" class="form-control input-sm" placeholder="Barra de busqueda" value="{{ request.GET.q }}">
-            <button class="btn btn-secondary" title="Search"><i class="fas fa-search"></i></button>
-            <a href="{% url 'lista_cliente' %}" class="btn btn-dark" style="margin-left: 2px;" title="Refrsh"><i class="fas fa-sync-alt"></i></a>
-        </div>
-    </form>
-    <table class="table table-bordered text-center" >
-        <thead class = "table-primary">
+    <table id="clientes" class="table table-bordered text-center" >
+        <thead class = "table-dark">
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Telefono</th>
-                <th colspan ="2"> Opciones</th>
+                <th> Opciones</th>
             </tr>
         </thead>
         <tbody>
@@ -31,43 +24,15 @@
                 <td>{{cliente.numtel}}</td>
                 <td>
                     <a href="{% url 'modificar_cliente' pk=cliente.id %}" class = "btn btn-primary btn-sm">
-                        <i class= "fas fa-pen"></i>
-                    </a>
-                </td>        
-                <td>
+                        <i class= "fas fa-pen"></i>&nbsp;&nbsp;Editar
+                    </a>&nbsp;&nbsp;
                     <a href="{% url 'borrar_cliente' pk=cliente.id %}" class = "btn btn-danger btn-sm">
-                        <i class= "fas fa-trash-alt"></i>
+                        <i class= "fas fa-trash-alt"></i>&nbsp;&nbsp;Eliminar
                     </a>
                 </td> 
             </tr>
             {% endfor %}
         </tbody>        
     </table>
-    <nav>
-        {% if page_obj.has_other_pages %}
-        <ul class = "pagination">
-            {% if page_obj.has_previous %}
-            <a href="?{% if request.GET.q %}q={{request.GET.q}}&{% endif %}page=1" class="btn btn-btn-outline-secondary mb-4" style= "border-radius: 1px; border: 1px solid #d3d3d3;">Primero</a>
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number}}"><i class="fas fa-angle-double-left"></i></a></li>
-            {%else %}
-            <li class="page-item disabled"></li>
-            {% endif %}
-            {% for i in page_obj.paginator.page_range %}
-            {% if page_obj.numbre == 1 %}
-            <li class="page-item active"><span class="page-link">{{ i }}<span class="sr-only"></span></span></li>
-            {% else %}
-            <li class="page-item"><a class="page-link" href="?{% if request.GET.q %}q={{request.GET.q}}&{% endif %}page={{ i }}">{{ i }}</a></li>
-            {% endif %}
-            {% endfor %}
-
-            {% if page_obj.has_next %}
-            <li class="page-item"><a class="page-link" href="?{% if request.GET.q %}q={{request.GET.q}}&{% endif %}page={{ page_obj.next_page_number}}"><i class="fas fa-angle-double-right"></i></a></li>
-            <a href="?{% if request.GET.q %}q={{request.GET.q}}&{% endif %}page={{ page_obj.paginator.num_pages }}" class="btn btn-btn-outline-secondary mb-4" style= "border-radius: 1px; border: 1px solid #d3d3d3;">ultimo</a>
-            {%else %}
-            <li class="page-item disabled"></li>
-            {% endif %}
-        </ul>
-        {% endif %}
-    </nav>
 </div>
 {%endblock%}

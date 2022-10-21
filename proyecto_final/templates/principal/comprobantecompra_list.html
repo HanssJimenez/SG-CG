@@ -1,19 +1,22 @@
 {% extends "principal/base.html" %}
-
+{% block title %} Compras {% endblock %}
 {% block body_block %}
-<div class="container">
-    <div class="row" style="color: #575757; font-style: bold; font-size: 3rem;">
-        <div class="col-md-8">Lista Compras</div>
-        <div class="col-md-4">            <!-- Log on to codeastro.com for more projects -->   
-            <div style="float:right;"> <a class="btn btn-success" href="{% url 'crear_compras_proveedor' %}">Añadir Adquision insumo</a> </div>
-        </div>
+<div class="container-fluid">
+    <table border="0" cellspacing="5" cellpadding="5">
+        <tbody>
+            <tr>
+                <td>Fecha Inicial:</td>
+                <td><input type="text" id="min" name="min"></td>
+                <td>Fecha Final:</td>
+                <td><input type="text" id="max" name="max"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="float:left;">
+        <a class="btn btn-success" href="{% url 'crear_compras_proveedor' %}"><i class="bi bi-cart"></i><i class="bi bi-plus"></i> Añadir Compra</a> 
     </div>
-
-    <br>
-
-    <table class="table table-bordered">
-
-        <thead class="thead-dark align-middle">
+    <table id="compras" class="table table-bordered text-center">
+        <thead class="table-dark">
             <tr>
                 <th width="10%">No. Comprobante</th>
                 <th width="15%">Proveedor</th>
@@ -24,9 +27,6 @@
                 <th width="25%">Acciones</th>
             </tr>
         </thead>
-
-{% if bills %}
-
         <tbody>         
             {% for purchase in bills %}
             <tr>
@@ -38,50 +38,24 @@
                         <a href="{% url 'proveedor' purchase.proveedor.nombre %}">{{ purchase.proveedor }}</a> <br> 
                     {% endif %}
                     <small style="color: #909494">Tel No : {{ purchase.proveedor.telefono }}</small> 
-                </td><!-- Log on to codeastro.com for more projects -->
+                </td>
                 <td class="align-middle">{% for item in purchase.get_lista_unidad %} {{ item.inventario.nombre }} <br> {% endfor %}</td>
                 <td class="align-middle">{% for item in purchase.get_lista_unidad %} {{ item.cantidad }} <br> {% endfor %}</td>     
                 <td class="align-middle">Q{{ purchase.get_total_precio }}</td>
-                <td class="align-middle">{{ purchase.fecha.date }}</td>
+                <td class="align-middle">{{ purchase.fecha.date|date:"Y-m-d" }}</td>
                 <td class="align-middle"> <a href="{% url 'compra_comprobante' purchase.nocomp %}" class="btn btn-secondary btn-sm">Ver Comprobante</a> <a href="{% url 'eliminar_compra' purchase.pk %}" class="btn btn-danger btn-sm">Eliminar Comprobante</a> </td>
             </tr>
             {% endfor %}
         </tbody>
-
+        <tfoot>
+            <tr>
+                <th ></th>
+                <th></th>
+                <th></th>
+                <th style="text-align:right">Total:</th>
+                <th style="text-align:center"></th>
+            </tr>
+        </tfoot>
     </table>
-
-    <div class="align-middle">
-        {% if is_paginated %}
-
-            {% if page_obj.has_previous %}
-                <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-            {% endif %}
-
-            {% for num in page_obj.paginator.page_range %}
-                {% if page_obj.number == num %}
-                    <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
-                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                    <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
-                {% endif %}
-            {% endfor %}
-
-            {% if page_obj.has_next %}
-                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-            {% endif %}
-
-        {% endif %}
-    </div>
-
-{% else %}
-
-        <tbody></tbody>  <!-- Log on to codeastro.com for more projects --> 
-    </table>
-
-    <br><br><br><br><br><br><br><br>
-    <div style="color: #575757; font-style: bold; font-size: 1.5rem; text-align: center;">The records are empty. Please try adding some.</div>
-<!-- Log on to codeastro.com for more projects -->
-{% endif %}
 </div>
 {% endblock%}

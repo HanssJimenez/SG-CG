@@ -1,24 +1,21 @@
 {% extends 'principal/base.html' %}
+{% block title %} Inventario {% endblock %}
 {%block body_block%}
 <div class="container-fluid">
-    <h1>Lista de Inventario</h1>
-    <a href="{% url 'crear_inventario' %}" class="btn btn-outline-primary mb-3 mt-5">
-        <i class="fas fa-plus"></i>&nbsp;&nbsp; Producto
+    <a href="{% url 'crear_inventario' %}" class="btn btn-success mb-3 mt-5">
+        <i class="bi bi-box2-heart"></i> <i class="fas fa-plus"></i>&nbsp;Producto
     </a>
-    
     <table id ="inventario" class="table table-bordered text-center">
         <thead class = "table-dark">
             <tr>
                 <th>ID</th>
-                <th>categoria</th>
-                <th>nombre</th>
-                <th>cantidad actual</th>
-                <th>medida</th>
-                <th>modificar</th>
-                <th>borrar</th>
+                <th>Categoría</th>
+                <th>Nombre</th>
+                <th>Cantidad Actual</th>
+                <th>Medida</th>
+                <th>Opciones</th>
             </tr>
         </thead>
-{%if object_list%}
         <tbody>
             {% for inventario in object_list%}
             <tr>
@@ -31,8 +28,6 @@
                     <a href="{% url 'modificar_inventario' pk=inventario.id %}" class = "btn btn-primary btn-sm">
                         <i class= "fas fa-pen"></i>
                     </a>
-                </td>        
-                <td>
                     <a href="{% url 'borrar_inventario' pk=inventario.id %}" class = "btn btn-danger btn-sm">
                         <i class= "fas fa-trash-alt"></i>
                     </a>
@@ -41,38 +36,4 @@
             {% endfor %}
         </tbody>        
     </table>
-    <nav>
-        {% if page_obj.has_other_pages %}
-        <ul class = "pagination">
-            {% if page_obj.has_previous %}
-            <a href="?{% if request.GET.q %}q={{request.GET.q}}&{% endif %}page=1" class="btn btn-btn-outline-secondary mb-4" style= "border-radius: 1px; border: 1px solid #d3d3d3;">Primero</a>
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number}}"><i class="fas fa-angle-double-left"></i></a></li>
-            {%else %}
-            <li class="page-item disabled"></li>
-            {% endif %}
-            {% for i in page_obj.paginator.page_range %}
-            {% if page_obj.numbre == 1 %}
-            <li class="page-item active"><span class="page-link">{{ i }}<span class="sr-only"></span></span></li>
-            {% else %}
-            <li class="page-item"><a class="page-link" href="?{% if request.GET.q %}q={{request.GET.q}}&{% endif %}page={{ i }}">{{ i }}</a></li>
-            {% endif %}
-            {% endfor %}
-
-            {% if page_obj.has_next %}
-            <li class="page-item"><a class="page-link" href="?{% if request.GET.q %}q={{request.GET.q}}&{% endif %}page={{ page_obj.next_page_number}}"><i class="fas fa-angle-double-right"></i></a></li>
-            <a href="?{% if request.GET.q %}q={{request.GET.q}}&{% endif %}page={{ page_obj.paginator.num_pages }}" class="btn btn-btn-outline-secondary mb-4" style= "border-radius: 1px; border: 1px solid #d3d3d3;">ultimo</a>
-            {%else %}
-            <li class="page-item disabled"></li>
-            {% endif %}
-        </ul>
-        {% endif %}
-    </nav>
-</div>
-{%else%}
-<tbody><tbody>
-</table>
-<br>
-    <div style="color: #575757; font-style: bold; font-size: 1.5rem; text-align: center;">No se encontraron registros.</div>
-
-{%endif%}
 {%endblock%}

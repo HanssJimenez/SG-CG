@@ -1,14 +1,10 @@
 {% extends "principal/base.html" %}
-<!-- Log on to codeastro.com for more projects -->
 {%load static%}
 
-
-{% block title %} Home {% endblock title %}
-
-
+{% block title %} Resumen {% endblock title %}
 {% block body_block %}
-<div class="container">
-    <div style="color:#464646; font-style: bold; font-size: 3rem; border-bottom: 1px solid #464646;">Bienvenido, {{ request.user.username }}</div>
+<div class="container-fluid">
+    <div style="color:#464646; font-style: bold; font-size: 3rem; border-bottom: 1px solid #464646;">Resumen:<br> inventario, servicios y compras</div>
 
     <br>
 
@@ -18,19 +14,8 @@
 
     <br>
 
-    <div class="row">
-        <div class="col-md-6">
-            <a href="{% url 'nuevo_servicio' %}" class="btn btn-success btn-lg btn-block btn-huge">Nuevo Servicio</a>
-        </div>
-        <div class="col-md-6">
-            <a href="{% url 'crear_compras_proveedor' %}" class="btn btn-success btn-lg btn-block btn-huge">Compra de Insumo</a>
-        </div>
-    </div>
-
-    <br>
-
     <div class="content-section">
-        <div class="row"><!-- Log on to codeastro.com for more projects -->
+        <div class="row">
 
             <div class="col-md-6">
                 <div style="color: #4e6570; font-style: bold; font-size: 1.3em; border-bottom: 2px solid #4e6570">Servicios Recientes</div><br>
