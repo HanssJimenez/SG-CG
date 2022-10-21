@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-from django.urls import path
+from django.urls import path, include
 from django.contrib import admin
 from principal import views
 
@@ -22,6 +22,8 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^no_posee_permisos', views.no_permisos, name='no_posee_permisos'),
     url(r'^admin/', admin.site.urls),
+    path('jet/', include('jet.urls', 'jet')),
+    path('jet/dashboard/', include('jet.dashboard.urls','jet-dashboard')),
     url(r'^principal/', include('principal.urls', namespace='principal')),
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^special/', views.special,name='special'),
