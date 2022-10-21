@@ -1,9 +1,10 @@
 {% extends 'principal/base.html' %}
+{% block title %} Seleccionar Proveedor {% endblock title %}
 {%block body_block%}
 <div style="color:#575757; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">Nueva Compra</div> 
     
 <br>
-
+<div class="container-fluid">
 <form method="post">
 
     {% csrf_token %}
@@ -17,9 +18,10 @@
 
     <br>
     <div class="align-middle">
-        <button type="submit" class="btn btn-success">Next</button>
+        <button type="submit" class="btn btn-success">Siguiente</button>
         <a href="{% url 'lista_compras' %}" class="btn btn-secondary">Cancel</a>
     </div>
     
 </form>
+</div>
 {%endblock%}

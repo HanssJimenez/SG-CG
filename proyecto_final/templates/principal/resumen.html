@@ -29,7 +29,7 @@
                             Comprado por <b>{{ item.nombre }}</b> <br>
                             <small><i>{{ item.fechav.date }}</i></small>
                         </div>
-                        <div class="col-md-2"> <br> Q {{ item.get_precio_total }} <br> <a href="{% url 'compra_comprobante' item.nocomp %}">Ver Comprobante</a> </div>
+                        <div class="col-md-2"> <br> Q {{ item.get_precio_total }} <br> <a href="{% url 'comprobante_servicio' item.nocomp %}">Ver Comprobante</a> </div>
                     </div>
                 {% endfor %}
             </div>
@@ -46,7 +46,7 @@
                             Comprado a <b>{{ item.proveedor.nombre }}</b> <br>
                             <small><i>{{ item.fecha.date }}</i></small>
                         </div>
-                        <div class="col-md-2"> <br>Q {{ item.get_total_precio }} <br> <a href="{% url 'comprobante_servicio' item.nocomp %}">Ver Comprobante</a> </div>
+                        <div class="col-md-2"> <br>Q {{ item.get_total_precio }} <br> <a href="{% url 'compra_comprobante' item.nocomp %}">Ver Comprobante</a> </div>
                     </div>
                 {% endfor %}
             </div>

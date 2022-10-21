@@ -1,6 +1,6 @@
 {% extends "principal/base.html" %}
 {% load static %}
-
+{% block title %} Crear Compra {% endblock title %}
 
 
 {% block body_block %}
@@ -144,7 +144,7 @@
                 }
                 total--;
             } else {
-                custom_alert.render("Field cannot be deleted");
+                custom_alert.render("Este campo no se puede eliminar");
             }
             return false;
         }

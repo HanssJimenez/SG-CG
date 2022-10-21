@@ -140,14 +140,6 @@ class DetalleComprobanteServicio(models.Model):
 	    return "No. Comprobante: " + str(self.nocomp.nocomp)
 
 
-
-
-
-
-
-
-
-
 class Colaborador(models.Model):
     DPI = models.CharField(max_length=15, unique=True)
     nombre = models.CharField(max_length=100)

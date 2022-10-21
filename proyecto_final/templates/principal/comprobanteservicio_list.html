@@ -8,9 +8,9 @@
         <tbody>
             <tr>
                 <td>Fecha Inicial:</td>
-                <td><input type="text" id="min" name="min"></td>
+                <td><input type="date" id="min" name="min"></td>
                 <td>Fecha Final:</td>
-                <td><input type="text" id="max" name="max"></td>
+                <td><input type="date" id="max" name="max"></td>
             </tr>
         </tbody>
     </table>
@@ -38,7 +38,7 @@
                 <td class="align-middle">{% for item in servicio.get_lista_unidades %} {{ item.inventario.nombre }} <br> {% endfor %}</td>
                 <td class="align-middle">{% for item in servicio.get_lista_unidades %} {{ item.cantidad }} <br> {% endfor %}</td>     
                 <td class="align-middle">Q{{ servicio.get_precio_total }}</td>
-                <td class="align-middle">{{ servicio.fechav.date|date:"Y-m-d"}}</td>
+                <td class="align-middle">{{ servicio.fechav.date|date:"Y/m/d"}}</td>
                 <td class="align-middle"> <a href="{% url 'comprobante_servicio' servicio.nocomp %}" class="btn btn-secondary btn-sm">Ver Comprobante</a> <a href="{% url 'eliminar_servicio' servicio.pk %}" class="btn btn-danger btn-sm">Eliminar Comprobante</a> </td>
             </tr>
             {% endfor %}

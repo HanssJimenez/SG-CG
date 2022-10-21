@@ -375,7 +375,7 @@ class CrearServicioVista(AccesoUsuarioColaborador,View):
                 # saves bill item and stock
                 stock.save()
                 billitem.save()
-            messages.success(request, "Sold items have been registered successfully")
+            messages.success(request, "Unidad Vendida ha sido registrada exitosamente")
             return redirect('comprobante_servicio', nocomp=billobj.nocomp)
         form = ServicioForm(request.GET or None)
         formset = VentaUnidadFormset(request.GET or None)

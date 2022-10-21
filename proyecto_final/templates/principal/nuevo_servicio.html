@@ -1,6 +1,6 @@
 {% extends "principal/base.html" %}
 {% load static %}
-
+{% block title %} Crear Servicio {% endblock title %}
 {% block body_block %}
 <div class="container">
     <div style="color:#575757; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">Nuevo Servicio</div>
@@ -158,7 +158,7 @@
                         }
                     total--;
                 } else {
-                    alert("Field cannot be deleted");
+                    alert("Este campo no se puede eliminar");
                 }
                 return false;
             }

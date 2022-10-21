@@ -3,6 +3,7 @@ $('#clientes').DataTable({
     paging: true,
     pageLength:10,
     lengthChange:true,
+    lengthMenu:[ [5,10, 25, 50, 100, -1], [5,10, 25, 50, 100, "Todo"] ],
     autoWidth: true,
     searching: true,
     bInfo: true,
@@ -64,11 +65,13 @@ $('#clientes').DataTable({
     }
 })
 
+
 $('#categorias').DataTable({
     responsive: true,
     paging: true,
     pageLength:10,
     lengthChange:true,
+    lengthMenu:[ [5,10, 25, 50, 100, -1], [5,10, 25, 50, 100, "Todo"] ],
     autoWidth: true,
     searching: true,
     bInfo: true,
@@ -135,6 +138,7 @@ $('#inventario').DataTable({
     paging: true,
     pageLength:10,
     lengthChange:true,
+    lengthMenu:[ [5,10, 25, 50, 100, -1], [5,10, 25, 50, 100, "Todo"] ],
     autoWidth: true,
     searching: true,
     bInfo: true,
@@ -483,6 +487,100 @@ $('#compras').DataTable({
     }
 })
 
+$('#proveedor').DataTable({
+    responsive: true,
+    paging: true,
+    pageLength:10,
+    lengthChange:true,
+    lengthMenu:[ [5,10, 25, 50, 100, -1], [5,10, 25, 50, 100, "Todo"] ],
+    autoWidth: true,
+    searching: true,
+    bInfo: true,
+    bSort: true,
+    dom: 'lBfrtip',
+    buttons:[
+        {
+        extend: 'copy',
+        text: '<i class="fas fa-clone"></i>',
+        className: 'btn btn-secondary',
+        titleAttr: 'Copiar',
+        exportOptions:{
+            columns:[0,1,2,3,5]
+            }   
+        },
+        {
+            extend: 'excel',
+            text: '<i class="fas fa-file-excel"></i>',
+            className: 'btn btn-secondary',
+            titleAttr: 'Excel',
+            exportOptions:{
+                columns:[0,1,2,3,5]
+                }   
+        },
+        {
+            extend: 'print',
+            text: '<i class="fas fa-print"></i>',
+            className: 'btn btn-secondary',
+            titleAttr: 'Imprimir',
+            exportOptions:{
+                columns:[0,1,2,3,5]
+            },
+            customize: function( win ){
+                $(win.document.body).css('font-size','10pt')
+                $(win.document.body).find('table')
+                    .addClass('compact')
+                    .css('font-size','inherit');
+            }   
+        },
+        {
+            extend: 'pdf',
+            text: '<i class="fas fa-file-pdf"></i>',
+            className: 'btn btn-secondary',
+            titleAttr: 'PDF',
+            exportOptions:{
+                columns:[0,1,2,3,4,5]
+            },
+            customize: function( win ){
+                $(win.document.body).css('font-size','10pt')
+                $(win.document.body).find('table')
+                    .addClass('compact')
+                    .css('font-size','inherit');
+            }   
+        }
+        
+    ],
+    "language":{
+        "url": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json"
+    },
+    footerCallback: function (row, data, start, end, display) {
+        var api = this.api();
+
+        // Remove the formatting to get integer data for summation
+        var intVal = function (i) {
+            return typeof i === 'string' ? i.replace(/[\Q,]/g, '') * 1 : typeof i === 'number' ? i : 0;
+        };
+
+        // Total over all pages
+        total = api
+            .column(3)
+            .data()
+            .reduce(function (a, b) {
+                return intVal(a) + intVal(b);
+            }, 0);
+
+        // Total over this page
+        pageTotal = api
+            .column(3, { page: 'current' })
+            .data()
+            .reduce(function (a, b) {
+                return intVal(a) + intVal(b);
+            }, 0);
+
+        // Update footer
+        $(api.column(3).footer()).html('Q' + pageTotal);
+    }
+})
+
 $('#proveedores').DataTable({
     responsive: true,
     paging: true,
@@ -562,10 +660,18 @@ var minDate, maxDate;
 // Custom filtering function which will search data in column four between two values
 $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
-        var min = minDate.val();
-        var max = maxDate.val();
+        if ($('#min').val() != '') {
+            var min = new Date($('#min').val());
+        } else {
+            var min = null;
+        }
+        if ($('#max').val() != '') {
+            var max = new Date($('#max').val());
+        } else {
+            var max = null;
+        }
         var date = new Date( data[5] );
-
+        
         if (
             ( min === null && max === null ) ||
             ( min === null && date <= max ) ||
@@ -581,21 +687,14 @@ $.fn.dataTable.ext.search.push(
 $(document).ready(function() {
     // Create date inputs
 
-    minDate = new DateTime($('#min'), {
-        format: 'MMMM Do YYYY'
-        
-    });
-    maxDate = new DateTime($('#max'), {
-        format: 'MMMM Do YYYY'
-    });
-
     // DataTables initialisation
     var table = $('#servicios').DataTable();
     var table2 = $('#compras').DataTable();
-
+    var table3 = $('#proveedor').DataTable();
     // Refilter the table
     $('#min, #max').on('change', function () {
         table.draw();
         table2.draw();
+        table3.draw();
     });
 });

@@ -1,9 +1,8 @@
 {% extends bill_base %}
 {% load static %}
-
+{% block title %} Comprobante Servicio {% endblock title %}
 {% block body_block %}
 
-    <!-- <br><br> --><!-- Log on to codeastro.com for more projects -->
     
     <form method="post">
     {% csrf_token %}
@@ -24,10 +23,9 @@
                         <tr style="text-align: center;">
                             <td >
                                 <span style="font-size: 350%;">SG-CG</span> <br>
-                                <span style="font-size: 120%; font-weight: bold;">DEALERS IN : Products</span> <br>
-                                <span style="font-weight: bold;">Direccion :</span> 9ave. 7-99 zona1<br>Esquipulas, San Mateo 1<br>
+                                <span style="font-weight: bold;">Direccion :</span> 9ave. 7-99 zona 1<br>Esquipulas, San Mateo 1<br>
                                 <span style="font-weight: bold;">Correo : cybergames@mail.com</span> <br><br>
-                            </td><!-- Log on to codeastro.com for more projects -->
+                            </td>
                         </tr>
                         
                         <tr>
@@ -35,7 +33,7 @@
                             <table class="border" style="width: 800px; margin-left: auto; margin-right: auto;">
                                 <tbody>
                                     <tr>
-                                        <td class="border" style="text-align: center; font-weight: bold;" colspan="3">GSTIN NO - {{ bill.proveedor.gestion }}</td>
+                                        <td class="border" style="text-align: center; font-weight: bold;" colspan="3">GSTIN NO - {{ bill.gestion }}</td>
                                     </tr>
                                     <tr>
                                         <td class="border" style="width: 50%; font-weight: bold;">&nbsp;NOMBRE DE CLIENTE/ DESCRIPCION DE SERVICIO</td>
@@ -47,24 +45,24 @@
                                         <td class="border" style="width: 25%; font-weight: bold;">&nbsp;Fecha solicitud</td>
                                         <td class="border" style="width: 25%;">&nbsp;{{ bill.fechav.date }}</td>
                                     </tr>
-                                    <tr><!-- Log on to codeastro.com for more projects -->
-                                        <td class="border" style="width: 50%;" rowspan="3">{{ bill.descripcion|linebreaks }}</td>
+                                    <tr>
+                                        <td class="border" style="width: 50%;" rowspan="3">{{ bill.direccion}}</td>
                                     </tr>
                                     <tr>
                                         <td class="border" style="width: 25%; font-weight: bold;">&nbsp;Fecha de entrega</td>
-                                        <td class="border align-middle" style="width: 25%;"> <input type="text" name="destino" class="text-center" style="border: 0; overflow: hidden;" value="{% if billdetails.destino %}{{ billdetails.destino }}{% endif %}"> </td>
+                                        <td class="border align-middle" style="width: 25%;"> <input type="text" name="descripcion" class="text-center" style="border: 0; overflow: hidden;" value="{% if billdetails.descripcion %}{{ billdetails.descripcion }}{% endif %}"> </td>
                                     </tr>
                                     <tr>
                                         <td class="border" style="font-weight: bold;">&nbsp;No GESTION:</td>
                                         <td class="border" style="font-weight: bold;">&nbsp;{{ bill.gestion }}</td>
-                                    </tr><!-- Log on to codeastro.com for more projects -->
+                                    </tr>
                                 </tbody>
                             </table>
                             </td>
                         </tr>
                         
                         <tr>
-                            <td><!-- Log on to codeastro.com for more projects -->
+                            <td>
                             <table class="border" style="width: 800px; margin-left: auto; margin-right: auto;">
                                 <tbody>
                                     <tr>
@@ -92,7 +90,7 @@
                                 <tbody>
                                     <tr>
                                         <td class="border" style="width: 12%; font-weight: bold; text-align: center;">TOTAL Q</td>
-                                        <td class="border align-middle">&nbsp; <input type="text" name="total" class="align-middle" pattern="[0-9]+\.[0-9]+" style="border: 0; overflow: hidden;" value="{% if billdetails.total %}{{ billdetails.total }}{% endif %}"td class="inner-box" style="width: 5%;" >&nbsp;</td>
+                                        <td class="border align-middle">&nbsp; <input type="text" name="total" class="align-middle" pattern="[0-9]+\" style="border: 0; overflow: hidden;" value="{{bill.get_precio_total}}"td class="inner-box" style="width: 5%;" >&nbsp;</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -120,13 +118,13 @@
         </div>
 
         <br><br>
-
+    <div class="row justify-content-center">
         <div class="wrapper">
             <button class="center btn btn-primary" onclick="printpage('printArea')">Imprimir</button>
             <button class="center btn btn-success" type="submit">Guardar</button>
-            <a href="{% url 'lista_compras' %}" class=" btn center btn-secondary">regresar</a>
+            <a href="{% url 'lista_servicio' %}" class=" btn center btn-secondary">regresar</a>
         </div><!-- Log on to codeastro.com for more projects -->
-
+    </div>
     </form>
 
     <script>
