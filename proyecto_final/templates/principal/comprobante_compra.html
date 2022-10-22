@@ -1,11 +1,8 @@
 {% extends bill_base %}
 {% load static %}
-
-
-
+{% block title %} Comprobante Compra {% endblock %}
 {% block body_block %}
 
-    <!-- <br><br> --><!-- Log on to codeastro.com for more projects -->
     
     <form method="post">
     {% csrf_token %}
@@ -29,7 +26,7 @@
                                 <span style="font-size: 120%; font-weight: bold;">DEALERS IN : Products</span> <br>
                                 <span style="font-weight: bold;">Direccion :</span> 9ave. 7-99 zona1<br>Esquipulas, San Mateo 1<br>
                                 <span style="font-weight: bold;">Correo : cybergames@mail.com</span> <br><br>
-                            </td><!-- Log on to codeastro.com for more projects -->
+                            </td>
                         </tr>
                         
                         <tr>
@@ -49,7 +46,7 @@
                                         <td class="border" style="width: 25%; font-weight: bold;">&nbsp;FECHA</td>
                                         <td class="border" style="width: 25%;">&nbsp;{{ bill.fecha.date }}</td>
                                     </tr>
-                                    <tr><!-- Log on to codeastro.com for more projects -->
+                                    <tr>
                                         <td class="border" style="width: 50%;" rowspan="3">{{ bill.proveedor.direccion|linebreaks }}</td>
                                     </tr>
                                     <tr>
@@ -59,14 +56,14 @@
                                     <tr>
                                         <td class="border" style="font-weight: bold;">&nbsp;No GESTION:</td>
                                         <td class="border" style="font-weight: bold;">&nbsp;{{ bill.proveedor.gestion }}</td>
-                                    </tr><!-- Log on to codeastro.com for more projects -->
+                                    </tr>
                                 </tbody>
                             </table>
                             </td>
                         </tr>
                         
                         <tr>
-                            <td><!-- Log on to codeastro.com for more projects -->
+                            <td>
                             <table class="border" style="width: 800px; margin-left: auto; margin-right: auto;">
                                 <tbody>
                                     <tr>
@@ -89,7 +86,7 @@
                             </table>
                             </td>
                         </tr>
-                        <td><!-- Log on to codeastro.com for more projects -->
+                        <td>
                             <table class="border" style="width: 800px; margin-left: auto; margin-right: auto;">
                                 <tbody>
                                     <tr>
@@ -108,7 +105,7 @@
 
                         <tr>
                             <td style="text-align: center;">
-                                <!-- FINAL TEXT -->
+
                             </td>
                         </tr>
 
@@ -117,7 +114,6 @@
 
             </div>
 
-            <!-- <br><br> --><!-- Log on to codeastro.com for more projects -->
 
         </div>
 
@@ -127,7 +123,7 @@
             <button class="center btn btn-primary" onclick="printpage('printArea')">Imprimir</button>
             <button class="center btn btn-success" type="submit">Guardar</button>
             <a href="{% url 'lista_compras' %}" class=" btn center btn-secondary">regresar</a>
-        </div><!-- Log on to codeastro.com for more projects -->
+        </div>
 
     </form>
 
