@@ -5,6 +5,16 @@
     <a href="{% url 'crear_inventario' %}" class="btn btn-success mb-3 mt-5">
         <i class="bi bi-box2-heart"></i> <i class="fas fa-plus"></i>&nbsp;Producto
     </a>
+    <table hidden border="0" cellspacing="5" cellpadding="5" >
+        <tbody>
+            <tr>
+                <td>Fecha Inicial:</td>
+                <td><input type="date" id="min" name="min"></td>
+                <td>Fecha Final:</td>
+                <td><input type="date" id="max" name="max"></td>
+            </tr>
+        </tbody>
+    </table>
     <table id ="inventario" class="table table-bordered text-center">
         <thead class = "table-dark">
             <tr>

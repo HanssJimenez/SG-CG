@@ -654,7 +654,6 @@ $('#proveedores').DataTable({
     }
 })
 
-
 var minDate, maxDate;
 
 // Custom filtering function which will search data in column four between two values
@@ -683,7 +682,6 @@ $.fn.dataTable.ext.search.push(
         return false;
     }
 );
-
 $(document).ready(function() {
     // Create date inputs
 

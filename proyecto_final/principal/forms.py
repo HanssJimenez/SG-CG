@@ -267,7 +267,7 @@ class ServicioForm(forms.ModelForm):
         self.fields['gestion'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '10', 'pattern' : '[A-Z0-9]{10}', 'title' : 'GSTIN Format Required'})
     class Meta:
         model = ComprobanteServicio
-        fields = ['nombre', 'telefono', 'direccion', 'correo', 'gestion']
+        fields = ['nombre', 'telefono', 'direccion', 'correo', 'gestion','servicio']
         widgets = {
             'direccion' : forms.Textarea(
                 attrs = {

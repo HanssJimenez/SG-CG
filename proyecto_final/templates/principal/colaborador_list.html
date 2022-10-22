@@ -6,7 +6,16 @@
     <a href="{% url 'crear_colaborador' %}" class="btn btn-success mb-3 mt-5">
         <i class="bi bi-person-heart"></i>&nbsp;<i class="fas fa-plus"></i>&nbsp;&nbsp; Colaborador
     </a>
-
+    <table hidden border="0" cellspacing="5" cellpadding="5" >
+        <tbody>
+            <tr>
+                <td>Fecha Inicial:</td>
+                <td><input type="date" id="min" name="min"></td>
+                <td>Fecha Final:</td>
+                <td><input type="date" id="max" name="max"></td>
+            </tr>
+        </tbody>
+    </table>
     <table id = "colaborador" class="table table-bordered text-center">
         <thead class = "table-dark">
             <tr>
@@ -18,8 +27,7 @@
                 <th>Puesto</th>
                 <th>Fecha de nacimiento</th>
                 <th>Sueldo</th>
-                <th> Opciones</th>
-
+                <th>Opciones</th>
             </tr>
         </thead>
         <tbody>
@@ -35,7 +43,7 @@
                 <td>Q {{colaborador.sueldo}}</td>
                 <td>
                     <a href="{% url 'modificar_colaborador' pk=colaborador.id %}" class = "btn btn-primary btn-sm">
-                        <i class= "fas fa-pen"></i>&nbsp;&nbsp; Modificar
+                        <i class= "fas fa-pen"></i>&nbsp;&nbsp;Modificar
                     </a>&nbsp;&nbsp;
                     <a href="{% url 'borrar_colaborador' pk=colaborador.id %}" class = "btn btn-danger btn-sm">
                         <i class= "fas fa-trash-alt"></i>&nbsp;&nbsp;Eliminar

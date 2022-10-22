@@ -33,9 +33,6 @@
                             <table class="border" style="width: 800px; margin-left: auto; margin-right: auto;">
                                 <tbody>
                                     <tr>
-                                        <td class="border" style="text-align: center; font-weight: bold;" colspan="3">GSTIN NO - {{ bill.gestion }}</td>
-                                    </tr>
-                                    <tr>
                                         <td class="border" style="width: 50%; font-weight: bold;">&nbsp;NOMBRE DE CLIENTE/ DESCRIPCION DE SERVICIO</td>
                                         <td class="border" style="width: 25%; font-weight: bold;">&nbsp;COMPROBANTE NO</td>
                                         <td class="border" style="width: 25%;">&nbsp;{{ bill.nocomp }}</td>
@@ -46,15 +43,11 @@
                                         <td class="border" style="width: 25%;">&nbsp;{{ bill.fechav.date }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="border" style="width: 50%;" rowspan="3">{{ bill.direccion}}</td>
+                                        <td class="border" style="width: 50%;" rowspan="3">{{ bill.direccion}}<br> Q{{bill.servicio}}</td>
                                     </tr>
                                     <tr>
                                         <td class="border" style="width: 25%; font-weight: bold;">&nbsp;Fecha de entrega</td>
                                         <td class="border align-middle" style="width: 25%;"> <input type="text" name="descripcion" class="text-center" style="border: 0; overflow: hidden;" value="{% if billdetails.descripcion %}{{ billdetails.descripcion }}{% endif %}"> </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="border" style="font-weight: bold;">&nbsp;No GESTION:</td>
-                                        <td class="border" style="font-weight: bold;">&nbsp;{{ bill.gestion }}</td>
                                     </tr>
                                 </tbody>
                             </table>
