@@ -38,7 +38,7 @@ class Inventario(models.Model):
     borrado = models.BooleanField(default = False)
 
     def __str__(self):
-        return self.nombre
+        return self.nombre + " " + self.medida
 
 
 ############################## Compras ##################################
@@ -84,7 +84,7 @@ class UnidadCompra(models.Model):
     totalprecio = models.IntegerField(default=1)
 
     def __str__(self):
-	    return "Comprobante no: " + str(self.nocomp.nocomp) + ", Producto = " + self.inventario.nombre
+	    return "Comprobante no: " + str(self.nocomp.nocomp) + ", Producto = " + self.inventario.nombre 
 
 #contains the other details in the purchases bill
 class DetalleComprobanteCompra(models.Model):

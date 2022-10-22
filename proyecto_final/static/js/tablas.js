@@ -225,6 +225,7 @@ $('#servicios').DataTable({
         text: '<i class="fas fa-clone"></i>',
         className: 'btn btn-secondary',
         titleAttr: 'Copiar',
+        footer: true,
         exportOptions:{
             columns:[1,2,3,4,5]
             }   
@@ -234,6 +235,7 @@ $('#servicios').DataTable({
             text: '<i class="fas fa-file-excel"></i>',
             className: 'btn btn-secondary',
             titleAttr: 'Excel',
+            footer: true,
             exportOptions:{
                 columns:[1,2,3,4,5]
                 }   
@@ -243,6 +245,7 @@ $('#servicios').DataTable({
             text: '<i class="fas fa-print"></i>',
             className: 'btn btn-secondary',
             titleAttr: 'Imprimir',
+            footer: true,
             exportOptions:{
                 columns:[1,2,3,4,5]
             },
@@ -258,6 +261,7 @@ $('#servicios').DataTable({
             text: '<i class="fas fa-file-pdf"></i>',
             className: 'btn btn-secondary',
             titleAttr: 'PDF',
+            footer: true,
             exportOptions:{
                 columns:[1,2,3,4,5]
             },
@@ -504,6 +508,7 @@ $('#proveedor').DataTable({
         text: '<i class="fas fa-clone"></i>',
         className: 'btn btn-secondary',
         titleAttr: 'Copiar',
+        footer: true,
         exportOptions:{
             columns:[0,1,2,3,5]
             }   
@@ -513,6 +518,7 @@ $('#proveedor').DataTable({
             text: '<i class="fas fa-file-excel"></i>',
             className: 'btn btn-secondary',
             titleAttr: 'Excel',
+            footer: true,
             exportOptions:{
                 columns:[0,1,2,3,5]
                 }   
@@ -522,6 +528,7 @@ $('#proveedor').DataTable({
             text: '<i class="fas fa-print"></i>',
             className: 'btn btn-secondary',
             titleAttr: 'Imprimir',
+            footer: true,
             exportOptions:{
                 columns:[0,1,2,3,5]
             },
@@ -537,6 +544,7 @@ $('#proveedor').DataTable({
             text: '<i class="fas fa-file-pdf"></i>',
             className: 'btn btn-secondary',
             titleAttr: 'PDF',
+            footer: true,
             exportOptions:{
                 columns:[0,1,2,3,4,5]
             },

@@ -19,7 +19,7 @@ from principal.forms import *
 from principal.models import *
 
 
-# Create your views here.
+
 
 class AccesoUsuarioColaborador(PermissionRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
@@ -37,9 +37,9 @@ def index(request):
 
 def no_permisos(request):
     return render(request, 'principal/no_posee_permisos.html')
-
+# Vista resumen
 class VistaInicio(AccesoUsuarioColaborador,View):
-    permission_required = ('principal.add_colaborador')
+    permission_required = ('principal.view_cliente')
     template_name = "principal/resumen.html"
     def get(self, request):        
         labels = []
@@ -49,8 +49,8 @@ class VistaInicio(AccesoUsuarioColaborador,View):
             labels.append(item.nombre)
             data.append(item.cantidad)
         # sales = SaleBill.objects.order_by('-fecha')[:3]
-        purchases = ComprobanteCompra.objects.order_by('-fecha')[:3]
-        sales = ComprobanteServicio.objects.order_by('-fechav')[:3]
+        purchases = ComprobanteCompra.objects.order_by('-fecha')[:5]
+        sales = ComprobanteServicio.objects.order_by('-fechav')[:5]
         context = {
             'labels'    : labels,
             'data'      : data,
@@ -76,15 +76,25 @@ class ModificarColaborador(AccesoUsuarioColaborador,UpdateView):
     # fields = '__all__'
     success_url = reverse_lazy('lista_colaborador')
 #Eliminar
-class EliminarColaborador(AccesoUsuarioColaborador,DeleteView):
-    permission_required = ('principal.delete_colaborador')
-    queryset = Colaborador.objects.all()
-    success_url = reverse_lazy('lista_colaborador')
+class EliminarColaborador(AccesoUsuarioColaborador,View):
+    permission_required = ('principal.change_colaborador')
+    template_name = 'principal/colaborador_confirm_delete.html'
+    success_message = "Colaborador Eliminado Exitosamente"
+
+    def get(self, request, pk):
+        colaborador = get_object_or_404(Colaborador, pk=pk)
+        return render(request, self.template_name, {'object' : colaborador})
+
+    def post(self, request, pk):  
+        colaborador = get_object_or_404(Colaborador, pk=pk)
+        colaborador.borrado = True
+        colaborador.save()                                               
+        return redirect('lista_colaborador')
 #Leer
 class LeerColaborador(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_colaborador')
     model = Colaborador
-    queryset = Colaborador.objects.all()
+    queryset = Colaborador.objects.filter(borrado=False)
     
     
 # ClassBaseViews Credito Crear/Modificar/Eliminar/Leer
@@ -129,49 +139,59 @@ class ModificarCliente(AccesoUsuarioColaborador,UpdateView):
     success_url = reverse_lazy('lista_cliente')
 
 #Eliminar
-class EliminarCliente(AccesoUsuarioColaborador,DeleteView):
-    permission_required = ('principal.delete_cliente')
-    queryset = Cliente.objects.all()
-    success_url = reverse_lazy('lista_cliente')
+class EliminarCliente(AccesoUsuarioColaborador,View):
+    permission_required = ('principal.change_cliente')
+    template_name = 'principal/cliente_confirm_delete.html'
+    success_message = "Cliente Eliminado Exitosamente"
+
+    def get(self, request, pk):
+        cliente = get_object_or_404(Cliente, pk=pk)
+        return render(request, self.template_name, {'object' : cliente})
+
+    def post(self, request, pk):  
+        cliente = get_object_or_404(Colaborador, pk=pk)
+        cliente.borrado = True
+        cliente.save()                                               
+        return redirect('lista_cliente')
     
 #Leer
 class LeerCliente(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_cliente')
     model = Cliente
-    queryset = Cliente.objects.all()
+    queryset = Cliente.objects.filter(borrado=False)
 
 
 ################################################################################################
-# shows a lists of all suppliers
+# Muestra todos los proveedore
 class LeerProveedor(AccesoUsuarioColaborador,ListView):
-    permission_required = ('principal.add_colaborador')
+    permission_required = ('principal.view_proveedor')
     model = Proveedor
     queryset = Proveedor.objects.filter(borrado=False)
 
 
 # used to add a new supplier
 class CrearProveedor(AccesoUsuarioColaborador,CreateView):
-    permission_required = ('principal.add_colaborador')
+    permission_required = ('principal.add_proveedor')
     model = Proveedor
     form_class = ProveedorForm
     success_url = reverse_lazy('lista_proveedor')
     
 
-# used to update a supplier's info
+# Utilizado para actualizar la información del proveedor
 class ModificarProveedor(AccesoUsuarioColaborador,SuccessMessageMixin, UpdateView):
-    permission_required = ('principal.add_colaborador')
+    permission_required = ('principal.change_proveedor')
     model = Proveedor
     form_class = ProveedorForm
     success_url = 'lista_proveedor'
-    success_message = "Supplier details has been updated successfully"
+    success_message = "Proveedor actualizado correctamente"
 
 
 
-# # used to delete a supplier
+# # Utilizado para eliminar Proveedor
 class EliminarProveedor(AccesoUsuarioColaborador,View):
-    permission_required = ('principal.add_colaborador')
+    permission_required = ('principal.change_proveedor')
     template_name = 'principal/proveedor_confirm_delete.html'
-    success_message = "Supplier has been deleted successfully"
+    success_message = "Proveedor eliminado correctamente"
 
     def get(self, request, pk):
         proveedor = get_object_or_404(Proveedor, pk=pk)
@@ -184,9 +204,9 @@ class EliminarProveedor(AccesoUsuarioColaborador,View):
         return redirect('lista_proveedor')
 
 
-# # used to view a supplier's profile
+# # Utilizado para ver la información del proveedor
 class ProveedorVista(AccesoUsuarioColaborador,View):
-    permission_required = ('principal.add_colaborador')
+    permission_required = ('principal.view_proveedor')
     def get(self, request, nombre):
         supplierobj = get_object_or_404(Proveedor, nombre=nombre)
         bill_list = ComprobanteCompra.objects.filter(proveedor=supplierobj)
@@ -205,26 +225,26 @@ class ProveedorVista(AccesoUsuarioColaborador,View):
         return render(request, 'principal/proveedor.html', context)
 ################################################################################################
 
-# shows the list of bills of all purchases 
+# Muestra la lista de comprobantes de compras
 class LeerCompra(AccesoUsuarioColaborador,ListView):
-    permission_required = ('principal.add_colaborador')
+    permission_required = ('principal.add_comprobantecompra')
     model = ComprobanteCompra
     template_name = "principal/comprobantecompra_list.html"
     context_object_name = 'bills'
     ordering = ['-fecha']
     paginate_by = 10
 
-# used to select the supplier
+# Selecciona al proveedor para la compra
 class SeleccionarProveedorView(AccesoUsuarioColaborador,View):
-    permission_required = ('principal.add_colaborador')
+    permission_required = ('principal.add_comprobantecompra')
     form_class = SeleccionarProveedor
     template_name = 'principal/select_proveedor.html'
 
-    def get(self, request, *args, **kwargs):                                    # loads the form page
+    def get(self, request, *args, **kwargs):                                    # carga la pagina dle formulario
         form = self.form_class
         return render(request, self.template_name, {'form': form})
 
-    def post(self, request, *args, **kwargs):                                   # gets selected supplier and redirects to 'PurchaseCreateView' class
+    def post(self, request, *args, **kwargs):                                   # redirecciona del proveedor seleccionado a la pagina de compra
         form = self.form_class(request.POST)
         if form.is_valid():
             supplierid = request.POST.get("proveedor")
@@ -233,44 +253,44 @@ class SeleccionarProveedorView(AccesoUsuarioColaborador,View):
         return render(request, self.template_name, {'form': form})
 
 
-# used to generate a bill object and save items
+# Utilizado para generar el comprabante y actulizar el invetario 
 class CrearCompraView(AccesoUsuarioColaborador,View):                                                 
-    permission_required = ('principal.add_colaborador')
+    permission_required = ('principal.add_detallecomprobanteCompra')
     template_name = 'principal/nueva_compra.html'
 
     def get(self, request, pk):
-        formset = UnidadCompraFormset(request.GET or None)                      # renders an empty formset
-        supplierobj = get_object_or_404(Proveedor, pk=pk)                        # gets the supplier object
+        formset = UnidadCompraFormset(request.GET or None)                      # Crea un formset vacio
+        supplierobj = get_object_or_404(Proveedor, pk=pk)                        # Guarda al proveedor como objeto
         context = {
             'formset'   : formset,
             'proveedor'  : supplierobj,
-        }                                                                       # sends the supplier and formset as context
+        }                                                                       # Envia el proveedor y formset como objetos
         return render(request, self.template_name, context)
 
     def post(self, request, pk):
-        formset = UnidadCompraFormset(request.POST)                             # recieves a post method for the formset
-        supplierobj = get_object_or_404(Proveedor, pk=pk)                        # gets the supplier object
+        formset = UnidadCompraFormset(request.POST)                             # obteine el formset de unidad compra
+        supplierobj = get_object_or_404(Proveedor, pk=pk)                        # Obteine el objeto de proveedor
         if formset.is_valid():
-            # saves bill
-            billobj = ComprobanteCompra(proveedor=supplierobj)                        # a new object of class 'PurchaseBill' is created with supplier field set to 'supplierobj'
-            billobj.save()                                                      # saves object into the db
-            # create bill details object
+            # Guarda el comprobante
+            billobj = ComprobanteCompra(proveedor=supplierobj)                        # crea el objeto 'comprobnatecompra' y vincula el proveedor como  'supplierobj'
+            billobj.save()                                                      # Guarda el comprobantecompra
+            # Crea un objeto de detalle de comprobante
             billdetailsobj = DetalleComprobanteCompra(nocomp=billobj)
             billdetailsobj.save()
-            for form in formset:                                                # for loop to save each individual form as its own object
-                # false saves the item and links bill to the item
+            for form in formset:                                                # for para ciclar cada unidad en su respectivo inventario
+                # Guarda sin commit la unidad y vincuala el comprobante con la unidad
                 billitem = form.save(commit=False)
-                billitem.nocomp = billobj                                       # links the bill object to the items
-                # gets the stock item
-                stock = get_object_or_404(Inventario, nombre=billitem.inventario.nombre)       # gets the item
-                # calculates the total price
+                billitem.nocomp = billobj                                       # Vincula el comprobante a el inventario
+                # Obtiene el inventario seguna el nombre de la unidad
+                stock = get_object_or_404(Inventario, nombre=billitem.inventario.nombre)       # Obtiene la unidad del inventario
+                # Calcula el precio total
                 billitem.totalprecio = billitem.preciouni * billitem.cantidad
-                # updates quantity in stock db
-                stock.cantidad += billitem.cantidad                              # updates quantity
-                # saves bill item and stock
+                # Actualiza la cantidad en el invetario
+                stock.cantidad += billitem.cantidad                              # Actualiza cantidadad en inventario
+                # Guarda el invetario y comprobante
                 stock.save()
                 billitem.save()
-            messages.success(request, "Purchased items have been registered successfully")
+            messages.success(request, "Inventario actualizado correctamente")
             return redirect('compra_comprobante', nocomp=billobj.nocomp)
         formset = UnidadCompraFormset(request.GET or None)
         context = {
@@ -280,9 +300,9 @@ class CrearCompraView(AccesoUsuarioColaborador,View):
         return render(request, self.template_name, context)
 
 
-# used to delete a bill object
+# Eliminar el comprobante en caso de inserciones erroenes
 class EliminarCompra(AccesoUsuarioColaborador,SuccessMessageMixin, DeleteView):
-    permission_required = ('principal.add_colaborador')
+    permission_required = ('principal.delete_comprobantecompra')
     model = ComprobanteCompra
     success_url = '/lista_compras/'
     def delete(self, *args, **kwargs):
@@ -296,7 +316,7 @@ class EliminarCompra(AccesoUsuarioColaborador,SuccessMessageMixin, DeleteView):
         return super(EliminarCompra, self).delete(*args, **kwargs)
 
 class ComprobanteCompraView(View):
-    permission_required = ('principal.add_colaborador')
+    permission_required = ('principal.view_comprobantecompra')
     model = ComprobanteCompra
     template_name = "principal/comprobante_compra.html"
     bill_base = "principal/base.html"
@@ -319,7 +339,7 @@ class ComprobanteCompraView(View):
             billdetailsobj.total = request.POST.get("total")
 
             billdetailsobj.save()
-            messages.success(request, "Bill details have been modified successfully")
+            messages.success(request, "Detalle de comprobante actualizado correctamente")
         context = {
             'bill'          : ComprobanteCompra.objects.get(nocomp=nocomp),
             'items'         : UnidadCompra.objects.filter(nocomp=nocomp),
@@ -330,7 +350,7 @@ class ComprobanteCompraView(View):
 ################################################################################################
 # shows the list of bills of all sales 
 class LeerServicio(AccesoUsuarioColaborador,ListView):
-    permission_required = ('principal.add_colaborador')
+    permission_required = ('principal.add_comprobanteservicio')
     model = ComprobanteServicio
     template_name = "principal/comprobanteservicio_list.html"
     context_object_name = 'bills'
@@ -338,12 +358,12 @@ class LeerServicio(AccesoUsuarioColaborador,ListView):
 
 # used to generate a bill object and save items
 class CrearServicioVista(AccesoUsuarioColaborador,View):    
-    permission_required = ('principal.add_colaborador')                                                  
+    permission_required = ('principal.add_comprobanteservicio')                                                  
     template_name = 'principal/nuevo_servicio.html'
 
     def get(self, request):
         form = ServicioForm(request.GET or None)
-        formset = VentaUnidadFormset(request.GET or None)                          # renders an empty formset
+        formset = VentaUnidadFormset(request.GET or None)                          # Crea un formset vacio
         stocks = Inventario.objects.filter(borrado=False)
         context = {
             'form'      : form,
@@ -354,25 +374,25 @@ class CrearServicioVista(AccesoUsuarioColaborador,View):
 
     def post(self, request):
         form = ServicioForm(request.POST)
-        formset = VentaUnidadFormset(request.POST)                                 # recieves a post method for the formset
+        formset = VentaUnidadFormset(request.POST)                                 # Obtiene el metodo post del formset
         if form.is_valid() and formset.is_valid():
-            # saves bill
+            # Guarda el comprobante
             billobj = form.save(commit=False)
             billobj.save()     
-            # create bill details object
+            # Crea un objeto detallecomprobanteservcio
             billdetailsobj = DetalleComprobanteServicio(nocomp=billobj)
             billdetailsobj.save()
-            for form in formset:                                                # for loop to save each individual form as its own object
-                # false saves the item and links bill to the item
+            for form in formset:                                                # for que cicla cada elemento de servicios individualmete en su propio objeto
+                # guarda sin commit para vincular el producto con el comprobante
                 billitem = form.save(commit=False)
-                billitem.nocomp = billobj                                       # links the bill object to the items
-                # gets the stock item
+                billitem.nocomp = billobj                                       # vincula el comprobante con la unidad vendida
+                # Obtine la unidad del invetario
                 stock = get_object_or_404(Inventario, nombre=billitem.inventario.nombre)      
-                # calculates the total price
+                # Calcula el precio total
                 billitem.totalprecio = billitem.preciouni * billitem.cantidad
-                # updates quantity in stock db
+                # Actualiza la cantidad en el inventario
                 stock.cantidad -= billitem.cantidad   
-                # saves bill item and stock
+                # Guarda el comprobante y el inventario
                 stock.save()
                 billitem.save()
             messages.success(request, "Unidad Vendida ha sido registrada exitosamente")
@@ -388,7 +408,7 @@ class CrearServicioVista(AccesoUsuarioColaborador,View):
 
 # used to delete a bill object
 class EliminarServicioView(AccesoUsuarioColaborador,SuccessMessageMixin, DeleteView):
-    permission_required = ('principal.add_colaborador')
+    permission_required = ('principal.delete_comprobanteservicio')
     model = ComprobanteServicio
     success_url = '/lista_servicio/'
     
@@ -400,12 +420,12 @@ class EliminarServicioView(AccesoUsuarioColaborador,SuccessMessageMixin, DeleteV
             if stock.borrado == False:
                 stock.cantidad += item.cantidad
                 stock.save()
-        messages.success(self.request, "Sale bill has been deleted successfully")
+        messages.success(self.request, "Comprobante de servicio eliminado correctamente")
         return super(EliminarServicioView, self).delete(*args, **kwargs)
 
 
 class ComprobanteServicioView(AccesoUsuarioColaborador,View):
-    permission_required = ('principal.add_colaborador')
+    permission_required = ('principal.view_comprobanteservicio')
     model = ComprobanteServicio
     template_name = "principal/comprobante_servicio.html"
     bill_base = "principal/base.html"
@@ -429,7 +449,7 @@ class ComprobanteServicioView(AccesoUsuarioColaborador,View):
             billdetailsobj.total = request.POST.get("total")
 
             billdetailsobj.save()
-            messages.success(request, "Bill details have been modified successfully")
+            messages.success(request, "Detalle de comprobante actualizado correctamente")
         context = {
             'bill'          : ComprobanteServicio.objects.get(nocomp=nocomp),
             'items'         : UnidadVendida.objects.filter(nocomp=nocomp),
@@ -489,25 +509,25 @@ class ModificarCategorias(AccesoUsuarioColaborador,UpdateView):
     fields = '__all__'
     success_url = reverse_lazy('lista_categorias')
 #Eliminar
-class EliminarCategorias(AccesoUsuarioColaborador,DeleteView):
-    permission_required = ('principal.delete_categorias')
-    queryset = Categorias.objects.all()
-    success_url = reverse_lazy('lista_categorias')
+class EliminarCategorias(AccesoUsuarioColaborador,View):
+    permission_required = ('principal.change_inventario')
+    template_name = 'principal/categorias_confirm_delete.html'
+    
+    def get(self, request, pk):
+        categoria = get_object_or_404(Categorias, pk=pk)
+        return render(request, self.template_name,{'object':categoria})
+    
+    def post(self, request, pk):  
+        categoria = get_object_or_404(Categorias, pk=pk)
+        categoria.borrado = True
+        categoria.save()                                               
+        return redirect('lista_categorias')
+    
 #Leer
 class LeerCategorias(AccesoUsuarioColaborador,ListView):
     permission_required = ('principal.view_categorias')
     model = Categorias
-    queryset = Categorias.objects.all()
-    paginate_by = 10
-    def get_queryset(self):
-        q = self.request.GET.get('q')
-        if q:
-            object_list = self.model.objects.filter(
-                Q(nombre__icontains=q) 
-            )
-        else:
-            object_list = self.model.objects.all()
-        return object_list
+    queryset = Categorias.objects.filter(borrado=False)
 
 # ClassBaseViews Solicitud Crear/Modificar/Eliminar/Leer
 #Crear
@@ -604,12 +624,10 @@ def user_login(request):
         else:
             print('Alguien intento entrar')
             print('Username:{} and password {}'.format(username, password))
-            return HttpResponse('datos de login invalidos')
+            return HttpResponse('datos de inicio de sesion invalidos')
     else:
         return render(request,'principal/login.html',{})
 
-def cuadros (request):
-    return render(request, 'principal/charts.html')
 
 def error_404_view(request, exception):
     return render(request, 'principal/404.html')

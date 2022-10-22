@@ -82,6 +82,7 @@
                                     <a class="nav-link" href="layout-sidenav-light.html">Eliminar</a> {% endcomment %}
                                 </nav>
                             </div>
+                            {%if perms.add_colaborador%}   
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseColaboradores" aria-expanded="false" aria-controls="collapseColaboradores">
                                 <div class="sb-nav-link-icon"><i class="bi bi-person-heart"></i></div>
                                 Colaboradores
@@ -94,6 +95,8 @@
                                     <a class="nav-link" href="layout-sidenav-light.html">Eliminar</a> {% endcomment %}
                                 </nav>
                             </div>
+                            {%endif%}
+                            {%if perms.add_cliente%} 
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseClientes" aria-expanded="false" aria-controls="collapseClientes">
                                 <div class="sb-nav-link-icon"><i class="bi bi-person-hearts"></i></div>
                                 Clientes
@@ -105,6 +108,8 @@
                                     {% comment %} <a class="nav-link" href="{% url 'lista_credito' %}">Credito</a> {% endcomment %}
                                 </nav>
                             </div>
+                            {%endif%}
+                            {%if perms.add_inventario%} 
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseInventario" aria-expanded="false" aria-controls="collapseInventario">
                                 <div class="sb-nav-link-icon"><i class="bi bi-box2-heart-fill"></i></div>
                                 Inventario
@@ -116,6 +121,7 @@
                                     <a class="nav-link" href="{% url 'lista_categorias' %}">categoria</a>
                                 </nav>
                             </div>
+                            {%endif%}
                             {% comment %} <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVentas" aria-expanded="false" aria-controls="collapseVentas">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Servicios
