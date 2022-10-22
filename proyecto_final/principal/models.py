@@ -13,7 +13,9 @@ class UserProfileInfo(models.Model):
 
     def __str__(self):
         return self.user.username
+    
 ############################### Inventario
+
 MEDIDA = (
     ('unidad', 'unidad'),
     ('gramos', 'gramos'),
@@ -38,7 +40,9 @@ class Inventario(models.Model):
     def __str__(self):
         return self.nombre
 
-############################## Compras ###############
+
+############################## Compras ##################################
+
 
 class Proveedor(models.Model):
     id = models.AutoField(primary_key=True)
@@ -85,7 +89,6 @@ class UnidadCompra(models.Model):
 #contains the other details in the purchases bill
 class DetalleComprobanteCompra(models.Model):
     nocomp = models.ForeignKey(ComprobanteCompra, on_delete = models.CASCADE, related_name='detallecomprobantecompra')
-
     destino = models.CharField(max_length=50, blank=True, null=True)
     total = models.CharField(max_length=50, blank=True, null=True)
     def __str__(self):
@@ -101,8 +104,9 @@ class ComprobanteServicio(models.Model):
     nombre = models.CharField(max_length=150)
     telefono = models.CharField(max_length=12)
     direccion = models.CharField(max_length=200)
+    servicio = models.PositiveIntegerField(max_length=100)
     correo = models.EmailField(max_length=254)
-    gestion = models.CharField(max_length=15)
+    gestion = models.CharField(max_length=15, blank=True, null=True)
 
     def __str__(self):
         return "No. Comprobante: " + str(self.nocomp)
@@ -112,9 +116,11 @@ class ComprobanteServicio(models.Model):
         
     def get_precio_total(self):
         unidadesvendidas = UnidadVendida.objects.filter(nocomp=self)
+        subtot = self.servicio
         total = 0
         for item in unidadesvendidas:
-            total += item.totalprecio
+            total += item.totalprecio 
+        total += subtot
         return total
 
 #contains the sale stocks made
@@ -130,8 +136,7 @@ class UnidadVendida(models.Model):
 
 #contains the other details in the sales bill
 class DetalleComprobanteServicio(models.Model):
-    nocomp = models.ForeignKey(ComprobanteServicio, on_delete = models.CASCADE, related_name='saledetailsbillno')   
-    
+    nocomp = models.ForeignKey(ComprobanteServicio, on_delete = models.CASCADE, related_name='saledetailsbillno')
     tiposervicio= models.CharField(max_length=50, blank=True, null=True)
     descripcion = models.CharField(max_length=50, blank=True, null=True)
     total = models.CharField(max_length=50, blank=True, null=True)
