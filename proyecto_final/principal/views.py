@@ -476,7 +476,7 @@ class ModificarInventario(AccesoUsuarioColaborador,UpdateView):
     success_url = reverse_lazy('lista_inventario')
 #Eliminar
 class EliminarInventario(AccesoUsuarioColaborador,View):
-    permission_required = ('principal.delete_inventario')
+    permission_required = ('principal.change_inventario')
     template_name = 'principal/inventario_confirm_delete.html'
     
     def get(self, request, pk):

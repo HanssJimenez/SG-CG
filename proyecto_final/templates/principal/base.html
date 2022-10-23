@@ -29,21 +29,22 @@
             {% if user.is_authenticated%}
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="bi bi-list-stars"></i></button>
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                <li><a class="nav-link active" href="{% url 'index' %}">Bienvenido</a></li>
+                <li><a class="nav-link" href="{% url 'index' %}">Bienvenido</a></li>
+                {% if perms.auth.add_user %}
                 <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'admin:index' %}">Administrador</a>
+                    <a class="nav-link" href="{% url 'admin:index' %}">Administrador</a>
                 </li>
                 <li>
-                    {% if perms.principal.add_user %}
-                        <a class="nav-link active" href="{% url 'principal:register' %}">Registrar Usuario</a>
-                    {%endif%}
+                        <a class="nav-link" href="{% url 'principal:register' %}">Registrar Usuario</a>
+                    
                 </li>
+                {%endif%}
                 <li>            
                     
                     {% if user.is_authenticated %}
-                    <a class="nav-link active" href="{% url 'logout' %}">Cerrar Sesión</a>
+                    <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
                     {% else %}
-                    <a class="nav-link active" href="{% url 'principal:user_login' %}">Iniciar Sesión</a>
+                    <a class="nav-link" href="{% url 'principal:user_login' %}">Iniciar Sesión</a>
                     {% endif %}
                     
                 </li>
@@ -70,6 +71,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Usuarios
                             </a> {% endcomment %}
+                            {%if perms.principal.view_cliente%} 
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseResumen" aria-expanded="false" aria-controls="collapseResumen">
                                 <div class="sb-nav-link-icon"><i class="bi bi-clipboard-data-fill"></i></div>
                                 Resumen
@@ -82,7 +84,8 @@
                                     <a class="nav-link" href="layout-sidenav-light.html">Eliminar</a> {% endcomment %}
                                 </nav>
                             </div>
-                            {%if perms.add_colaborador%}   
+                            {%endif%}
+                            {%if perms.principal.add_colaborador%}   
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseColaboradores" aria-expanded="false" aria-controls="collapseColaboradores">
                                 <div class="sb-nav-link-icon"><i class="bi bi-person-heart"></i></div>
                                 Colaboradores
@@ -96,7 +99,7 @@
                                 </nav>
                             </div>
                             {%endif%}
-                            {%if perms.add_cliente%} 
+                            {%if perms.principal.add_cliente%} 
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseClientes" aria-expanded="false" aria-controls="collapseClientes">
                                 <div class="sb-nav-link-icon"><i class="bi bi-person-hearts"></i></div>
                                 Clientes
@@ -109,7 +112,7 @@
                                 </nav>
                             </div>
                             {%endif%}
-                            {%if perms.add_inventario%} 
+                            {%if perms.principal.add_inventario%}  
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseInventario" aria-expanded="false" aria-controls="collapseInventario">
                                 <div class="sb-nav-link-icon"><i class="bi bi-box2-heart-fill"></i></div>
                                 Inventario
@@ -132,6 +135,7 @@
                                     <a class="nav-link" href="{% url 'lista_solicitud' %}">Lista</a>
                                 </nav>
                             </div> {% endcomment %}
+                            {%if perms.principal.add_proveedor%}  
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProveedores" aria-expanded="false" aria-controls="collapseVentas">
                                 <div class="sb-nav-link-icon"><i class="bi bi-person-lines-fill"></i></div>
                                 Proveedores
@@ -142,6 +146,8 @@
                                     <a class="nav-link" href="{% url 'lista_proveedor' %}">Lista</a>
                                 </nav>
                             </div>
+                            {%endif%}
+                            {%if perms.principal.add_detallecomprobantecompra%}  
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCompras" aria-expanded="false" aria-controls="collapseVentas">
                                 <div class="sb-nav-link-icon"><i class="bi bi-bag-heart-fill"></i></div>
                                 Compras
@@ -152,6 +158,8 @@
                                     <a class="nav-link" href="{% url 'lista_compras' %}">Lista</a>
                                 </nav>
                             </div>
+                            {%endif%}
+                            {%if perms.principal.add_detallecomprobanteservicio%}  
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseServicios" aria-expanded="false" aria-controls="collapseVentas">
                                 <div class="sb-nav-link-icon"><i class="bi bi-tools"></i></div>
                                 Servicios
@@ -162,6 +170,7 @@
                                     <a class="nav-link" href="{% url 'lista_servicio' %}">Lista</a>
                                 </nav>
                             </div>
+                            {%endif%}
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">

@@ -23,9 +23,8 @@
                         <tr style="text-align: center;">
                             <td >
                                 <span style="font-size: 350%;">SG-CG</span> <br>
-                                <span style="font-size: 120%; font-weight: bold;">DEALERS IN : Products</span> <br>
                                 <span style="font-weight: bold;">Direccion :</span> 9ave. 7-99 zona1<br>Esquipulas, San Mateo 1<br>
-                                <span style="font-weight: bold;">Correo : cybergames@mail.com</span> <br><br>
+                                <span style="font-weight: bold;">Correo : cybergamesesq@gmail.com</span> <br><br>
                             </td>
                         </tr>
                         
@@ -71,15 +70,15 @@
                                         <td class="border" style="width: 30%; font-weight: bold; text-align: center;">INSUMOS</td>
                                         <td class="border" style="width: 12%; font-weight: bold; text-align: center;">CANTIDAD</td>
                                         <td class="border" style="width: 12%; font-weight: bold; text-align: center;">PRECIO UNIDAD</td>
-                                        <td class="border" style="width: 12%; font-weight: bold; text-align: center;">TOTAL Q</td>
+                                        <td class="border" style="width: 12%; font-weight: bold; text-align: center;">TOTAL</td>
                                     </tr>
                                     {% for item in items %}
                                         <tr style="height: auto;">
                                             <td class="border" style="width: 5%;">&nbsp; {{ forloop.counter }}</td>
-                                            <td class="border" style="width: 30%;">&nbsp; {{ item.inventario.nombre }}</td>
+                                            <td class="border" style="width: 30%;">&nbsp; {{ item.inventario }}</td>
                                             <td class="border" style="width: 12%;">&nbsp; {{ item.cantidad }}</td>
-                                            <td class="border" style="width: 12%;">&nbsp; {{ item.preciouni }}</td>
-                                            <td class="border" style="width: 12%;">&nbsp;{{ item.totalprecio }}</td>
+                                            <td class="border" style="width: 12%;">&nbsp; Q {{ item.preciouni }}</td>
+                                            <td class="border" style="width: 12%;">&nbsp; Q{{ item.totalprecio }}</td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -99,7 +98,7 @@
                             
                         <tr>
                             <td style="text-align: right;">
-                                <span style="font-weight: bold;">COMPAÑIA <br><br><br><br> FIRMA</span>
+                                <span style="font-weight: bold;">CyberGames <br><br><br><br> FIRMA</span>
                             </td>
                         </tr>
 

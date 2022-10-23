@@ -75,10 +75,10 @@ class ClienteForm(forms.ModelForm):
 #Form de colaborador
 class ColaboradorForm(forms.ModelForm):
     DPI = forms.CharField(
-        label= 'DPI', min_length=13, max_length=13, 
+        label= 'CUI', min_length=15, max_length=15, 
         validators=[RegexValidator(r'^[0-9]*$',
         message="Solo debe ingresar números")],
-        widget=forms.TextInput(attrs={'placeholder':'ingrese DPI'})
+        widget=forms.TextInput(attrs={'placeholder':'ingrese DPI','data-mask': '0000-00000-0000',})
     )
     nombre = forms.CharField(
         label= 'Nombre', min_length=3, max_length=50, 
@@ -93,7 +93,7 @@ class ColaboradorForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'placeholder':'ingrese apellido'})
     )
     puesto = forms.CharField(
-        label= 'Puesto', min_length=10, max_length=50, 
+        label= 'Puesto', min_length=6, max_length=50, 
         validators=[RegexValidator(r'^[a-zA-ZÀ-ÿ\s]*$',
         message="Solo debe ingresar letras")],
         widget=forms.TextInput(attrs={'placeholder':'ingrese puesto'})
@@ -125,7 +125,8 @@ class ColaboradorForm(forms.ModelForm):
                     'max':'2030-01-01'
                     
                 }
-            ),
+            )
+            
         }
     def clean_DPI(self):
         dpi = self.cleaned_data.get('DPI')
@@ -235,10 +236,10 @@ class DetalleCompraForm(forms.ModelForm):
 class ProveedorForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['nombre'].widget.attrs.update({'class': 'textinput form-control', 'pattern' : '[a-zA-Z\s]{1,50}', 'title' : 'Alphabets and Spaces only'})
-        self.fields['telefono'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '10', 'pattern' : '[0-9]{10}', 'title' : 'Numbers only'})
+        self.fields['nombre'].widget.attrs.update({'class': 'textinput form-control', 'pattern' : '[a-zA-Z\s]{1,50}', 'title' : 'Se aceptan solo letras y espacio'})
+        self.fields['telefono'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '10', 'pattern' : '[0-9]{10}', 'title' : 'Se aceptan solo numeros'})
         self.fields['correo'].widget.attrs.update({'class': 'textinput form-control'})
-        self.fields['gestion'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '15', 'pattern' : '[A-Z0-9]{15}', 'title' : 'GSTIN Format Required'})
+        self.fields['gestion'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '15', 'pattern' : '[A-Z0-9]{15}', 'title' : 'Ingrese Mayúsculas y números'})
     class Meta:
         model = Proveedor
         fields = ['nombre', 'telefono', 'direccion', 'correo', 'gestion']
@@ -261,7 +262,7 @@ class DetalleCompraForm(forms.ModelForm):
 class ServicioForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['nombre'].widget.attrs.update({'class': 'textinput form-control', 'pattern' : '[a-zA-Z\s]{1,50}', 'title' : 'Alphabets and Spaces only', 'required': 'true'})
+        self.fields['nombre'].widget.attrs.update({'class': 'textinput form-control', 'pattern' : '[a-zA-Z\s]{1,50}', 'title' : 'Se aceptan solo letras y espacio', 'required': 'true'})
         self.fields['telefono'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '8', 'pattern' : '[0-9]{8}', 'title' : 'Numbers only', 'required': 'true'})
         self.fields['correo'].widget.attrs.update({'class': 'textinput form-control'})
         self.fields['gestion'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '10', 'pattern' : '[A-Z0-9]{10}', 'title' : 'GSTIN Format Required'})

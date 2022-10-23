@@ -16,9 +16,13 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.urls import path, include
 from django.contrib import admin
+from django.conf import settings
+from django.views.static import serve
 from principal import views
 
 urlpatterns = [
+    url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
     url(r'^$', views.index, name='index'),
     url(r'^no_posee_permisos', views.no_permisos, name='no_posee_permisos'),
     url(r'^admin/', admin.site.urls),
