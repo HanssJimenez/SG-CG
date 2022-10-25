@@ -149,7 +149,7 @@ class EliminarCliente(AccesoUsuarioColaborador,View):
         return render(request, self.template_name, {'object' : cliente})
 
     def post(self, request, pk):  
-        cliente = get_object_or_404(Colaborador, pk=pk)
+        cliente = get_object_or_404(Cliente, pk=pk)
         cliente.borrado = True
         cliente.save()                                               
         return redirect('lista_cliente')
@@ -631,5 +631,3 @@ def user_login(request):
 
 def error_404_view(request, exception):
     return render(request, 'principal/404.html')
-
-

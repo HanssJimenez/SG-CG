@@ -125,16 +125,6 @@
                                 </nav>
                             </div>
                             {%endif%}
-                            {% comment %} <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVentas" aria-expanded="false" aria-controls="collapseVentas">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Servicios
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseVentas" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{% url 'lista_solicitud' %}">Lista</a>
-                                </nav>
-                            </div> {% endcomment %}
                             {%if perms.principal.add_proveedor%}  
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProveedores" aria-expanded="false" aria-controls="collapseVentas">
                                 <div class="sb-nav-link-icon"><i class="bi bi-person-lines-fill"></i></div>
@@ -195,9 +185,6 @@
         </div>
         {% endif %}
         <script src="{% static 'js/scripts.js' %}"></script>
-        
-        <script src="{% static 'bootstrap/popper.min.js' %}"></script>
-        
         <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
         <script src="{% static 'js/dataTables.bootstrap5.min.js' %}"></script>
         <script src="{% static 'js/pdfmake.min.js' %}"></script>
@@ -205,7 +192,6 @@
         <script src="{% static 'js/datatables.min.js' %}"></script>
         <script src="{% static 'js/moment.min.js' %}"></script>
         <script src="{% static 'js/dataTables.dateTime.min.js' %}"></script>
-        
         <script src="{% static 'js/jquery.mask.min.js' %}"></script>
         <script src="{% static 'js/sum().js' %}"></script>
         <script src="{% static 'js/tablas.js' %}"></script>

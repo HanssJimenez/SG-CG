@@ -25,6 +25,9 @@ MEDIDA = (
 class Categorias(models.Model):
     nombre = models.CharField(max_length=50,blank=False, null=False)
     borrado = models.BooleanField(default=False)
+    class Meta:
+        verbose_name = 'Categoria'
+        verbose_name_plural = "Categorias"
     def __str__(self):
         return self.nombre
 
@@ -36,7 +39,9 @@ class Inventario(models.Model):
     cantidad = models.PositiveIntegerField(default = 0, blank= False, null=True)
     medida = models.CharField(max_length=10, choices=MEDIDA, default='u')
     borrado = models.BooleanField(default = False)
-
+    class Meta:
+        verbose_name = 'Inventario'
+        verbose_name_plural = "Inventario"
     def __str__(self):
         return self.nombre + " " + self.medida
 
@@ -52,9 +57,11 @@ class Proveedor(models.Model):
     correo = models.EmailField(max_length=254, unique=True)
     gestion = models.CharField(max_length=15, unique=True)
     borrado = models.BooleanField(default=False)
-
+    class Meta:
+        verbose_name = 'Proveedor'
+        verbose_name_plural = "Proveedores"
     def __str__(self):
-	    return self.nombre
+        return self.nombre
 
 
 #contains the purchase bills made
@@ -62,7 +69,9 @@ class ComprobanteCompra(models.Model):
     nocomp = models.AutoField(primary_key=True)
     fecha = models.DateTimeField(auto_now=True)
     proveedor = models.ForeignKey(Proveedor, on_delete = models.CASCADE, related_name='proveedorcompra')
-
+    class Meta:
+        verbose_name = 'Comprobante de compra'
+        verbose_name_plural = "Comprobantes de compras"
     def __str__(self):
         return "Comprobante no: " + str(self.nocomp)
     def get_lista_unidad(self):
@@ -82,18 +91,23 @@ class UnidadCompra(models.Model):
     cantidad = models.IntegerField(default=1)
     preciouni = models.IntegerField(default=1)
     totalprecio = models.IntegerField(default=1)
-
+    class Meta:
+        verbose_name = 'Unidad compra'
+        verbose_name_plural = "Unidades compradas"
     def __str__(self):
-	    return "Comprobante no: " + str(self.nocomp.nocomp) + ", Producto = " + self.inventario.nombre 
+        return "Comprobante no: " + str(self.nocomp.nocomp) + ", Producto = " + self.inventario.nombre 
 
 #contains the other details in the purchases bill
 class DetalleComprobanteCompra(models.Model):
     nocomp = models.ForeignKey(ComprobanteCompra, on_delete = models.CASCADE, related_name='detallecomprobantecompra')
     destino = models.CharField(max_length=50, blank=True, null=True)
     total = models.CharField(max_length=50, blank=True, null=True)
+    class Meta:
+        verbose_name = 'Detalle de compra'
+        verbose_name_plural = "Detalles de compras"
     def __str__(self):
-	    return "Comprobante no: " + str(self.nocomp.nocomp)
-
+        return "Comprobante no: " + str(self.nocomp.nocomp)
+    
 
 ##################### Servicios ############################
 #contains the sale bills made
@@ -107,7 +121,9 @@ class ComprobanteServicio(models.Model):
     servicio = models.PositiveIntegerField(max_length=100)
     correo = models.EmailField(max_length=254)
     gestion = models.CharField(max_length=15, blank=True, null=True)
-
+    class Meta:
+        verbose_name = 'Comprobante de servicio'
+        verbose_name_plural = "Comprobantes de servicios"
     def __str__(self):
         return "No. Comprobante: " + str(self.nocomp)
 
@@ -130,9 +146,11 @@ class UnidadVendida(models.Model):
     cantidad = models.IntegerField(default=1)
     preciouni = models.IntegerField(default=1)
     totalprecio = models.IntegerField(default=1)
-
+    class Meta:
+        verbose_name = 'Unidad Vendida'
+        verbose_name_plural = "Unidades Vendidas"
     def __str__(self):
-	    return "No. Comprobante: " + str(self.nocomp.nocomp) + ", unidad = " + self.inventario.nombre
+        return "No. Comprobante: " + str(self.nocomp.nocomp) + ", unidad = " + self.inventario.nombre
 
 #contains the other details in the sales bill
 class DetalleComprobanteServicio(models.Model):
@@ -140,9 +158,11 @@ class DetalleComprobanteServicio(models.Model):
     tiposervicio= models.CharField(max_length=50, blank=True, null=True)
     descripcion = models.CharField(max_length=50, blank=True, null=True)
     total = models.CharField(max_length=50, blank=True, null=True)
-
+    class Meta:
+        verbose_name = 'Detalle de servicio'
+        verbose_name_plural = "Detalle de servicios"
     def __str__(self):
-	    return "No. Comprobante: " + str(self.nocomp.nocomp)
+        return "No. Comprobante: " + str(self.nocomp.nocomp)
 
 
 class Colaborador(models.Model):
@@ -154,6 +174,9 @@ class Colaborador(models.Model):
     fecha_de_nacimiento = models.DateField(auto_now=False, auto_now_add=False)
     sueldo = models.PositiveIntegerField()
     borrado = models.BooleanField(default=False)
+    class Meta:
+        verbose_name = 'Colaborador'
+        verbose_name_plural = "Colaboradores"
     def clean(self):
         self.nombre = self.nombre.capitalize()
         self.apellido = self.apellido.capitalize()
@@ -166,6 +189,9 @@ class Cliente(models.Model):
     apellido = models.CharField(max_length=100)
     numtel = models.CharField(max_length=9, verbose_name="Número de teléfono")
     borrado = models.BooleanField(default=False)
+    class Meta:
+        verbose_name = 'Cliente'
+        verbose_name_plural = "Clientes"
     def __str__(self):
         return self.nombre+" "+self.apellido
 
