@@ -36,6 +36,7 @@ class Inventario(models.Model):
     id = models.AutoField(primary_key=True)
     categoria = models.ForeignKey(Categorias, on_delete=models.PROTECT)
     nombre = models.CharField(max_length=50, blank=False)
+    cantidadmin = models.PositiveIntegerField(default = 0, blank= True, null=True)
     cantidad = models.PositiveIntegerField(default = 0, blank= False, null=True)
     medida = models.CharField(max_length=10, choices=MEDIDA, default='u')
     borrado = models.BooleanField(default = False)
