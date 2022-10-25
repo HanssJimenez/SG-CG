@@ -42,7 +42,7 @@
                 <th width="15%">Inventario</th>
                 <th width="15%">Cantidad</th>
                 <th width="15%">Total Precio De Compra</th>
-                <th></th>
+                <th hidden></th>
                 <th width="15%">Fecha De Compra</th>
                 <th width="30%">Opciones</th>
             </tr>
@@ -54,7 +54,7 @@
                 <td class="text-center">{% for item in purchase.get_lista_unidad %} {{ item.inventario.nombre }} <br> {% endfor %}</td>
                 <td class="text-center">{% for item in purchase.get_lista_unidad %} {{ item.cantidad }} <br> {% endfor %}</td>     
                 <td class="text-center">Q{{ purchase.get_total_precio }}</td>
-                <td></td>
+                <td hidden></td>
                 <td class="text-center">{{ purchase.fecha|date:"Y-m-d" }}</td>
                 <td class="align-middle"> <a href="{% url 'compra_comprobante' purchase.nocomp %}" class="btn btn-secondary">Ver Comprobante</a> <a href="{% url 'eliminar_compra' purchase.pk %}" class="btn btn-danger">Eliminar Comprobante</a> </td>
             </tr>

@@ -9,7 +9,7 @@
     <br>
 
     <div id="container" style="position: relative; height:45vh; border: 1.2mm ridge #4e6570; border-radius: 30px;" class="align-middle table-bordered">
-        <canvas id="bar-graph"></canvas>
+        <canvas id="bar-graph-grouped"></canvas>
     </div>
 
     <br>
@@ -64,28 +64,22 @@
             type: 'horizontalBar',
             data: {
                 datasets: [{
-                    backgroundColor: ['rgba(255, 99, 132, 0.9)',
-                    'rgba(255, 159, 64, 0.9)',
-                    'rgba(255, 205, 86, 0.9)',
-                    'rgba(75, 192, 192, 0.9)',
-                    'rgba(54, 162, 235, 0.9)',
-                    'rgba(153, 102, 255, 0.9)',
-                    'rgba(201, 203, 207, 0.9)'],
-                    borderColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(255, 159, 64)',
-                    'rgb(255, 205, 86)',
-                    'rgb(75, 192, 192)',
-                    'rgb(54, 162, 235)',
-                    'rgb(153, 102, 255)',
-                    'rgb(201, 203, 207)'
-                    ],
+                    backgroundColor: 'rgba(54, 162, 235, 0.9)',
+                    borderColor: 'rgb(54, 162, 235)',
                     label: 'Insumos de la empresa',
                     data: {{ data|safe }},
-                }],
+                },{
+                    backgroundColor: 'rgba(255, 99, 132, 0.9)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    label: 'Insumos minimo',
+                    data: {{ data2|safe }},
+                }
+                ],
+
                 borderWidth: 1,
-                labels: {{ labels|safe }}
+                labels: {{ labels|safe }},
             },
+            
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -95,7 +89,7 @@
 
         //runs all charts on loading the webpage
         window.onload = function() {
-            var ctx = document.getElementById('bar-graph').getContext('2d');
+            var ctx = document.getElementById('bar-graph-grouped').getContext('2d');
             window.BarStock = new Chart(ctx, barConfig);
         };
 

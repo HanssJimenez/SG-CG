@@ -159,11 +159,16 @@ class CreditoForm(forms.ModelForm):
         fields = "__all__"
 #Form de Inventario
 class InventarioForm(forms.ModelForm):
-    
+    cantidadmin = forms.CharField(
+        label= 'Cantidad mínima', min_length=1, max_length=5, 
+        validators=[RegexValidator(r'^[0-9]*$',
+        message="Solo debe ingresar números")],
+        widget=forms.TextInput(attrs={'placeholder':'ingrese Cantidad'})
+    )
     class Meta:
         model = Inventario
         ordering = ['-pk']
-        fields = ('categoria', 'nombre', 'cantidad' , 'medida')
+        fields = ('categoria', 'nombre', 'cantidadmin','cantidad' , 'medida')
 #Form de Categoria
 class CategoriasForm(forms.ModelForm):
     class Meta:

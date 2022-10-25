@@ -43,17 +43,21 @@ class VistaInicio(AccesoUsuarioColaborador,View):
     template_name = "principal/resumen.html"
     def get(self, request):        
         labels = []
-        data = []        
+        labels2 = []
+        data = []
+        data2 = []        
         stockqueryset = Inventario.objects.filter(borrado=False).order_by('-cantidad')
         for item in stockqueryset:
             labels.append(item.nombre)
             data.append(item.cantidad)
+            data2.append(item.cantidadmin)
         # sales = SaleBill.objects.order_by('-fecha')[:3]
         purchases = ComprobanteCompra.objects.order_by('-fecha')[:5]
         sales = ComprobanteServicio.objects.order_by('-fechav')[:5]
         context = {
             'labels'    : labels,
             'data'      : data,
+            'data2'     : data2,
             'sales'     : sales,
             'purchases' : purchases
         }
@@ -465,14 +469,14 @@ class CrearInventario(AccesoUsuarioColaborador,CreateView):
     permission_required = ('principal.add_inventario')
     model = Inventario
     form_class = InventarioForm
-    # fields = ('categoria', 'nombre', 'cantidad', 'medida')
+    # fields = ('categoria', 'nombre', 'cantidad', 'medida','cantidadmin')
     success_url = reverse_lazy('lista_inventario')
 #Modificar
 class ModificarInventario(AccesoUsuarioColaborador,UpdateView):
     permission_required = ('principal.change_inventario')
     model = Inventario
     form_class = InventarioForm
-    # fields = ('categoria', 'nombre_p', 'cantidad')
+    # fields = ('categoria', 'nombre_p', 'cantidad','cantidadmin')
     success_url = reverse_lazy('lista_inventario')
 #Eliminar
 class EliminarInventario(AccesoUsuarioColaborador,View):

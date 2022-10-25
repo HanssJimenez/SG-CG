@@ -21,6 +21,7 @@
                 <th>ID</th>
                 <th>Categoría</th>
                 <th>Nombre</th>
+                <th hidden >Cantidad minima</th>
                 <th>Cantidad Actual</th>
                 <th>Medida</th>
                 <th>Opciones</th>
@@ -30,9 +31,10 @@
             {% for inventario in object_list%}
             <tr>
                 <td> {{inventario.id}} <br></td>
-                <td>{{inventario.categoria}}</a></td>
+                <td>{{inventario.categoria}}</td>
+                <td hidden>{{inventario.cantidadmin}}</td>
                 <td>{{inventario.nombre}}</td>
-                <td>{{inventario.cantidad}}</td>
+                {% if inventario.cantidadmin > inventario.cantidad%}<td class="bg-warning">{{inventario.cantidad}} "Poco Stock"</td>{%else%}<td>{{inventario.cantidad}}</td>{%endif%}
                 <td>{{inventario.medida}}</td>
                 <td>
                     <a href="{% url 'modificar_inventario' pk=inventario.id %}" class = "btn btn-primary btn-sm">
