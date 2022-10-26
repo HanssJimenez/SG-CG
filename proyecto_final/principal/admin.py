@@ -16,7 +16,6 @@ class CategoriasAdmin(admin.ModelAdmin):
     list_filter = ['nombre']
     list_per_page = 10
     
-
 class ClienteAdmin(admin.ModelAdmin):
     list_display = ['nombre','apellido','numtel', 'borrado']
     readonly_fields = ['nombre','apellido','numtel']
@@ -24,7 +23,6 @@ class ClienteAdmin(admin.ModelAdmin):
     list_filter = ['nombre', 'apellido']
     list_per_page = 10
     
-
 class ColaboradorAdmin(admin.ModelAdmin):
     list_display = ['DPI','nombre','apellido', 'numero_de_telefono','puesto','fecha_de_nacimiento','sueldo','borrado']
     readonly_fields = ['DPI','nombre','apellido', 'numero_de_telefono','puesto','fecha_de_nacimiento','sueldo']
@@ -32,7 +30,6 @@ class ColaboradorAdmin(admin.ModelAdmin):
     list_filter = ['nombre', 'apellido', 'puesto']
     list_per_page = 10
     
-
 class ProveedorAdmin(admin.ModelAdmin):
     list_display = ['id','nombre','telefono', 'direccion', 'correo','gestion', 'borrado']
     readonly_fields = ['id','nombre','telefono', 'direccion', 'correo','gestion']
@@ -40,15 +37,13 @@ class ProveedorAdmin(admin.ModelAdmin):
     list_filter = ['nombre', 'correo']
     list_per_page = 10
     
-
 class ComprobanteCompraAdmin(admin.ModelAdmin):
     list_display = ['nocomp','fecha','proveedor']
     readonly_fields = ['nocomp','fecha','proveedor']
     search_fields = ['nocomp','fecha','proveedor']
     list_filter = ['proveedor', 'fecha']
     list_per_page = 10
-    
-        
+
 class UnidadCompraAdmin(admin.ModelAdmin):
     list_display = ['nocomp','inventario','cantidad', 'preciouni','totalprecio']
     readonly_fields = ['nocomp','inventario','cantidad', 'preciouni','totalprecio']
@@ -61,7 +56,6 @@ class DetalleComprobanteCompraAdmin(admin.ModelAdmin):
     list_display = ['nocomp','destino','total']
     readonly_fields = ['nocomp','destino','total']
     list_per_page = 10
-
 
 class ComprobanteServicioAdmin(admin.ModelAdmin):
     list_display = ['nocomp','fechav','nombre','telefono','direccion','servicio','correo']
