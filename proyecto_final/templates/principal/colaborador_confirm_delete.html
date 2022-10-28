@@ -3,7 +3,7 @@
     <div class="container">
         <form method="post" action="">
             {% csrf_token %}
-                <h1>Esta seguro que desea elimiar este colaborador?</h1><br>
+                <h1>Esta seguro que desea eliminar este colaborador?</h1><br>
                 <input class="btn btn-danger" type="submit" value="Si" />
                 <a href="{% url 'lista_colaborador' %}"><div class="btn btn-primary">Cancelar</div></a>
         </form>
