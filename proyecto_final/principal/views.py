@@ -444,7 +444,7 @@ class ComprobanteServicioView(AccesoUsuarioColaborador,View):
         return render(request, self.template_name, context)
 
     def post(self, request, nocomp):
-        form = SaleDetailsForm(request.POST)
+        form = DetalleServicioForm(request.POST)
         if form.is_valid():
             billdetailsobj = DetalleComprobanteServicio.objects.get(nocomp=nocomp)
             

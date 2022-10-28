@@ -268,9 +268,9 @@ class ServicioForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['nombre'].widget.attrs.update({'class': 'textinput form-control', 'pattern' : '[a-zA-Z\s]{1,50}', 'title' : 'Se aceptan solo letras y espacio', 'required': 'true'})
-        self.fields['telefono'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '8', 'pattern' : '[0-9]{8}', 'title' : 'Numbers only', 'required': 'true'})
+        self.fields['telefono'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '8', 'pattern' : '[0-9]{8}', 'title' : 'Solo se aceptan números', 'required': 'true'})
         self.fields['correo'].widget.attrs.update({'class': 'textinput form-control'})
-        self.fields['gestion'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '10', 'pattern' : '[A-Z0-9]{10}', 'title' : 'GSTIN Format Required'})
+        self.fields['gestion'].widget.attrs.update({'class': 'textinput form-control', 'maxlength': '10', 'pattern' : '[A-Z0-9]{10}', 'title' : 'Letras mayúsculas y números'})
     class Meta:
         model = ComprobanteServicio
         fields = ['nombre', 'telefono', 'direccion', 'correo', 'gestion','servicio']
@@ -299,7 +299,7 @@ class VentaUnidadForm(forms.ModelForm):
 VentaUnidadFormset = formset_factory(VentaUnidadForm, extra=1)
 
 # form used to accept the other details for sales bill
-class SaleDetailsForm(forms.ModelForm):
+class DetalleServicioForm(forms.ModelForm):
     class Meta:
         model = DetalleComprobanteServicio
         fields = ['tiposervicio','descripcion', 'total']
