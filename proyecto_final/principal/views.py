@@ -622,7 +622,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request,user)
-                return HttpResponseRedirect(reverse('index'))
+                return HttpResponseRedirect(reverse('resumen'))
             else:
                 HttpResponse('La Cuenta no esta activa')
         else:

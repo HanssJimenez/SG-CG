@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.views.static import serve
 from principal import views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
@@ -90,4 +91,4 @@ urlpatterns = [
     # url(r'^borrar_producto/(?P<pk>\d+)/$', views.borrar_producto_inventario, name = 'borrar_producto')   VistaInicio,
 ]
 
-handler404 = 'principal.views.error_404_view'
+urlpatterns += staticfiles_urlpatterns()
